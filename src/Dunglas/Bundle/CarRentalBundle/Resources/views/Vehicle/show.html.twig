@@ -1,0 +1,51 @@
+{% extends 'DunglasCarRentalBundle::layout.html.twig' %}
+
+{% block content %}
+<h1>Vehicle</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>                <td>{{ entity.id }}</td>        </tr>
+        <tr>
+            <th>Numberplate</th>                <td>{{ entity.numberPlate }}</td>        </tr>
+        <tr>
+            <th>Version</th>                <td>{{ entity.version }}</td>        </tr>
+        <tr>
+            <th>Fuel</th>                <td>{{ entity.fuel }}</td>        </tr>
+        <tr>
+            <th>Nextvehicleinspection</th>                <td>{{ entity.nextVehicleInspection|date('Y-m-d H:i:s') }}</td>        </tr>
+        <tr>
+            <th>Lastvalvetrain</th>                <td>{{ entity.lastValvetrain|date('Y-m-d H:i:s') }}</td>        </tr>
+        <tr>
+            <th>Valvetrain</th>                <td>{{ entity.valvetrain }}</td>        </tr>
+        <tr>
+            <th>Notes</th>                <td>{{ entity.notes }}</td>        </tr>
+        <tr>
+            <th>Active</th>                <td>{{ entity.active }}</td>        </tr>
+        <tr>
+            <th>Created</th>                <td>{{ entity.created|date('Y-m-d H:i:s') }}</td>        </tr>
+        <tr>
+            <th>Updated</th>                <td>{{ entity.updated|date('Y-m-d H:i:s') }}</td>        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('vehicle') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('vehicle_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('vehicle_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

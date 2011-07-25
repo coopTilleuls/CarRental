@@ -1,0 +1,15 @@
+vehicle:
+    resource: "@DunglasCarRentalBundle/Controller/VehicleController.php"
+    type:     annotation
+
+customer:
+    resource: "@DunglasCarRentalBundle/Controller/CustomerController.php"
+    type:     annotation
+    
+manufacturer:
+    resource: "@DunglasCarRentalBundle/Controller/ManufacturerController.php"
+    type:     annotation
+
+model:
+    resource: "@DunglasCarRentalBundle/Controller/ModelController.php"
+    type:     annotation

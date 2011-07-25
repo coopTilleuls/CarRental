@@ -1,0 +1,65 @@
+{% extends 'DunglasCarRentalBundle::layout.html.twig' %}
+
+{% block content %}
+<h1>Customer</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>                <td>{{ entity.id }}</td>        </tr>
+        <tr>
+            <th>Gender</th>                <td>{{ entity.gender }}</td>        </tr>
+        <tr>
+            <th>Lastname</th>                <td>{{ entity.lastName }}</td>        </tr>
+        <tr>
+            <th>Firstname</th>                <td>{{ entity.firstName }}</td>        </tr>
+        <tr>
+            <th>Address1</th>                <td>{{ entity.address1 }}</td>        </tr>
+        <tr>
+            <th>Address2</th>                <td>{{ entity.address2 }}</td>        </tr>
+        <tr>
+            <th>City</th>                <td>{{ entity.city }}</td>        </tr>
+        <tr>
+            <th>Zipcode</th>                <td>{{ entity.zipCode }}</td>        </tr>
+        <tr>
+            <th>Country</th>                <td>{{ entity.country }}</td>        </tr>
+        <tr>
+            <th>Emailaddress</th>                <td>{{ entity.emailAddress }}</td>        </tr>
+        <tr>
+            <th>Phonenumber1</th>                <td>{{ entity.phoneNumber1 }}</td>        </tr>
+        <tr>
+            <th>Phonenumber2</th>                <td>{{ entity.phoneNumber2 }}</td>        </tr>
+        <tr>
+            <th>Registrationdate</th>                <td>{{ entity.registrationDate|date('Y-m-d H:i:s') }}</td>        </tr>
+        <tr>
+            <th>Birth</th>                <td>{{ entity.birth|date('Y-m-d H:i:s') }}</td>        </tr>
+        <tr>
+            <th>Notes</th>                <td>{{ entity.notes }}</td>        </tr>
+        <tr>
+            <th>Active</th>                <td>{{ entity.active }}</td>        </tr>
+        <tr>
+            <th>Created</th>                <td>{{ entity.created|date('Y-m-d H:i:s') }}</td>        </tr>
+        <tr>
+            <th>Updated</th>                <td>{{ entity.updated|date('Y-m-d H:i:s') }}</td>        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('customer') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('customer_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('customer_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}
