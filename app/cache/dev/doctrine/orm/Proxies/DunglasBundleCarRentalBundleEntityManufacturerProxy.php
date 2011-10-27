@@ -20,16 +20,27 @@ class DunglasBundleCarRentalBundleEntityManufacturerProxy extends \Dunglas\Bundl
     {
         if (!$this->__isInitialized__ && $this->_entityPersister) {
             $this->__isInitialized__ = true;
+
+            if (method_exists($this, "__wakeup")) {
+                // call this after __isInitialized__to avoid infinite recursion
+                // but before loading to emulate what ClassMetadata::newInstance()
+                // provides.
+                $this->__wakeup();
+            }
+
             if ($this->_entityPersister->load($this->_identifier, $this) === null) {
                 throw new \Doctrine\ORM\EntityNotFoundException();
             }
             unset($this->_entityPersister, $this->_identifier);
         }
     }
-    
+
     
     public function getId()
     {
+        if ($this->__isInitialized__ === false) {
+            return $this->_identifier["id"];
+        }
         $this->__load();
         return parent::getId();
     }
@@ -86,6 +97,12 @@ class DunglasBundleCarRentalBundleEntityManufacturerProxy extends \Dunglas\Bundl
     {
         $this->__load();
         return parent::__toString();
+    }
+
+    public function addModel(\Dunglas\Bundle\CarRentalBundle\Entity\Model $models)
+    {
+        $this->__load();
+        return parent::addModel($models);
     }
 
 

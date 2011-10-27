@@ -4,6 +4,7 @@ namespace Dunglas\Bundle\CarRentalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Dunglas\Bundle\CarRentalBundle\Entity\Fuel
@@ -38,13 +39,13 @@ class Fuel
     
     /**
      * @ORM\Column(name="created", type="datetime")
-     * @Gedmo:Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      */
     private $created;
     
     /**
      * @ORM\Column(name="updated", type="datetime")
-     * @Gedmo:Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      */
     private $updated;
 
@@ -141,5 +142,19 @@ class Fuel
     public function getVehicles()
     {
         return $this->vehicles;
+    }
+    
+    public function __toString() {
+        return $this->getName();
+    }
+
+    /**
+     * Add vehicles
+     *
+     * @param Dunglas\Bundle\CarRentalBundle\Entity\Vehicle $vehicles
+     */
+    public function addVehicle(\Dunglas\Bundle\CarRentalBundle\Entity\Vehicle $vehicles)
+    {
+        $this->vehicles[] = $vehicles;
     }
 }

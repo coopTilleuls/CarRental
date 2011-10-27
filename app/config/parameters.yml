@@ -1,0 +1,13 @@
+parameters:
+  database_driver: "pdo_mysql"
+  database_host: "localhost"
+  database_name: "carrental"
+  database_user: "root"
+  database_unix_socket: "/tmp/mysql.sock"
+  database_password: ""
+  mailer_transport: "smtp"
+  mailer_host: "localhost"
+  mailer_user: ""
+  mailer_password: ""
+  locale: "fr"
+  secret: "5c27fa07b6550433693faf2c9b0e215edea9d26f"

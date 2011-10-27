@@ -1,0 +1,88 @@
+table.sonata-ba-list {
+    width: 500px;
+}
+
+div.sonata-ba-field-inline-table input.title {
+    width: 100px;
+}
+
+div.sonata-ba-field-inline-table textarea.title {
+    width: 150px;
+    height: 50px;
+}
+
+table.sonata-ba-list td {
+    width: 75px;
+}
+
+table.sonata-ba-list td img{
+    vertical-align: bottom
+}
+
+table.sonata-ba-list td.sonata-ba-list-label {
+    width: 350px;
+}
+
+td.pager ul {
+    float: left;
+    list-style: none;
+    margin: 2px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+td.pager ul li {
+    float: left;
+}
+
+td.pager ul li a {
+    border: 1px solid #cccccc;
+    padding: 4px;
+    margin: 2px;
+}
+
+div.sonata-ba-modal-edit-one-to-one td.sonata-ba-list-field-batch,
+div.sonata-ba-modal-edit-one-to-one div.sonata-ba-list-actions,
+div.sonata-ba-modal-edit-one-to-one th.sonata-ba-list-field-header-batch
+{
+    display: none;
+}
+
+div.sonata-ba-modal-edit-one-to-one div.sonata-ba-list-actions {
+    display: none;
+}
+
+th.sonata-ba-list-field-header-order-desc:hover {
+    background: url(../famfamfam/bullet_arrow_up.png) no-repeat center left;
+}
+
+th.sonata-ba-list-field-header-order-asc:hover {
+    background: url(../famfamfam/bullet_arrow_down.png) no-repeat center left;
+}
+
+th.sonata-ba-list-field-header-order-desc,
+th.sonata-ba-list-field-header-order-asc {
+    padding-left: 15px;
+}
+
+th.sonata-ba-list-field-header-order-desc.sonata-ba-list-field-order-active {
+    background: url(../famfamfam/bullet_arrow_up.png) no-repeat center left;
+}
+
+th.sonata-ba-list-field-header-order-asc.sonata-ba-list-field-order-active {
+    background: url(../famfamfam/bullet_arrow_down.png) no-repeat center left;
+}
+
+th.sonata-ba-list-field-header-order-desc.sonata-ba-list-field-order-active:hover {
+    background: url(../famfamfam/bullet_arrow_down.png) no-repeat center left;
+}
+
+th.sonata-ba-list-field-header-order-asc.sonata-ba-list-field-order-active:hover {
+    background: url(../famfamfam/bullet_arrow_up.png) no-repeat center left;
+}
+
+em.sonata-ba-field-help {
+    display: block;
+    color: #999;
+    margin-bottom: 10px;
+}

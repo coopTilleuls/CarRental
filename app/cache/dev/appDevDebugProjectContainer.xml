@@ -18,6 +18,10 @@
       <parameter key="SensioFrameworkExtraBundle">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</parameter>
       <parameter key="JMSSecurityExtraBundle">JMS\SecurityExtraBundle\JMSSecurityExtraBundle</parameter>
       <parameter key="StofDoctrineExtensionsBundle">Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle</parameter>
+      <parameter key="SonatajQueryBundle">Sonata\jQueryBundle\SonatajQueryBundle</parameter>
+      <parameter key="SonataBluePrintBundle">Sonata\BluePrintBundle\SonataBluePrintBundle</parameter>
+      <parameter key="SonataAdminBundle">Sonata\AdminBundle\SonataAdminBundle</parameter>
+      <parameter key="KnpMenuBundle">Knp\Bundle\MenuBundle\KnpMenuBundle</parameter>
       <parameter key="DunglasCarRentalBundle">Dunglas\Bundle\CarRentalBundle\DunglasCarRentalBundle</parameter>
       <parameter key="AcmeDemoBundle">Acme\DemoBundle\AcmeDemoBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
@@ -29,20 +33,19 @@
     <parameter key="database_driver">pdo_mysql</parameter>
     <parameter key="database_host">localhost</parameter>
     <parameter key="database_name">carrental</parameter>
-    <parameter key="database_user">carrental</parameter>
-    <parameter key="database_password">jUjpMeL2az6jzAqC</parameter>
+    <parameter key="database_user">root</parameter>
+    <parameter key="database_unix_socket">/tmp/mysql.sock</parameter>
+    <parameter key="database_password"></parameter>
     <parameter key="mailer_transport">smtp</parameter>
     <parameter key="mailer_host">localhost</parameter>
     <parameter key="mailer_user"></parameter>
     <parameter key="mailer_password"></parameter>
-    <parameter key="locale">en</parameter>
+    <parameter key="locale">fr</parameter>
     <parameter key="secret">5c27fa07b6550433693faf2c9b0e215edea9d26f</parameter>
-    <parameter key="router_listener.class">Symfony\Bundle\FrameworkBundle\EventListener\RouterListener</parameter>
-    <parameter key="session_listener.class">Symfony\Bundle\FrameworkBundle\EventListener\SessionListener</parameter>
     <parameter key="controller_resolver.class">Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver</parameter>
     <parameter key="controller_name_converter.class">Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser</parameter>
     <parameter key="response_listener.class">Symfony\Component\HttpKernel\EventListener\ResponseListener</parameter>
-    <parameter key="exception_listener.class">Symfony\Component\HttpKernel\EventListener\ExceptionListener</parameter>
+    <parameter key="locale_listener.class">Symfony\Component\HttpKernel\EventListener\LocaleListener</parameter>
     <parameter key="event_dispatcher.class">Symfony\Bundle\FrameworkBundle\ContainerAwareEventDispatcher</parameter>
     <parameter key="http_kernel.class">Symfony\Bundle\FrameworkBundle\HttpKernel</parameter>
     <parameter key="filesystem.class">Symfony\Component\HttpKernel\Util\Filesystem</parameter>
@@ -54,14 +57,29 @@
     <parameter key="translation.loader.php.class">Symfony\Component\Translation\Loader\PhpFileLoader</parameter>
     <parameter key="translation.loader.yml.class">Symfony\Component\Translation\Loader\YamlFileLoader</parameter>
     <parameter key="translation.loader.xliff.class">Symfony\Component\Translation\Loader\XliffFileLoader</parameter>
+    <parameter key="translation.loader.qt.class">Symfony\Component\Translation\Loader\QtTranslationsLoader</parameter>
+    <parameter key="translation.loader.csv.class">Symfony\Component\Translation\Loader\CsvFileLoader</parameter>
+    <parameter key="translation.loader.rb.class">Symfony\Component\Translation\Loader\ResourceBundleLoader</parameter>
+    <parameter key="translation.loader.ini.class">Symfony\Component\Translation\Loader\IniFileLoader</parameter>
+    <parameter key="translation.dumper.php.class">Symfony\Component\Translation\Dumper\PhpFileDumper</parameter>
+    <parameter key="translation.dumper.xliff.class">Symfony\Component\Translation\Dumper\XliffFileDumper</parameter>
+    <parameter key="translation.dumper.yml.class">Symfony\Component\Translation\Dumper\YamlFileDumper</parameter>
+    <parameter key="translation.dumper.qt.class">Symfony\Component\Translation\Dumper\QtFileDumper</parameter>
+    <parameter key="translation.dumper.csv.class">Symfony\Component\Translation\Dumper\CsvFileDumper</parameter>
+    <parameter key="translation.dumper.ini.class">Symfony\Component\Translation\Dumper\IniFileDumper</parameter>
+    <parameter key="translation.extractor.php.class">Symfony\Bundle\FrameworkBundle\Translation\PhpExtractor</parameter>
+    <parameter key="translation.loader.class">Symfony\Bundle\FrameworkBundle\Translation\TranslationLoader</parameter>
+    <parameter key="translation.extractor.class">Symfony\Component\Translation\Extractor\ChainExtractor</parameter>
+    <parameter key="translation.writer.class">Symfony\Component\Translation\Writer\TranslationWriter</parameter>
     <parameter key="debug.event_dispatcher.class">Symfony\Bundle\FrameworkBundle\Debug\TraceableEventDispatcher</parameter>
     <parameter key="debug.container.dump">/Users/dunglas/Documents/workspace/CarRental/app/cache/dev/appDevDebugProjectContainer.xml</parameter>
     <parameter key="kernel.secret">5c27fa07b6550433693faf2c9b0e215edea9d26f</parameter>
-    <parameter key="exception_listener.controller">Symfony\Bundle\FrameworkBundle\Controller\ExceptionController::showAction</parameter>
+    <parameter key="kernel.trust_proxy_headers">false</parameter>
+    <parameter key="kernel.default_locale">fr</parameter>
     <parameter key="session.class">Symfony\Component\HttpFoundation\Session</parameter>
     <parameter key="session.storage.native.class">Symfony\Component\HttpFoundation\SessionStorage\NativeSessionStorage</parameter>
     <parameter key="session.storage.filesystem.class">Symfony\Component\HttpFoundation\SessionStorage\FilesystemSessionStorage</parameter>
-    <parameter key="session.default_locale">en</parameter>
+    <parameter key="session_listener.class">Symfony\Bundle\FrameworkBundle\EventListener\SessionListener</parameter>
     <parameter key="session.storage.options" type="collection"/>
     <parameter key="form.extension.class">Symfony\Component\Form\Extension\DependencyInjection\DependencyInjectionExtension</parameter>
     <parameter key="form.factory.class">Symfony\Component\Form\FormFactory</parameter>
@@ -90,15 +108,16 @@
     <parameter key="data_collector.exception.class">Symfony\Component\HttpKernel\DataCollector\ExceptionDataCollector</parameter>
     <parameter key="data_collector.events.class">Symfony\Component\HttpKernel\DataCollector\EventDataCollector</parameter>
     <parameter key="data_collector.logger.class">Symfony\Component\HttpKernel\DataCollector\LoggerDataCollector</parameter>
-    <parameter key="data_collector.timer.class">Symfony\Bundle\FrameworkBundle\DataCollector\TimerDataCollector</parameter>
+    <parameter key="data_collector.timer.class">Symfony\Component\HttpKernel\DataCollector\TimerDataCollector</parameter>
     <parameter key="data_collector.memory.class">Symfony\Component\HttpKernel\DataCollector\MemoryDataCollector</parameter>
     <parameter key="profiler_listener.only_exceptions">false</parameter>
     <parameter key="profiler_listener.only_master_requests">false</parameter>
-    <parameter key="profiler.storage.dsn">sqlite:/Users/dunglas/Documents/workspace/CarRental/app/cache/dev/profiler.db</parameter>
+    <parameter key="profiler.storage.dsn">file:/Users/dunglas/Documents/workspace/CarRental/app/cache/dev/profiler</parameter>
     <parameter key="profiler.storage.username"></parameter>
     <parameter key="profiler.storage.password"></parameter>
     <parameter key="profiler.storage.lifetime">86400</parameter>
     <parameter key="router.class">Symfony\Bundle\FrameworkBundle\Routing\Router</parameter>
+    <parameter key="router.request_context.class">Symfony\Component\Routing\RequestContext</parameter>
     <parameter key="routing.loader.class">Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader</parameter>
     <parameter key="routing.resolver.class">Symfony\Component\Config\Loader\LoaderResolver</parameter>
     <parameter key="routing.loader.xml.class">Symfony\Component\Routing\Loader\XmlFileLoader</parameter>
@@ -113,6 +132,7 @@
     <parameter key="router.cache_warmer.class">Symfony\Bundle\FrameworkBundle\CacheWarmer\RouterCacheWarmer</parameter>
     <parameter key="router.options.matcher.cache_class">app%kernel.environment%UrlMatcher</parameter>
     <parameter key="router.options.generator.cache_class">app%kernel.environment%UrlGenerator</parameter>
+    <parameter key="router_listener.class">Symfony\Component\HttpKernel\EventListener\RouterListener</parameter>
     <parameter key="router.resource">/Users/dunglas/Documents/workspace/CarRental/app/config/routing_dev.yml</parameter>
     <parameter key="request_listener.http_port">80</parameter>
     <parameter key="request_listener.https_port">443</parameter>
@@ -138,7 +158,7 @@
     <parameter key="templating.asset.path_package.class">Symfony\Bundle\FrameworkBundle\Templating\Asset\PathPackage</parameter>
     <parameter key="templating.asset.url_package.class">Symfony\Component\Templating\Asset\UrlPackage</parameter>
     <parameter key="templating.asset.package_factory.class">Symfony\Bundle\FrameworkBundle\Templating\Asset\PackageFactory</parameter>
-    <parameter key="templating.helper.code.file_link_format"></parameter>
+    <parameter key="templating.helper.code.file_link_format">null</parameter>
     <parameter key="templating.helper.form.resources" type="collection">
       <parameter>FrameworkBundle:Form</parameter>
     </parameter>
@@ -155,7 +175,7 @@
     <parameter key="security.encoder_factory.generic.class">Symfony\Component\Security\Core\Encoder\EncoderFactory</parameter>
     <parameter key="security.encoder.digest.class">Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder</parameter>
     <parameter key="security.encoder.plain.class">Symfony\Component\Security\Core\Encoder\PlaintextPasswordEncoder</parameter>
-    <parameter key="security.user.provider.entity.class">Symfony\Component\Security\Core\User\EntityUserProvider</parameter>
+    <parameter key="security.user.provider.entity.class">Symfony\Bridge\Doctrine\Security\User\EntityUserProvider</parameter>
     <parameter key="security.user.provider.in_memory.class">Symfony\Component\Security\Core\User\InMemoryUserProvider</parameter>
     <parameter key="security.user.provider.in_memory.user.class">Symfony\Component\Security\Core\User\User</parameter>
     <parameter key="security.user.provider.chain.class">Symfony\Component\Security\Core\User\ChainUserProvider</parameter>
@@ -174,6 +194,7 @@
     <parameter key="security.matcher.class">Symfony\Component\HttpFoundation\RequestMatcher</parameter>
     <parameter key="security.role_hierarchy.class">Symfony\Component\Security\Core\Role\RoleHierarchy</parameter>
     <parameter key="security.http_utils.class">Symfony\Component\Security\Http\HttpUtils</parameter>
+    <parameter key="security.validator.user_password.class">Symfony\Bundle\SecurityBundle\Validator\Constraint\UserPasswordValidator</parameter>
     <parameter key="security.authentication.retry_entry_point.class">Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint</parameter>
     <parameter key="security.channel_listener.class">Symfony\Component\Security\Http\Firewall\ChannelListener</parameter>
     <parameter key="security.authentication.form_entry_point.class">Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint</parameter>
@@ -228,12 +249,16 @@
     <parameter key="twig.extension.routing.class">Symfony\Bridge\Twig\Extension\RoutingExtension</parameter>
     <parameter key="twig.extension.yaml.class">Symfony\Bridge\Twig\Extension\YamlExtension</parameter>
     <parameter key="twig.extension.form.class">Symfony\Bridge\Twig\Extension\FormExtension</parameter>
+    <parameter key="twig.translation.extractor.class">Symfony\Bridge\Twig\Translation\TwigExtractor</parameter>
+    <parameter key="twig.exception_listener.class">Symfony\Component\HttpKernel\EventListener\ExceptionListener</parameter>
+    <parameter key="twig.exception_listener.controller">Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction</parameter>
     <parameter key="twig.form.resources" type="collection">
       <parameter>form_div_layout.html.twig</parameter>
     </parameter>
     <parameter key="twig.options" type="collection">
       <parameter key="debug">true</parameter>
       <parameter key="strict_variables">true</parameter>
+      <parameter key="exception_controller">Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction</parameter>
       <parameter key="cache">/Users/dunglas/Documents/workspace/CarRental/app/cache/dev/twig</parameter>
       <parameter key="charset">UTF-8</parameter>
     </parameter>
@@ -271,7 +296,6 @@
     <parameter key="swiftmailer.spool.enabled">false</parameter>
     <parameter key="swiftmailer.sender_address">null</parameter>
     <parameter key="swiftmailer.single_address">null</parameter>
-    <parameter key="doctrine.dbal.connection.class">Doctrine\DBAL\Connection</parameter>
     <parameter key="doctrine.dbal.logger.debug.class">Doctrine\DBAL\Logging\DebugStack</parameter>
     <parameter key="doctrine.dbal.logger.class">Symfony\Bridge\Doctrine\Logger\DbalLogger</parameter>
     <parameter key="doctrine.dbal.configuration.class">Doctrine\DBAL\Configuration</parameter>
@@ -298,13 +322,14 @@
     <parameter key="doctrine.orm.metadata.driver_chain.class">Doctrine\ORM\Mapping\Driver\DriverChain</parameter>
     <parameter key="doctrine.orm.metadata.annotation.class">Doctrine\ORM\Mapping\Driver\AnnotationDriver</parameter>
     <parameter key="doctrine.orm.metadata.annotation_reader.class">Symfony\Bridge\Doctrine\Annotations\IndexedReader</parameter>
-    <parameter key="doctrine.orm.metadata.xml.class">Symfony\Bridge\Doctrine\Mapping\Driver\XmlDriver</parameter>
-    <parameter key="doctrine.orm.metadata.yml.class">Symfony\Bridge\Doctrine\Mapping\Driver\YamlDriver</parameter>
+    <parameter key="doctrine.orm.metadata.xml.class">Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver</parameter>
+    <parameter key="doctrine.orm.metadata.yml.class">Doctrine\ORM\Mapping\Driver\SimplifiedYamlDriver</parameter>
     <parameter key="doctrine.orm.metadata.php.class">Doctrine\ORM\Mapping\Driver\PHPDriver</parameter>
     <parameter key="doctrine.orm.metadata.staticphp.class">Doctrine\ORM\Mapping\Driver\StaticPHPDriver</parameter>
     <parameter key="doctrine.orm.proxy_cache_warmer.class">Symfony\Bridge\Doctrine\CacheWarmer\ProxyCacheWarmer</parameter>
     <parameter key="form.type_guesser.doctrine.class">Symfony\Bridge\Doctrine\Form\DoctrineOrmTypeGuesser</parameter>
     <parameter key="doctrine.orm.validator.unique.class">Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator</parameter>
+    <parameter key="doctrine.orm.validator_initializer.class">Symfony\Bridge\Doctrine\Validator\EntityInitializer</parameter>
     <parameter key="doctrine.entity_managers" type="collection">
       <parameter key="default">doctrine.orm.default_entity_manager</parameter>
     </parameter>
@@ -332,6 +357,7 @@
     <parameter key="assetic.php_formula_loader.class">Symfony\Bundle\AsseticBundle\Factory\Loader\AsseticHelperFormulaLoader</parameter>
     <parameter key="assetic.debug">true</parameter>
     <parameter key="assetic.use_controller">true</parameter>
+    <parameter key="assetic.enable_profiler">false</parameter>
     <parameter key="assetic.read_from">/Users/dunglas/Documents/workspace/CarRental/app/../web</parameter>
     <parameter key="assetic.write_to">/Users/dunglas/Documents/workspace/CarRental/app/../web</parameter>
     <parameter key="assetic.java.bin">/usr/bin/java</parameter>
@@ -371,9 +397,23 @@
     <parameter key="stof_doctrine_extensions.listener.tree.class">Gedmo\Tree\TreeListener</parameter>
     <parameter key="stof_doctrine_extensions.listener.loggable.class">Stof\DoctrineExtensionsBundle\Listener\LoggableListener</parameter>
     <parameter key="stof_doctrine_extensions.listener.sortable.class">Gedmo\Sortable\SortableListener</parameter>
+    <parameter key="sonata.admin.templates.layout">SonataAdminBundle::standard_layout.html.twig</parameter>
+    <parameter key="sonata.admin.templates.ajax">SonataAdminBundle::ajax_layout.html.twig</parameter>
+    <parameter key="knp_menu.factory.class">Knp\Menu\Silex\RouterAwareFactory</parameter>
+    <parameter key="knp_menu.helper.class">Knp\Menu\Twig\Helper</parameter>
+    <parameter key="knp_menu.menu_provider.chain.class">Knp\Menu\Provider\ChainProvider</parameter>
+    <parameter key="knp_menu.menu_provider.container_aware.class">Knp\Bundle\MenuBundle\Provider\ContainerAwareProvider</parameter>
+    <parameter key="knp_menu.menu_provider.builder_alias.class">Knp\Bundle\MenuBundle\Provider\BuilderAliasProvider</parameter>
+    <parameter key="knp_menu.renderer_provider.class">Knp\Bundle\MenuBundle\Renderer\ContainerAwareProvider</parameter>
+    <parameter key="knp_menu.renderer.list.class">Knp\Menu\Renderer\ListRenderer</parameter>
+    <parameter key="knp_menu.twig.extension.class">Knp\Menu\Twig\MenuExtension</parameter>
+    <parameter key="knp_menu.renderer.twig.class">Knp\Menu\Renderer\TwigRenderer</parameter>
+    <parameter key="knp_menu.renderer.twig.template">knp_menu.html.twig</parameter>
+    <parameter key="knp_menu.default_renderer">twig</parameter>
     <parameter key="web_profiler.debug_toolbar.class">Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener</parameter>
     <parameter key="web_profiler.debug_toolbar.intercept_redirects">false</parameter>
     <parameter key="web_profiler.debug_toolbar.mode">2</parameter>
+    <parameter key="web_profiler.debug_toolbar.position">bottom</parameter>
     <parameter key="sensio.distribution.webconfigurator.class">Sensio\Bundle\DistributionBundle\Configurator\Configurator</parameter>
     <parameter key="data_collector.templates" type="collection">
       <parameter key="data_collector.config" type="collection">
@@ -417,118 +457,321 @@
         <parameter>DoctrineBundle:Collector:db</parameter>
       </parameter>
     </parameter>
-    <parameter key="kernel.compiled_classes" type="collection">
-      <parameter>Symfony\Bundle\FrameworkBundle\EventListener\SessionListener</parameter>
-      <parameter>Symfony\Component\HttpFoundation\SessionStorage\SessionStorageInterface</parameter>
-      <parameter>Symfony\Component\HttpFoundation\Session</parameter>
-      <parameter>Symfony\Component\HttpFoundation\SessionStorage\NativeSessionStorage</parameter>
-      <parameter>Symfony\Component\Routing\RouterInterface</parameter>
-      <parameter>Symfony\Component\Routing\Matcher\UrlMatcherInterface</parameter>
-      <parameter>Symfony\Component\Routing\Matcher\UrlMatcher</parameter>
-      <parameter>Symfony\Component\Routing\Generator\UrlGeneratorInterface</parameter>
-      <parameter>Symfony\Component\Routing\Generator\UrlGenerator</parameter>
-      <parameter>Symfony\Bundle\FrameworkBundle\Routing\Router</parameter>
-      <parameter>Symfony\Bundle\FrameworkBundle\Templating\EngineInterface</parameter>
-      <parameter>Symfony\Component\Templating\TemplateNameParserInterface</parameter>
-      <parameter>Symfony\Component\Templating\TemplateNameParser</parameter>
-      <parameter>Symfony\Component\Templating\EngineInterface</parameter>
-      <parameter>Symfony\Component\Config\FileLocatorInterface</parameter>
-      <parameter>Symfony\Component\Templating\TemplateReferenceInterface</parameter>
-      <parameter>Symfony\Component\Templating\TemplateReference</parameter>
-      <parameter>Symfony\Bundle\FrameworkBundle\Templating\TemplateReference</parameter>
-      <parameter>Symfony\Bundle\FrameworkBundle\Templating\TemplateNameParser</parameter>
-      <parameter>Symfony\Bundle\FrameworkBundle\Templating\Loader\TemplateLocator</parameter>
-      <parameter>Symfony\Component\HttpFoundation\ParameterBag</parameter>
-      <parameter>Symfony\Component\HttpFoundation\HeaderBag</parameter>
-      <parameter>Symfony\Component\HttpFoundation\Request</parameter>
-      <parameter>Symfony\Component\HttpFoundation\Response</parameter>
-      <parameter>Symfony\Component\HttpFoundation\ResponseHeaderBag</parameter>
-      <parameter>Symfony\Component\EventDispatcher\EventDispatcherInterface</parameter>
-      <parameter>Symfony\Component\EventDispatcher\EventDispatcher</parameter>
-      <parameter>Symfony\Component\EventDispatcher\Event</parameter>
-      <parameter>Symfony\Component\EventDispatcher\EventSubscriberInterface</parameter>
-      <parameter>Symfony\Component\HttpKernel\HttpKernel</parameter>
-      <parameter>Symfony\Component\HttpKernel\EventListener\ResponseListener</parameter>
-      <parameter>Symfony\Component\HttpKernel\Controller\ControllerResolver</parameter>
-      <parameter>Symfony\Component\HttpKernel\Controller\ControllerResolverInterface</parameter>
-      <parameter>Symfony\Component\HttpKernel\Event\KernelEvent</parameter>
-      <parameter>Symfony\Component\HttpKernel\Event\FilterControllerEvent</parameter>
-      <parameter>Symfony\Component\HttpKernel\Event\FilterResponseEvent</parameter>
-      <parameter>Symfony\Component\HttpKernel\Event\GetResponseEvent</parameter>
-      <parameter>Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent</parameter>
-      <parameter>Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent</parameter>
-      <parameter>Symfony\Component\HttpKernel\KernelEvents</parameter>
-      <parameter>Symfony\Bundle\FrameworkBundle\EventListener\RouterListener</parameter>
-      <parameter>Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser</parameter>
-      <parameter>Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver</parameter>
-      <parameter>Symfony\Bundle\FrameworkBundle\Controller\Controller</parameter>
-      <parameter>Symfony\Bundle\FrameworkBundle\ContainerAwareEventDispatcher</parameter>
-      <parameter>Symfony\Component\Security\Http\Firewall</parameter>
-      <parameter>Symfony\Component\Security\Http\FirewallMapInterface</parameter>
-      <parameter>Symfony\Component\Security\Core\SecurityContext</parameter>
-      <parameter>Symfony\Component\Security\Core\SecurityContextInterface</parameter>
-      <parameter>Symfony\Component\Security\Core\User\UserProviderInterface</parameter>
-      <parameter>Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager</parameter>
-      <parameter>Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface</parameter>
-      <parameter>Symfony\Component\Security\Core\Authorization\AccessDecisionManager</parameter>
-      <parameter>Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface</parameter>
-      <parameter>Symfony\Component\Security\Core\Authorization\Voter\VoterInterface</parameter>
-      <parameter>Symfony\Bundle\SecurityBundle\Security\FirewallMap</parameter>
-      <parameter>Symfony\Bundle\SecurityBundle\Security\FirewallContext</parameter>
-      <parameter>Symfony\Component\HttpFoundation\RequestMatcher</parameter>
-      <parameter>Symfony\Component\HttpFoundation\RequestMatcherInterface</parameter>
-      <parameter>Twig_Environment</parameter>
-      <parameter>Twig_ExtensionInterface</parameter>
-      <parameter>Twig_Extension</parameter>
-      <parameter>Twig_Extension_Core</parameter>
-      <parameter>Twig_Extension_Escaper</parameter>
-      <parameter>Twig_Extension_Optimizer</parameter>
-      <parameter>Twig_LoaderInterface</parameter>
-      <parameter>Twig_Markup</parameter>
-      <parameter>Twig_TemplateInterface</parameter>
-      <parameter>Twig_Template</parameter>
-      <parameter>Monolog\Formatter\FormatterInterface</parameter>
-      <parameter>Monolog\Formatter\LineFormatter</parameter>
-      <parameter>Monolog\Handler\HandlerInterface</parameter>
-      <parameter>Monolog\Handler\AbstractHandler</parameter>
-      <parameter>Monolog\Handler\AbstractProcessingHandler</parameter>
-      <parameter>Monolog\Handler\StreamHandler</parameter>
-      <parameter>Monolog\Handler\FingersCrossedHandler</parameter>
-      <parameter>Monolog\Logger</parameter>
-      <parameter>Symfony\Bridge\Monolog\Logger</parameter>
-      <parameter>Symfony\Bridge\Monolog\Handler\DebugHandler</parameter>
-      <parameter>JMS\SecurityExtraBundle\Controller\ControllerListener</parameter>
-      <parameter>JMS\SecurityExtraBundle\Metadata\Driver\AnnotationConverter</parameter>
-      <parameter>JMS\SecurityExtraBundle\Security\Authorization\Interception\MethodInvocation</parameter>
-    </parameter>
   </parameters>
   <services>
+    <service id="dunglas.carrental.admin.renting" class="Dunglas\Bundle\CarRentalBundle\Admin\RentingAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Car Rental" label="Renting"/>
+      <argument>dunglas.carrental.admin.renting</argument>
+      <argument>Dunglas\Bundle\CarRentalBundle\Entity\Renting</argument>
+      <argument>SonataAdminBundle:CRUD</argument>
+      <call method="setModelManager">
+        <argument type="service" id="sonata.admin.manager.orm"/>
+      </call>
+      <call method="setFormContractor">
+        <argument type="service" id="sonata.admin.builder.orm_form"/>
+      </call>
+      <call method="setShowBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_show"/>
+      </call>
+      <call method="setListBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_list"/>
+      </call>
+      <call method="setDatagridBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_datagrid"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator.default"/>
+      </call>
+      <call method="setConfigurationPool">
+        <argument type="service" id="sonata.admin.pool"/>
+      </call>
+      <call method="setRouter">
+        <argument type="service" id="router"/>
+      </call>
+      <call method="setValidator">
+        <argument type="service" id="validator"/>
+      </call>
+      <call method="setSecurityHandler">
+        <argument type="service" id="sonata.admin.security.handler.noop"/>
+      </call>
+      <call method="setMenuFactory">
+        <argument type="service" id="knp_menu.factory"/>
+      </call>
+      <call method="setLabel">
+        <argument>Renting</argument>
+      </call>
+      <call method="configure"/>
+    </service>
+    <service id="dunglas.carrental.admin.payment" class="Dunglas\Bundle\CarRentalBundle\Admin\PaymentAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Car Rental" label="Payment"/>
+      <argument>dunglas.carrental.admin.payment</argument>
+      <argument>Dunglas\Bundle\CarRentalBundle\Entity\Payment</argument>
+      <argument>SonataAdminBundle:CRUD</argument>
+      <call method="setModelManager">
+        <argument type="service" id="sonata.admin.manager.orm"/>
+      </call>
+      <call method="setFormContractor">
+        <argument type="service" id="sonata.admin.builder.orm_form"/>
+      </call>
+      <call method="setShowBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_show"/>
+      </call>
+      <call method="setListBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_list"/>
+      </call>
+      <call method="setDatagridBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_datagrid"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator.default"/>
+      </call>
+      <call method="setConfigurationPool">
+        <argument type="service" id="sonata.admin.pool"/>
+      </call>
+      <call method="setRouter">
+        <argument type="service" id="router"/>
+      </call>
+      <call method="setValidator">
+        <argument type="service" id="validator"/>
+      </call>
+      <call method="setSecurityHandler">
+        <argument type="service" id="sonata.admin.security.handler.noop"/>
+      </call>
+      <call method="setMenuFactory">
+        <argument type="service" id="knp_menu.factory"/>
+      </call>
+      <call method="setLabel">
+        <argument>Payment</argument>
+      </call>
+      <call method="configure"/>
+    </service>
+    <service id="dunglas.carrental.admin.customer" class="Dunglas\Bundle\CarRentalBundle\Admin\CustomerAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Car Rental" label="Customer"/>
+      <argument>dunglas.carrental.admin.customer</argument>
+      <argument>Dunglas\Bundle\CarRentalBundle\Entity\Customer</argument>
+      <argument>SonataAdminBundle:CRUD</argument>
+      <call method="setModelManager">
+        <argument type="service" id="sonata.admin.manager.orm"/>
+      </call>
+      <call method="setFormContractor">
+        <argument type="service" id="sonata.admin.builder.orm_form"/>
+      </call>
+      <call method="setShowBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_show"/>
+      </call>
+      <call method="setListBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_list"/>
+      </call>
+      <call method="setDatagridBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_datagrid"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator.default"/>
+      </call>
+      <call method="setConfigurationPool">
+        <argument type="service" id="sonata.admin.pool"/>
+      </call>
+      <call method="setRouter">
+        <argument type="service" id="router"/>
+      </call>
+      <call method="setValidator">
+        <argument type="service" id="validator"/>
+      </call>
+      <call method="setSecurityHandler">
+        <argument type="service" id="sonata.admin.security.handler.noop"/>
+      </call>
+      <call method="setMenuFactory">
+        <argument type="service" id="knp_menu.factory"/>
+      </call>
+      <call method="setLabel">
+        <argument>Customer</argument>
+      </call>
+      <call method="configure"/>
+    </service>
+    <service id="dunglas.carrental.admin.vehicle" class="Dunglas\Bundle\CarRentalBundle\Admin\VehicleAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Vehicle" label="Vehicle"/>
+      <argument>dunglas.carrental.admin.vehicle</argument>
+      <argument>Dunglas\Bundle\CarRentalBundle\Entity\Vehicle</argument>
+      <argument>SonataAdminBundle:CRUD</argument>
+      <call method="setModelManager">
+        <argument type="service" id="sonata.admin.manager.orm"/>
+      </call>
+      <call method="setFormContractor">
+        <argument type="service" id="sonata.admin.builder.orm_form"/>
+      </call>
+      <call method="setShowBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_show"/>
+      </call>
+      <call method="setListBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_list"/>
+      </call>
+      <call method="setDatagridBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_datagrid"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator.default"/>
+      </call>
+      <call method="setConfigurationPool">
+        <argument type="service" id="sonata.admin.pool"/>
+      </call>
+      <call method="setRouter">
+        <argument type="service" id="router"/>
+      </call>
+      <call method="setValidator">
+        <argument type="service" id="validator"/>
+      </call>
+      <call method="setSecurityHandler">
+        <argument type="service" id="sonata.admin.security.handler.noop"/>
+      </call>
+      <call method="setMenuFactory">
+        <argument type="service" id="knp_menu.factory"/>
+      </call>
+      <call method="setLabel">
+        <argument>Vehicle</argument>
+      </call>
+      <call method="configure"/>
+    </service>
+    <service id="dunglas.carrental.admin.manufacturer" class="Dunglas\Bundle\CarRentalBundle\Admin\ManufacturerAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Config" label="Manufacturer"/>
+      <argument>dunglas.carrental.admin.manufacturer</argument>
+      <argument>Dunglas\Bundle\CarRentalBundle\Entity\Manufacturer</argument>
+      <argument>SonataAdminBundle:CRUD</argument>
+      <call method="setModelManager">
+        <argument type="service" id="sonata.admin.manager.orm"/>
+      </call>
+      <call method="setFormContractor">
+        <argument type="service" id="sonata.admin.builder.orm_form"/>
+      </call>
+      <call method="setShowBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_show"/>
+      </call>
+      <call method="setListBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_list"/>
+      </call>
+      <call method="setDatagridBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_datagrid"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator.default"/>
+      </call>
+      <call method="setConfigurationPool">
+        <argument type="service" id="sonata.admin.pool"/>
+      </call>
+      <call method="setRouter">
+        <argument type="service" id="router"/>
+      </call>
+      <call method="setValidator">
+        <argument type="service" id="validator"/>
+      </call>
+      <call method="setSecurityHandler">
+        <argument type="service" id="sonata.admin.security.handler.noop"/>
+      </call>
+      <call method="setMenuFactory">
+        <argument type="service" id="knp_menu.factory"/>
+      </call>
+      <call method="setLabel">
+        <argument>Manufacturer</argument>
+      </call>
+      <call method="configure"/>
+    </service>
+    <service id="dunglas.carrental.admin.model" class="Dunglas\Bundle\CarRentalBundle\Admin\ModelAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Config" label="Model"/>
+      <argument>dunglas.carrental.admin.model</argument>
+      <argument>Dunglas\Bundle\CarRentalBundle\Entity\Model</argument>
+      <argument>SonataAdminBundle:CRUD</argument>
+      <call method="setModelManager">
+        <argument type="service" id="sonata.admin.manager.orm"/>
+      </call>
+      <call method="setFormContractor">
+        <argument type="service" id="sonata.admin.builder.orm_form"/>
+      </call>
+      <call method="setShowBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_show"/>
+      </call>
+      <call method="setListBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_list"/>
+      </call>
+      <call method="setDatagridBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_datagrid"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator.default"/>
+      </call>
+      <call method="setConfigurationPool">
+        <argument type="service" id="sonata.admin.pool"/>
+      </call>
+      <call method="setRouter">
+        <argument type="service" id="router"/>
+      </call>
+      <call method="setValidator">
+        <argument type="service" id="validator"/>
+      </call>
+      <call method="setSecurityHandler">
+        <argument type="service" id="sonata.admin.security.handler.noop"/>
+      </call>
+      <call method="setMenuFactory">
+        <argument type="service" id="knp_menu.factory"/>
+      </call>
+      <call method="setLabel">
+        <argument>Model</argument>
+      </call>
+      <call method="configure"/>
+    </service>
+    <service id="dunglas.carrental.admin.fuel" class="Dunglas\Bundle\CarRentalBundle\Admin\FuelAdmin" scope="prototype">
+      <tag name="sonata.admin" manager_type="orm" group="Config" label="Fuel"/>
+      <argument>dunglas.carrental.admin.fuel</argument>
+      <argument>Dunglas\Bundle\CarRentalBundle\Entity\Fuel</argument>
+      <argument>SonataAdminBundle:CRUD</argument>
+      <call method="setModelManager">
+        <argument type="service" id="sonata.admin.manager.orm"/>
+      </call>
+      <call method="setFormContractor">
+        <argument type="service" id="sonata.admin.builder.orm_form"/>
+      </call>
+      <call method="setShowBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_show"/>
+      </call>
+      <call method="setListBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_list"/>
+      </call>
+      <call method="setDatagridBuilder">
+        <argument type="service" id="sonata.admin.builder.orm_datagrid"/>
+      </call>
+      <call method="setTranslator">
+        <argument type="service" id="translator.default"/>
+      </call>
+      <call method="setConfigurationPool">
+        <argument type="service" id="sonata.admin.pool"/>
+      </call>
+      <call method="setRouter">
+        <argument type="service" id="router"/>
+      </call>
+      <call method="setValidator">
+        <argument type="service" id="validator"/>
+      </call>
+      <call method="setSecurityHandler">
+        <argument type="service" id="sonata.admin.security.handler.noop"/>
+      </call>
+      <call method="setMenuFactory">
+        <argument type="service" id="knp_menu.factory"/>
+      </call>
+      <call method="setLabel">
+        <argument>Fuel</argument>
+      </call>
+      <call method="configure"/>
+    </service>
     <service id="controller_name_converter" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser" public="false">
       <tag name="monolog.logger" channel="request"/>
       <argument type="service" id="kernel"/>
     </service>
-    <service id="router_listener" class="Symfony\Bundle\FrameworkBundle\EventListener\RouterListener">
-      <tag name="kernel.event_listener" event="kernel.request" method="onEarlyKernelRequest" priority="255"/>
-      <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest"/>
-      <tag name="monolog.logger" channel="request"/>
-      <argument type="service" id="router"/>
-      <argument>80</argument>
-      <argument>443</argument>
-      <argument type="service" id="monolog.logger.request"/>
-    </service>
-    <service id="session_listener" class="Symfony\Bundle\FrameworkBundle\EventListener\SessionListener">
-      <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="128"/>
-      <argument type="service" id="service_container"/>
-    </service>
     <service id="response_listener" class="Symfony\Component\HttpKernel\EventListener\ResponseListener">
-      <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse"/>
+      <tag name="kernel.event_subscriber"/>
       <argument>UTF-8</argument>
     </service>
-    <service id="exception_listener" class="Symfony\Component\HttpKernel\EventListener\ExceptionListener">
-      <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" priority="-128"/>
-      <tag name="monolog.logger" channel="request"/>
-      <argument>Symfony\Bundle\FrameworkBundle\Controller\ExceptionController::showAction</argument>
-      <argument type="service" id="monolog.logger.request"/>
+    <service id="locale_listener" class="Symfony\Component\HttpKernel\EventListener\LocaleListener">
+      <tag name="kernel.event_subscriber"/>
+      <argument>fr</argument>
+      <argument type="service" id="router"/>
     </service>
     <service id="event_dispatcher" class="Symfony\Bundle\FrameworkBundle\Debug\TraceableEventDispatcher">
       <tag name="monolog.logger" channel="event"/>
@@ -537,58 +780,10 @@
       <call method="addListenerService">
         <argument>kernel.request</argument>
         <argument type="collection">
-          <argument>router_listener</argument>
-          <argument>onEarlyKernelRequest</argument>
-        </argument>
-        <argument>255</argument>
-      </call>
-      <call method="addListenerService">
-        <argument>kernel.request</argument>
-        <argument type="collection">
-          <argument>router_listener</argument>
-          <argument>onKernelRequest</argument>
-        </argument>
-        <argument>0</argument>
-      </call>
-      <call method="addListenerService">
-        <argument>kernel.request</argument>
-        <argument type="collection">
           <argument>session_listener</argument>
           <argument>onKernelRequest</argument>
         </argument>
         <argument>128</argument>
-      </call>
-      <call method="addListenerService">
-        <argument>kernel.response</argument>
-        <argument type="collection">
-          <argument>response_listener</argument>
-          <argument>onKernelResponse</argument>
-        </argument>
-        <argument>0</argument>
-      </call>
-      <call method="addListenerService">
-        <argument>kernel.exception</argument>
-        <argument type="collection">
-          <argument>exception_listener</argument>
-          <argument>onKernelException</argument>
-        </argument>
-        <argument>-128</argument>
-      </call>
-      <call method="addListenerService">
-        <argument>kernel.response</argument>
-        <argument type="collection">
-          <argument>profiler_listener</argument>
-          <argument>onKernelResponse</argument>
-        </argument>
-        <argument>-100</argument>
-      </call>
-      <call method="addListenerService">
-        <argument>kernel.exception</argument>
-        <argument type="collection">
-          <argument>profiler_listener</argument>
-          <argument>onKernelException</argument>
-        </argument>
-        <argument>0</argument>
       </call>
       <call method="addListenerService">
         <argument>kernel.controller</argument>
@@ -679,14 +874,6 @@
         <argument>-255</argument>
       </call>
       <call method="addListenerService">
-        <argument>kernel.request</argument>
-        <argument type="collection">
-          <argument>stof_doctrine_extensions.listener.translatable</argument>
-          <argument>onKernelRequest</argument>
-        </argument>
-        <argument>-10</argument>
-      </call>
-      <call method="addListenerService">
         <argument>kernel.controller</argument>
         <argument type="collection">
           <argument>acme.demo.listener</argument>
@@ -701,6 +888,26 @@
           <argument>onKernelResponse</argument>
         </argument>
         <argument>-128</argument>
+      </call>
+      <call method="addSubscriberService">
+        <argument>response_listener</argument>
+        <argument>Symfony\Component\HttpKernel\EventListener\ResponseListener</argument>
+      </call>
+      <call method="addSubscriberService">
+        <argument>locale_listener</argument>
+        <argument>Symfony\Component\HttpKernel\EventListener\LocaleListener</argument>
+      </call>
+      <call method="addSubscriberService">
+        <argument>profiler_listener</argument>
+        <argument>Symfony\Component\HttpKernel\EventListener\ProfilerListener</argument>
+      </call>
+      <call method="addSubscriberService">
+        <argument>router_listener</argument>
+        <argument>Symfony\Component\HttpKernel\EventListener\RouterListener</argument>
+      </call>
+      <call method="addSubscriberService">
+        <argument>twig.exception_listener</argument>
+        <argument>Symfony\Component\HttpKernel\EventListener\ExceptionListener</argument>
       </call>
     </service>
     <service id="http_kernel" class="Symfony\Bundle\FrameworkBundle\HttpKernel">
@@ -771,24 +978,305 @@
       <argument type="service" id="kernel"/>
       <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources</argument>
     </service>
-    <service id="translator.real" class="Symfony\Bundle\FrameworkBundle\Translation\Translator">
+    <service id="translator.default" class="Symfony\Bundle\FrameworkBundle\Translation\Translator">
       <argument type="service" id="service_container"/>
-      <argument type="service" id="translator.selector"/>
+      <argument type="service">
+        <service class="Symfony\Component\Translation\MessageSelector" public="false"/>
+      </argument>
       <argument type="collection">
         <argument key="translation.loader.php">php</argument>
         <argument key="translation.loader.yml">yml</argument>
         <argument key="translation.loader.xliff">xliff</argument>
+        <argument key="translation.loader.qt">ts</argument>
+        <argument key="translation.loader.csv">csv</argument>
+        <argument key="translation.loader.rb">rb</argument>
+        <argument key="translation.loader.ini">ini</argument>
       </argument>
       <argument type="collection">
         <argument key="cache_dir">/Users/dunglas/Documents/workspace/CarRental/app/cache/dev/translations</argument>
         <argument key="debug">true</argument>
+        <argument key="charset">UTF-8</argument>
       </argument>
-      <argument type="service" id="session"/>
+      <call method="setFallbackLocale">
+        <argument>fr</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.ca.xliff</argument>
+        <argument>ca</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.cs.xliff</argument>
+        <argument>cs</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.da.xliff</argument>
+        <argument>da</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.de.xliff</argument>
+        <argument>de</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.es.xliff</argument>
+        <argument>es</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.et.xliff</argument>
+        <argument>et</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.eu.xliff</argument>
+        <argument>eu</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.fa.xliff</argument>
+        <argument>fa</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.fi.xliff</argument>
+        <argument>fi</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.fr.xliff</argument>
+        <argument>fr</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.he.xliff</argument>
+        <argument>he</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.hu.xliff</argument>
+        <argument>hu</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.hy.xliff</argument>
+        <argument>hy</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.id.xliff</argument>
+        <argument>id</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.it.xliff</argument>
+        <argument>it</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.ja.xliff</argument>
+        <argument>ja</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.lb.xliff</argument>
+        <argument>lb</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.lt.xliff</argument>
+        <argument>lt</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.mn.xliff</argument>
+        <argument>mn</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.nl.xliff</argument>
+        <argument>nl</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.pl.xliff</argument>
+        <argument>pl</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.pt_BR.xliff</argument>
+        <argument>pt_BR</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.pt_PT.xliff</argument>
+        <argument>pt_PT</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.ro.xliff</argument>
+        <argument>ro</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.ru.xliff</argument>
+        <argument>ru</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.sk.xliff</argument>
+        <argument>sk</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.sl.xliff</argument>
+        <argument>sl</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.sr.xliff</argument>
+        <argument>sr</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.sv.xliff</argument>
+        <argument>sv</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.ua.xliff</argument>
+        <argument>ua</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/translations/validators.zh_CN.xliff</argument>
+        <argument>zh_CN</argument>
+        <argument>validators</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/AdminBundle/Resources/translations/SonataAdminBundle.ca.xliff</argument>
+        <argument>ca</argument>
+        <argument>SonataAdminBundle</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/AdminBundle/Resources/translations/SonataAdminBundle.de.xliff</argument>
+        <argument>de</argument>
+        <argument>SonataAdminBundle</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/AdminBundle/Resources/translations/SonataAdminBundle.en.xliff</argument>
+        <argument>en</argument>
+        <argument>SonataAdminBundle</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/AdminBundle/Resources/translations/SonataAdminBundle.es.xliff</argument>
+        <argument>es</argument>
+        <argument>SonataAdminBundle</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/AdminBundle/Resources/translations/SonataAdminBundle.fr.xliff</argument>
+        <argument>fr</argument>
+        <argument>SonataAdminBundle</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/AdminBundle/Resources/translations/SonataAdminBundle.it.xliff</argument>
+        <argument>it</argument>
+        <argument>SonataAdminBundle</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/AdminBundle/Resources/translations/SonataAdminBundle.ja.xliff</argument>
+        <argument>ja</argument>
+        <argument>SonataAdminBundle</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/AdminBundle/Resources/translations/SonataAdminBundle.lb.xliff</argument>
+        <argument>lb</argument>
+        <argument>SonataAdminBundle</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/AdminBundle/Resources/translations/SonataAdminBundle.nl.xliff</argument>
+        <argument>nl</argument>
+        <argument>SonataAdminBundle</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/AdminBundle/Resources/translations/SonataAdminBundle.pl.xliff</argument>
+        <argument>pl</argument>
+        <argument>SonataAdminBundle</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/AdminBundle/Resources/translations/SonataAdminBundle.pt_BR.xliff</argument>
+        <argument>pt_BR</argument>
+        <argument>SonataAdminBundle</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/AdminBundle/Resources/translations/SonataAdminBundle.pt_PT.xliff</argument>
+        <argument>pt_PT</argument>
+        <argument>SonataAdminBundle</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/AdminBundle/Resources/translations/SonataAdminBundle.ru.xliff</argument>
+        <argument>ru</argument>
+        <argument>SonataAdminBundle</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/AdminBundle/Resources/translations/SonataAdminBundle.uk.xliff</argument>
+        <argument>uk</argument>
+        <argument>SonataAdminBundle</argument>
+      </call>
+      <call method="addResource">
+        <argument>xliff</argument>
+        <argument>/Users/dunglas/Documents/workspace/CarRental/src/Dunglas/Bundle/CarRentalBundle/Resources/translations/messages.fr.xliff</argument>
+        <argument>fr</argument>
+        <argument>messages</argument>
+      </call>
     </service>
-    <service id="translator" class="Symfony\Component\Translation\IdentityTranslator">
-      <argument type="service" id="translator.selector"/>
-    </service>
-    <service id="translator.selector" class="Symfony\Component\Translation\MessageSelector" public="false"/>
     <service id="translation.loader.php" class="Symfony\Component\Translation\Loader\PhpFileLoader">
       <tag name="translation.loader" alias="php"/>
     </service>
@@ -798,10 +1286,112 @@
     <service id="translation.loader.xliff" class="Symfony\Component\Translation\Loader\XliffFileLoader">
       <tag name="translation.loader" alias="xliff"/>
     </service>
+    <service id="translation.loader.qt" class="Symfony\Component\Translation\Loader\QtTranslationsLoader">
+      <tag name="translation.loader" alias="ts"/>
+    </service>
+    <service id="translation.loader.csv" class="Symfony\Component\Translation\Loader\CsvFileLoader">
+      <tag name="translation.loader" alias="csv"/>
+    </service>
+    <service id="translation.loader.rb" class="Symfony\Component\Translation\Loader\ResourceBundleLoader">
+      <tag name="translation.loader" alias="rb"/>
+    </service>
+    <service id="translation.loader.ini" class="Symfony\Component\Translation\Loader\IniFileLoader">
+      <tag name="translation.loader" alias="ini"/>
+    </service>
+    <service id="translation.dumper.php" class="Symfony\Component\Translation\Dumper\PhpFileDumper">
+      <tag name="translation.dumper" alias="php"/>
+    </service>
+    <service id="tranlsation.dumper.xliff" class="Symfony\Component\Translation\Dumper\XliffFileDumper">
+      <tag name="translation.dumper" alias="xliff"/>
+    </service>
+    <service id="translation.dumper.yml" class="Symfony\Component\Translation\Dumper\YamlFileDumper">
+      <tag name="translation.dumper" alias="yml"/>
+    </service>
+    <service id="translation.dumper.qt" class="Symfony\Component\Translation\Dumper\QtFileDumper">
+      <tag name="translation.dumper" alias="ts"/>
+    </service>
+    <service id="translation.dumper.csv" class="Symfony\Component\Translation\Dumper\CsvFileDumper">
+      <tag name="translation.dumper" alias="csv"/>
+    </service>
+    <service id="translation.dumper.ini" class="Symfony\Component\Translation\Dumper\IniFileDumper">
+      <tag name="translation.dumper" alias="ini"/>
+    </service>
+    <service id="translation.extractor.php" class="Symfony\Bundle\FrameworkBundle\Translation\PhpExtractor">
+      <tag name="translation.extractor" alias="php"/>
+    </service>
+    <service id="translation.loader" class="Symfony\Bundle\FrameworkBundle\Translation\TranslationLoader">
+      <call method="addLoader">
+        <argument>php</argument>
+        <argument type="service" id="translation.loader.php"/>
+      </call>
+      <call method="addLoader">
+        <argument>yml</argument>
+        <argument type="service" id="translation.loader.yml"/>
+      </call>
+      <call method="addLoader">
+        <argument>xliff</argument>
+        <argument type="service" id="translation.loader.xliff"/>
+      </call>
+      <call method="addLoader">
+        <argument>ts</argument>
+        <argument type="service" id="translation.loader.qt"/>
+      </call>
+      <call method="addLoader">
+        <argument>csv</argument>
+        <argument type="service" id="translation.loader.csv"/>
+      </call>
+      <call method="addLoader">
+        <argument>rb</argument>
+        <argument type="service" id="translation.loader.rb"/>
+      </call>
+      <call method="addLoader">
+        <argument>ini</argument>
+        <argument type="service" id="translation.loader.ini"/>
+      </call>
+    </service>
+    <service id="translation.extractor" class="Symfony\Component\Translation\Extractor\ChainExtractor">
+      <call method="addExtractor">
+        <argument>php</argument>
+        <argument type="service" id="translation.extractor.php"/>
+      </call>
+      <call method="addExtractor">
+        <argument>twig</argument>
+        <argument type="service" id="twig.translation.extractor"/>
+      </call>
+    </service>
+    <service id="translation.writer" class="Symfony\Component\Translation\Writer\TranslationWriter">
+      <call method="addDumper">
+        <argument>php</argument>
+        <argument type="service" id="translation.dumper.php"/>
+      </call>
+      <call method="addDumper">
+        <argument>xliff</argument>
+        <argument type="service" id="tranlsation.dumper.xliff"/>
+      </call>
+      <call method="addDumper">
+        <argument>yml</argument>
+        <argument type="service" id="translation.dumper.yml"/>
+      </call>
+      <call method="addDumper">
+        <argument>ts</argument>
+        <argument type="service" id="translation.dumper.qt"/>
+      </call>
+      <call method="addDumper">
+        <argument>csv</argument>
+        <argument type="service" id="translation.dumper.csv"/>
+      </call>
+      <call method="addDumper">
+        <argument>ini</argument>
+        <argument type="service" id="translation.dumper.ini"/>
+      </call>
+    </service>
     <service id="session" class="Symfony\Component\HttpFoundation\Session">
       <argument type="service" id="session.storage"/>
-      <argument>en</argument>
-      <call method="start"/>
+    </service>
+    <service id="session_listener" class="Symfony\Bundle\FrameworkBundle\EventListener\SessionListener">
+      <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="128"/>
+      <argument type="service" id="service_container"/>
+      <argument>true</argument>
     </service>
     <service id="form.factory" class="Symfony\Component\Form\FormFactory">
       <argument type="collection">
@@ -838,10 +1428,20 @@
               <argument key="url">form.type.url</argument>
               <argument key="csrf">form.type.csrf</argument>
               <argument key="entity">form.type.entity</argument>
+              <argument key="sonata_type_admin">sonata.admin.form.type.admin</argument>
+              <argument key="sonata_type_collection">sonata.admin.form.type.collection</argument>
+              <argument key="sonata_type_model">sonata.admin.form.type.model</argument>
+              <argument key="sonata_type_model_reference">sonata.admin.form.type.model_reference</argument>
+              <argument key="sonata_type_immutable_array">sonata.admin.form.type.array</argument>
+              <argument key="sonata_type_boolean">sonata.admin.form.type.boolean</argument>
+              <argument key="sonata_type_filter_number">sonata.admin.form.filter.type.number</argument>
+              <argument key="sonata_type_filter_choice">sonata.admin.form.filter.type.choice</argument>
+              <argument key="sonata_type_filter_default">sonata.admin.form.filter.type.default</argument>
             </argument>
             <argument type="collection">
               <argument key="field" type="collection">
                 <argument>form.type_extension.field</argument>
+                <argument>sonata.admin.form.extension.field</argument>
               </argument>
               <argument key="form" type="collection">
                 <argument>form.type_extension.csrf</argument>
@@ -960,13 +1560,9 @@
     </service>
     <service id="validator" class="Symfony\Component\Validator\Validator">
       <argument type="service" id="validator.mapping.class_metadata_factory"/>
-      <argument type="service">
-        <service class="Symfony\Bundle\FrameworkBundle\Validator\ConstraintValidatorFactory" public="false">
-          <argument type="service" id="service_container"/>
-          <argument type="collection">
-            <argument key="doctrine.orm.validator.unique">doctrine.orm.validator.unique</argument>
-          </argument>
-        </service>
+      <argument type="service" id="validator.validator_factory"/>
+      <argument type="collection">
+        <argument type="service" id="doctrine.orm.validator_initializer"/>
       </argument>
     </service>
     <service id="validator.mapping.class_metadata_factory" class="Symfony\Component\Validator\Mapping\ClassMetadataFactory" public="false">
@@ -998,11 +1594,19 @@
       </argument>
       <argument>null</argument>
     </service>
+    <service id="validator.validator_factory" class="Symfony\Bundle\FrameworkBundle\Validator\ConstraintValidatorFactory" public="false">
+      <argument type="service" id="service_container"/>
+      <argument type="collection">
+        <argument key="security.validator.user_password">security.validator.user_password</argument>
+        <argument key="doctrine.orm.validator.unique">doctrine.orm.validator.unique</argument>
+        <argument key="sonata.admin.validator.inline">sonata.admin.validator.inline</argument>
+      </argument>
+    </service>
     <service id="profiler" class="Symfony\Component\HttpKernel\Profiler\Profiler">
       <tag name="monolog.logger" channel="profiler"/>
       <argument type="service">
-        <service class="Symfony\Component\HttpKernel\Profiler\SqliteProfilerStorage" public="false">
-          <argument>sqlite:/Users/dunglas/Documents/workspace/CarRental/app/cache/dev/profiler.db</argument>
+        <service class="Symfony\Component\HttpKernel\Profiler\FileProfilerStorage" public="false">
+          <argument>file:/Users/dunglas/Documents/workspace/CarRental/app/cache/dev/profiler</argument>
           <argument></argument>
           <argument></argument>
           <argument>86400</argument>
@@ -1048,7 +1652,7 @@
       </call>
       <call method="add">
         <argument type="service">
-          <service class="Symfony\Bundle\FrameworkBundle\DataCollector\TimerDataCollector" public="false">
+          <service class="Symfony\Component\HttpKernel\DataCollector\TimerDataCollector" public="false">
             <tag name="data_collector" template="WebProfilerBundle:Collector:timer" id="timer" priority="255"/>
             <argument type="service" id="kernel"/>
           </service>
@@ -1089,8 +1693,7 @@
       </call>
     </service>
     <service id="profiler_listener" class="Symfony\Component\HttpKernel\EventListener\ProfilerListener">
-      <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" priority="-100"/>
-      <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException"/>
+      <tag name="kernel.event_subscriber"/>
       <argument type="service" id="profiler"/>
       <argument>null</argument>
       <argument>false</argument>
@@ -1174,24 +1777,17 @@
               </service>
             </argument>
           </call>
+          <call method="addLoader">
+            <argument type="service" id="sonata.admin.route_loader"/>
+          </call>
         </service>
       </argument>
     </service>
-    <service id="router" class="Symfony\Bundle\FrameworkBundle\Routing\Router">
-      <argument type="service" id="service_container"/>
-      <argument>/Users/dunglas/Documents/workspace/CarRental/app/config/routing_dev.yml</argument>
-      <argument type="collection">
-        <argument key="cache_dir">/Users/dunglas/Documents/workspace/CarRental/app/cache/dev</argument>
-        <argument key="debug">true</argument>
-        <argument key="generator_class">Symfony\Component\Routing\Generator\UrlGenerator</argument>
-        <argument key="generator_base_class">Symfony\Component\Routing\Generator\UrlGenerator</argument>
-        <argument key="generator_dumper_class">Symfony\Component\Routing\Generator\Dumper\PhpGeneratorDumper</argument>
-        <argument key="generator_cache_class">app%kernel.environment%UrlGenerator</argument>
-        <argument key="matcher_class">Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher</argument>
-        <argument key="matcher_base_class">Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher</argument>
-        <argument key="matcher_dumper_class">Symfony\Component\Routing\Matcher\Dumper\PhpMatcherDumper</argument>
-        <argument key="matcher_cache_class">app%kernel.environment%UrlMatcher</argument>
-      </argument>
+    <service id="router_listener" class="Symfony\Component\HttpKernel\EventListener\RouterListener">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="monolog.logger" channel="request"/>
+      <argument type="service" id="router"/>
+      <argument type="service" id="monolog.logger.request"/>
     </service>
     <service id="templating.name_parser" class="Symfony\Bundle\FrameworkBundle\Templating\TemplateNameParser">
       <argument type="service" id="kernel"/>
@@ -1209,7 +1805,7 @@
         <service class="Symfony\Bundle\FrameworkBundle\Templating\Asset\PathPackage" scope="request" public="false">
           <argument type="service" id="request"/>
           <argument>null</argument>
-          <argument>null</argument>
+          <argument>%%s?%%s</argument>
         </service>
       </argument>
       <argument type="collection"/>
@@ -1235,12 +1831,12 @@
     </service>
     <service id="templating.helper.code" class="Symfony\Bundle\FrameworkBundle\Templating\Helper\CodeHelper">
       <tag name="templating.helper" alias="code"/>
-      <argument></argument>
+      <argument>null</argument>
       <argument>/Users/dunglas/Documents/workspace/CarRental/app</argument>
     </service>
     <service id="templating.helper.translator" class="Symfony\Bundle\FrameworkBundle\Templating\Helper\TranslatorHelper">
       <tag name="templating.helper" alias="translator"/>
-      <argument type="service" id="translator"/>
+      <argument type="service" id="translator.default"/>
     </service>
     <service id="templating.helper.form" class="Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper">
       <tag name="templating.helper" alias="form"/>
@@ -1358,6 +1954,11 @@
         </service>
       </argument>
       <argument type="service" id="event_dispatcher"/>
+    </service>
+    <service id="security.validator.user_password" class="Symfony\Bundle\SecurityBundle\Validator\Constraint\UserPasswordValidator">
+      <tag name="validator.constraint_validator" alias="security.validator.user_password"/>
+      <argument type="service" id="security.context"/>
+      <argument type="service" id="security.encoder_factory"/>
     </service>
     <service id="security.rememberme.response_listener" class="Symfony\Bundle\SecurityBundle\EventListener\ResponseListener">
       <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse"/>
@@ -1524,6 +2125,7 @@
       <argument type="collection">
         <argument key="debug">true</argument>
         <argument key="strict_variables">true</argument>
+        <argument key="exception_controller">Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction</argument>
         <argument key="cache">/Users/dunglas/Documents/workspace/CarRental/app/cache/dev/twig</argument>
         <argument key="charset">UTF-8</argument>
       </argument>
@@ -1539,7 +2141,7 @@
         <argument type="service">
           <service class="Symfony\Bridge\Twig\Extension\TranslationExtension" public="false">
             <tag name="twig.extension"/>
-            <argument type="service" id="translator"/>
+            <argument type="service" id="translator.default"/>
           </service>
         </argument>
       </call>
@@ -1604,6 +2206,22 @@
         </argument>
       </call>
       <call method="addExtension">
+        <argument type="service" id="sonata.admin.twig.extension"/>
+      </call>
+      <call method="addExtension">
+        <argument type="service">
+          <service class="Knp\Menu\Twig\MenuExtension" public="false">
+            <tag name="twig.extension"/>
+            <argument type="service">
+              <service class="Knp\Menu\Twig\Helper" public="false">
+                <argument type="service" id="knp_menu.renderer_provider"/>
+                <argument type="service" id="knp_menu.menu_provider"/>
+              </service>
+            </argument>
+          </service>
+        </argument>
+      </call>
+      <call method="addExtension">
         <argument type="service" id="twig.extension.acme.demo"/>
       </call>
     </service>
@@ -1613,6 +2231,19 @@
       <call method="addPath">
         <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/TwigBundle/DependencyInjection/../../../Bridge/Twig/Resources/views/Form</argument>
       </call>
+      <call method="addPath">
+        <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/knp/menu/src/Knp/Menu/Resources/views</argument>
+      </call>
+    </service>
+    <service id="twig.translation.extractor" class="Symfony\Bridge\Twig\Translation\TwigExtractor">
+      <tag name="translation.extractor" alias="twig"/>
+      <argument type="service" id="twig"/>
+    </service>
+    <service id="twig.exception_listener" class="Symfony\Component\HttpKernel\EventListener\ExceptionListener">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="monolog.logger" channel="request"/>
+      <argument>Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction</argument>
+      <argument type="service" id="monolog.logger.request"/>
     </service>
     <service id="monolog.handler.main" class="Monolog\Handler\StreamHandler">
       <argument>/Users/dunglas/Documents/workspace/CarRental/app/logs/dev.log</argument>
@@ -1645,13 +2276,14 @@
       <argument>default</argument>
       <argument>default</argument>
     </service>
-    <service id="doctrine.dbal.default_connection" class="Doctrine\DBAL\Connection" factory-method="createConnection" factory-service="doctrine.dbal.connection_factory">
+    <service id="doctrine.dbal.default_connection" class="stdClass" factory-method="createConnection" factory-service="doctrine.dbal.connection_factory">
       <argument type="collection">
         <argument key="dbname">carrental</argument>
         <argument key="host">localhost</argument>
-        <argument key="user">carrental</argument>
-        <argument key="password">jUjpMeL2az6jzAqC</argument>
+        <argument key="user">root</argument>
+        <argument key="password"></argument>
         <argument key="driver">pdo_mysql</argument>
+        <argument key="unix_socket">/tmp/mysql.sock</argument>
         <argument key="port">null</argument>
         <argument key="driverOptions" type="collection"/>
       </argument>
@@ -1672,6 +2304,16 @@
               </service>
             </argument>
           </call>
+          <call method="addEventSubscriber">
+            <argument type="service">
+              <service class="Gedmo\Timestampable\TimestampableListener" public="false">
+                <tag name="doctrine.event_subscriber" connection="default"/>
+                <call method="setAnnotationReader">
+                  <argument type="service" id="annotation_reader"/>
+                </call>
+              </service>
+            </argument>
+          </call>
         </service>
       </argument>
       <argument type="collection"/>
@@ -1688,6 +2330,10 @@
       <tag name="validator.constraint_validator" alias="doctrine.orm.validator.unique"/>
       <argument type="service" id="doctrine"/>
     </service>
+    <service id="doctrine.orm.validator_initializer" class="Symfony\Bridge\Doctrine\Validator\EntityInitializer">
+      <tag name="validator.initializer"/>
+      <argument type="service" id="doctrine"/>
+    </service>
     <service id="doctrine.orm.default_entity_manager" class="Doctrine\ORM\EntityManager" factory-method="create">
       <argument type="service" id="doctrine.dbal.default_connection"/>
       <argument type="service">
@@ -1701,7 +2347,7 @@
             <argument type="service">
               <service class="Doctrine\Common\Cache\ArrayCache" public="false">
                 <call method="setNamespace">
-                  <argument>sf2orm_default_0b6dee0c08ae6a1e93ce549d3d442e12</argument>
+                  <argument>sf2orm_default_1758a972af8f2293dfa6cf7d0220857f</argument>
                 </call>
               </service>
             </argument>
@@ -1710,7 +2356,7 @@
             <argument type="service">
               <service class="Doctrine\Common\Cache\ArrayCache" public="false">
                 <call method="setNamespace">
-                  <argument>sf2orm_default_0b6dee0c08ae6a1e93ce549d3d442e12</argument>
+                  <argument>sf2orm_default_1758a972af8f2293dfa6cf7d0220857f</argument>
                 </call>
               </service>
             </argument>
@@ -1719,7 +2365,7 @@
             <argument type="service">
               <service class="Doctrine\Common\Cache\ArrayCache" public="false">
                 <call method="setNamespace">
-                  <argument>sf2orm_default_0b6dee0c08ae6a1e93ce549d3d442e12</argument>
+                  <argument>sf2orm_default_1758a972af8f2293dfa6cf7d0220857f</argument>
                 </call>
               </service>
             </argument>
@@ -1799,7 +2445,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>FrameworkBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/FrameworkBundle/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
               <argument type="service">
@@ -1807,7 +2453,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>FrameworkBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/FrameworkBundle/Resources/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
             </argument>
@@ -1826,7 +2472,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>SecurityBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/SecurityBundle/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
               <argument type="service">
@@ -1834,7 +2480,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>SecurityBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/SecurityBundle/Resources/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
             </argument>
@@ -1853,7 +2499,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>TwigBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/TwigBundle/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
               <argument type="service">
@@ -1861,7 +2507,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>TwigBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/TwigBundle/Resources/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
             </argument>
@@ -1880,7 +2526,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>MonologBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/MonologBundle/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
               <argument type="service">
@@ -1888,7 +2534,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>MonologBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/MonologBundle/Resources/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
             </argument>
@@ -1907,7 +2553,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>SwiftmailerBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/SwiftmailerBundle/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
               <argument type="service">
@@ -1915,7 +2561,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>SwiftmailerBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/SwiftmailerBundle/Resources/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
             </argument>
@@ -1934,7 +2580,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>DoctrineBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/DoctrineBundle/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
               <argument type="service">
@@ -1942,7 +2588,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>DoctrineBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/DoctrineBundle/Resources/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
             </argument>
@@ -1961,7 +2607,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>AsseticBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/AsseticBundle/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
               <argument type="service">
@@ -1969,7 +2615,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>AsseticBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Symfony/Bundle/AsseticBundle/Resources/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
             </argument>
@@ -1988,7 +2634,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>SensioFrameworkExtraBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/SensioFrameworkExtraBundle/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
               <argument type="service">
@@ -1996,7 +2642,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>SensioFrameworkExtraBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sensio/Bundle/FrameworkExtraBundle/Resources/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
             </argument>
@@ -2015,7 +2661,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>JMSSecurityExtraBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/JMSSecurityExtraBundle/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
               <argument type="service">
@@ -2023,7 +2669,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>JMSSecurityExtraBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/JMS/SecurityExtraBundle/Resources/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
             </argument>
@@ -2042,7 +2688,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>StofDoctrineExtensionsBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/StofDoctrineExtensionsBundle/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
               <argument type="service">
@@ -2050,7 +2696,115 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>StofDoctrineExtensionsBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Stof/DoctrineExtensionsBundle/Resources/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SonatajQueryBundle</argument>
+                  <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/SonatajQueryBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SonatajQueryBundle</argument>
+                  <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/jQueryBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SonataBluePrintBundle</argument>
+                  <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/SonataBluePrintBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SonataBluePrintBundle</argument>
+                  <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/BluePrintBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SonataAdminBundle</argument>
+                  <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/SonataAdminBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SonataAdminBundle</argument>
+                  <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/AdminBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>KnpMenuBundle</argument>
+                  <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/KnpMenuBundle/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>KnpMenuBundle</argument>
+                  <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Knp/Bundle/MenuBundle/Resources/views</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
             </argument>
@@ -2069,7 +2823,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>DunglasCarRentalBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/DunglasCarRentalBundle/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
               <argument type="service">
@@ -2077,7 +2831,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>DunglasCarRentalBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/src/Dunglas/Bundle/CarRentalBundle/Resources/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
             </argument>
@@ -2096,7 +2850,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>AcmeDemoBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/AcmeDemoBundle/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
               <argument type="service">
@@ -2104,7 +2858,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>AcmeDemoBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/src/Acme/DemoBundle/Resources/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
             </argument>
@@ -2123,7 +2877,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>WebProfilerBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/WebProfilerBundle/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
               <argument type="service">
@@ -2131,7 +2885,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>WebProfilerBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
             </argument>
@@ -2150,7 +2904,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>SensioDistributionBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/SensioDistributionBundle/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
               <argument type="service">
@@ -2158,7 +2912,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>SensioDistributionBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sensio/Bundle/DistributionBundle/Resources/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
             </argument>
@@ -2177,7 +2931,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>SensioGeneratorBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/SensioGeneratorBundle/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
               <argument type="service">
@@ -2185,7 +2939,7 @@
                   <argument type="service" id="templating.loader"/>
                   <argument>SensioGeneratorBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sensio/Bundle/GeneratorBundle/Resources/views</argument>
-                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                  <argument>/\.[^.]+\.twig$/</argument>
                 </service>
               </argument>
             </argument>
@@ -2201,7 +2955,7 @@
             <argument type="service" id="templating.loader"/>
             <argument></argument>
             <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/views</argument>
-            <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+            <argument>/\.[^.]+\.twig$/</argument>
           </service>
         </argument>
         <argument>twig</argument>
@@ -2234,6 +2988,8 @@
       <argument type="service" id="request"/>
       <argument type="service" id="assetic.asset_manager"/>
       <argument type="service" id="assetic.cache"/>
+      <argument>false</argument>
+      <argument type="service" id="profiler"/>
     </service>
     <service id="assetic.cache" class="Assetic\Cache\FilesystemCache" public="false">
       <argument>/Users/dunglas/Documents/workspace/CarRental/app/cache/dev/assetic/assets</argument>
@@ -2291,7 +3047,6 @@
       <argument type="service" id="annotation_reader"/>
     </service>
     <service id="stof_doctrine_extensions.listener.translatable" class="Stof\DoctrineExtensionsBundle\Listener\TranslationListener">
-      <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" priority="-10"/>
       <call method="setAnnotationReader">
         <argument type="service" id="annotation_reader"/>
       </call>
@@ -2310,6 +3065,212 @@
         <argument type="service" id="annotation_reader"/>
       </call>
     </service>
+    <service id="sonata.admin.manager.orm" class="Sonata\AdminBundle\Model\ORM\ModelManager">
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+    </service>
+    <service id="sonata.admin.builder.orm_form" class="Sonata\AdminBundle\Builder\ORM\FormContractor">
+      <argument type="service" id="form.factory"/>
+    </service>
+    <service id="sonata.admin.builder.orm_list" class="Sonata\AdminBundle\Builder\ORM\ListBuilder">
+      <argument type="service" id="sonata.admin.guesser.orm_list_chain"/>
+    </service>
+    <service id="sonata.admin.guesser.orm_list" class="Sonata\AdminBundle\Guesser\ORM\TypeGuesser">
+      <tag name="sonata.admin.guesser.orm_list"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="sonata.admin.guesser.orm_list_chain" class="Sonata\AdminBundle\Guesser\TypeGuesserChain">
+      <argument type="collection">
+        <argument type="service" id="sonata.admin.guesser.orm_list"/>
+      </argument>
+    </service>
+    <service id="sonata.admin.builder.orm_show" class="Sonata\AdminBundle\Builder\ORM\ShowBuilder">
+      <argument type="service" id="sonata.admin.guesser.orm_show_chain"/>
+    </service>
+    <service id="sonata.admin.guesser.orm_show" class="Sonata\AdminBundle\Guesser\ORM\TypeGuesser">
+      <tag name="sonata.admin.guesser.orm_show"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="sonata.admin.guesser.orm_show_chain" class="Sonata\AdminBundle\Guesser\TypeGuesserChain">
+      <argument type="collection">
+        <argument type="service" id="sonata.admin.guesser.orm_show"/>
+      </argument>
+    </service>
+    <service id="sonata.admin.builder.orm_datagrid" class="Sonata\AdminBundle\Builder\ORM\DatagridBuilder">
+      <argument type="service" id="form.factory"/>
+      <argument type="service" id="sonata.admin.builder.filter.factory"/>
+      <argument type="service" id="sonata.admin.guesser.orm_datagrid_chain"/>
+    </service>
+    <service id="sonata.admin.guesser.orm_datagrid" class="Sonata\AdminBundle\Guesser\ORM\FilterTypeGuesser">
+      <tag name="sonata.admin.guesser.orm_datagrid"/>
+      <argument type="service" id="doctrine"/>
+    </service>
+    <service id="sonata.admin.guesser.orm_datagrid_chain" class="Sonata\AdminBundle\Guesser\TypeGuesserChain">
+      <argument type="collection">
+        <argument type="service" id="sonata.admin.guesser.orm_datagrid"/>
+      </argument>
+    </service>
+    <service id="sonata.admin.orm.filter.type.boolean" class="Sonata\AdminBundle\Filter\ORM\BooleanFilter" scope="prototype">
+      <tag name="sonata.admin.filter.type" alias="doctrine_orm_boolean"/>
+    </service>
+    <service id="sonata.admin.orm.filter.type.callback" class="Sonata\AdminBundle\Filter\ORM\CallbackFilter" scope="prototype">
+      <tag name="sonata.admin.filter.type" alias="doctrine_orm_callback"/>
+    </service>
+    <service id="sonata.admin.orm.filter.type.choice" class="Sonata\AdminBundle\Filter\ORM\ChoiceFilter" scope="prototype">
+      <tag name="sonata.admin.filter.type" alias="doctrine_orm_choice"/>
+    </service>
+    <service id="sonata.admin.orm.filter.type.model" class="Sonata\AdminBundle\Filter\ORM\ModelFilter" scope="prototype">
+      <tag name="sonata.admin.filter.type" alias="doctrine_orm_model"/>
+    </service>
+    <service id="sonata.admin.orm.filter.type.string" class="Sonata\AdminBundle\Filter\ORM\StringFilter" scope="prototype">
+      <tag name="sonata.admin.filter.type" alias="doctrine_orm_string"/>
+    </service>
+    <service id="sonata.admin.orm.filter.type.number" class="Sonata\AdminBundle\Filter\ORM\NumberFilter" scope="prototype">
+      <tag name="sonata.admin.filter.type" alias="doctrine_orm_number"/>
+    </service>
+    <service id="sonata.admin.twig.extension" class="Sonata\AdminBundle\Twig\Extension\SonataAdminExtension">
+      <tag name="twig.extension"/>
+    </service>
+    <service id="sonata.admin.pool" class="Sonata\AdminBundle\Admin\Pool">
+      <argument type="service" id="service_container"/>
+      <call method="setAdminServiceIds">
+        <argument type="collection">
+          <argument>dunglas.carrental.admin.renting</argument>
+          <argument>dunglas.carrental.admin.payment</argument>
+          <argument>dunglas.carrental.admin.customer</argument>
+          <argument>dunglas.carrental.admin.vehicle</argument>
+          <argument>dunglas.carrental.admin.manufacturer</argument>
+          <argument>dunglas.carrental.admin.model</argument>
+          <argument>dunglas.carrental.admin.fuel</argument>
+        </argument>
+      </call>
+      <call method="setAdminGroups">
+        <argument type="collection">
+          <argument key="Car Rental" type="collection">
+            <argument key="label">Car Rental</argument>
+            <argument key="items" type="collection">
+              <argument>dunglas.carrental.admin.renting</argument>
+              <argument>dunglas.carrental.admin.payment</argument>
+              <argument>dunglas.carrental.admin.customer</argument>
+            </argument>
+          </argument>
+          <argument key="Vehicle" type="collection">
+            <argument key="label">Vehicle</argument>
+            <argument key="items" type="collection">
+              <argument>dunglas.carrental.admin.vehicle</argument>
+            </argument>
+          </argument>
+          <argument key="Config" type="collection">
+            <argument key="label">Config</argument>
+            <argument key="items" type="collection">
+              <argument>dunglas.carrental.admin.manufacturer</argument>
+              <argument>dunglas.carrental.admin.model</argument>
+              <argument>dunglas.carrental.admin.fuel</argument>
+            </argument>
+          </argument>
+        </argument>
+      </call>
+      <call method="setAdminClasses">
+        <argument type="collection">
+          <argument key="Dunglas\Bundle\CarRentalBundle\Entity\Renting">dunglas.carrental.admin.renting</argument>
+          <argument key="Dunglas\Bundle\CarRentalBundle\Entity\Payment">dunglas.carrental.admin.payment</argument>
+          <argument key="Dunglas\Bundle\CarRentalBundle\Entity\Customer">dunglas.carrental.admin.customer</argument>
+          <argument key="Dunglas\Bundle\CarRentalBundle\Entity\Vehicle">dunglas.carrental.admin.vehicle</argument>
+          <argument key="Dunglas\Bundle\CarRentalBundle\Entity\Manufacturer">dunglas.carrental.admin.manufacturer</argument>
+          <argument key="Dunglas\Bundle\CarRentalBundle\Entity\Model">dunglas.carrental.admin.model</argument>
+          <argument key="Dunglas\Bundle\CarRentalBundle\Entity\Fuel">dunglas.carrental.admin.fuel</argument>
+        </argument>
+      </call>
+    </service>
+    <service id="sonata.admin.route_loader" class="Sonata\AdminBundle\Route\AdminPoolLoader">
+      <tag name="routing.loader"/>
+      <argument type="service" id="sonata.admin.pool"/>
+      <argument type="collection">
+        <argument>dunglas.carrental.admin.renting</argument>
+        <argument>dunglas.carrental.admin.payment</argument>
+        <argument>dunglas.carrental.admin.customer</argument>
+        <argument>dunglas.carrental.admin.vehicle</argument>
+        <argument>dunglas.carrental.admin.manufacturer</argument>
+        <argument>dunglas.carrental.admin.model</argument>
+        <argument>dunglas.carrental.admin.fuel</argument>
+      </argument>
+      <argument type="service" id="service_container"/>
+    </service>
+    <service id="sonata.admin.helper" class="Sonata\AdminBundle\Admin\AdminHelper">
+      <argument type="service" id="sonata.admin.pool"/>
+    </service>
+    <service id="sonata.admin.security.handler.noop" class="Sonata\AdminBundle\Security\Handler\NoopSecurityHandler"/>
+    <service id="sonata.admin.security.handler.acl" class="Sonata\AdminBundle\Security\Handler\AclSecurityHandler">
+      <argument type="service" id="security.context"/>
+    </service>
+    <service id="sonata.admin.builder.filter.factory" class="Sonata\AdminBundle\Filter\FilterFactory">
+      <argument type="service" id="service_container"/>
+      <argument type="collection">
+        <argument key="doctrine_orm_boolean">sonata.admin.orm.filter.type.boolean</argument>
+        <argument key="doctrine_orm_callback">sonata.admin.orm.filter.type.callback</argument>
+        <argument key="doctrine_orm_choice">sonata.admin.orm.filter.type.choice</argument>
+        <argument key="doctrine_orm_model">sonata.admin.orm.filter.type.model</argument>
+        <argument key="doctrine_orm_string">sonata.admin.orm.filter.type.string</argument>
+        <argument key="doctrine_orm_number">sonata.admin.orm.filter.type.number</argument>
+      </argument>
+    </service>
+    <service id="sonata.admin.form.type.admin" class="Sonata\AdminBundle\Form\Type\AdminType">
+      <tag name="form.type" alias="sonata_type_admin"/>
+    </service>
+    <service id="sonata.admin.form.type.collection" class="Sonata\AdminBundle\Form\Type\CollectionType">
+      <tag name="form.type" alias="sonata_type_collection"/>
+    </service>
+    <service id="sonata.admin.form.type.model" class="Sonata\AdminBundle\Form\Type\ModelType">
+      <tag name="form.type" alias="sonata_type_model"/>
+    </service>
+    <service id="sonata.admin.form.type.model_reference" class="Sonata\AdminBundle\Form\Type\ModelReferenceType">
+      <tag name="form.type" alias="sonata_type_model_reference"/>
+    </service>
+    <service id="sonata.admin.form.type.array" class="Sonata\AdminBundle\Form\Type\ImmutableArrayType">
+      <tag name="form.type" alias="sonata_type_immutable_array"/>
+    </service>
+    <service id="sonata.admin.form.type.boolean" class="Sonata\AdminBundle\Form\Type\BooleanType">
+      <tag name="form.type" alias="sonata_type_boolean"/>
+      <argument type="service" id="translator.default"/>
+    </service>
+    <service id="sonata.admin.form.extension.field" class="Sonata\AdminBundle\Form\Extension\Field\Type\FormTypeFieldExtension">
+      <tag name="form.type_extension" alias="field"/>
+    </service>
+    <service id="sonata.admin.form.filter.type.number" class="Sonata\AdminBundle\Form\Type\Filter\NumberType">
+      <tag name="form.type" alias="sonata_type_filter_number"/>
+      <argument type="service" id="translator.default"/>
+    </service>
+    <service id="sonata.admin.form.filter.type.choice" class="Sonata\AdminBundle\Form\Type\Filter\ChoiceType">
+      <tag name="form.type" alias="sonata_type_filter_choice"/>
+      <argument type="service" id="translator.default"/>
+    </service>
+    <service id="sonata.admin.form.filter.type.default" class="Sonata\AdminBundle\Form\Type\Filter\DefaultType">
+      <tag name="form.type" alias="sonata_type_filter_default"/>
+    </service>
+    <service id="sonata.admin.validator.inline" class="Sonata\AdminBundle\Validator\InlineValidator">
+      <tag name="validator.constraint_validator" alias="sonata.admin.validator.inline"/>
+      <argument type="service" id="service_container"/>
+      <argument type="service" id="validator.validator_factory"/>
+    </service>
+    <service id="knp_menu.factory" class="Knp\Menu\Silex\RouterAwareFactory">
+      <argument type="service" id="router"/>
+    </service>
+    <service id="knp_menu.renderer_provider" class="Knp\Bundle\MenuBundle\Renderer\ContainerAwareProvider">
+      <argument type="service" id="service_container"/>
+      <argument>twig</argument>
+      <argument type="collection">
+        <argument key="list">knp_menu.renderer.list</argument>
+        <argument key="twig">knp_menu.renderer.twig</argument>
+      </argument>
+    </service>
+    <service id="knp_menu.renderer.list" class="Knp\Menu\Renderer\ListRenderer">
+      <tag name="knp_menu.renderer" alias="list"/>
+      <argument>UTF-8</argument>
+    </service>
+    <service id="knp_menu.renderer.twig" class="Knp\Menu\Renderer\TwigRenderer">
+      <tag name="knp_menu.renderer" alias="twig"/>
+      <argument type="service" id="twig"/>
+      <argument>knp_menu.html.twig</argument>
+    </service>
     <service id="twig.extension.acme.demo" class="Acme\DemoBundle\Twig\Extension\DemoExtension" public="false">
       <tag name="twig.extension"/>
       <argument type="service" id="twig.loader"/>
@@ -2323,6 +3284,7 @@
       <argument type="service" id="templating"/>
       <argument>false</argument>
       <argument>2</argument>
+      <argument>bottom</argument>
     </service>
     <service id="sensio.distribution.webconfigurator" class="Sensio\Bundle\DistributionBundle\Configurator\Configurator">
       <argument>/Users/dunglas/Documents/workspace/CarRental/app</argument>
@@ -2418,6 +3380,23 @@
     <service id="session.storage" class="Symfony\Component\HttpFoundation\SessionStorage\NativeSessionStorage">
       <argument type="collection"/>
     </service>
+    <service id="router" class="Symfony\Bundle\FrameworkBundle\Routing\Router">
+      <argument type="service" id="service_container"/>
+      <argument>/Users/dunglas/Documents/workspace/CarRental/app/config/routing_dev.yml</argument>
+      <argument type="collection">
+        <argument key="cache_dir">/Users/dunglas/Documents/workspace/CarRental/app/cache/dev</argument>
+        <argument key="debug">true</argument>
+        <argument key="generator_class">Symfony\Component\Routing\Generator\UrlGenerator</argument>
+        <argument key="generator_base_class">Symfony\Component\Routing\Generator\UrlGenerator</argument>
+        <argument key="generator_dumper_class">Symfony\Component\Routing\Generator\Dumper\PhpGeneratorDumper</argument>
+        <argument key="generator_cache_class">app%kernel.environment%UrlGenerator</argument>
+        <argument key="matcher_class">Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher</argument>
+        <argument key="matcher_base_class">Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher</argument>
+        <argument key="matcher_dumper_class">Symfony\Component\Routing\Matcher\Dumper\PhpMatcherDumper</argument>
+        <argument key="matcher_cache_class">app%kernel.environment%UrlMatcher</argument>
+      </argument>
+      <argument>null</argument>
+    </service>
     <service id="templating.loader" class="Symfony\Bundle\FrameworkBundle\Templating\Loader\FilesystemLoader">
       <argument type="service" id="templating.locator"/>
     </service>
@@ -2508,8 +3487,29 @@
     <service id="mailer" class="Swift_Mailer">
       <argument type="service" id="swiftmailer.transport"/>
     </service>
+    <service id="knp_menu.menu_provider" class="Knp\Menu\Provider\ChainProvider">
+      <argument type="collection">
+        <argument type="service">
+          <service class="Knp\Bundle\MenuBundle\Provider\ContainerAwareProvider" public="false">
+            <tag name="knp_menu.provider"/>
+            <argument type="service" id="service_container"/>
+            <argument type="collection"/>
+          </service>
+        </argument>
+        <argument type="service">
+          <service class="Knp\Bundle\MenuBundle\Provider\BuilderAliasProvider" public="false">
+            <tag name="knp_menu.provider"/>
+            <argument type="service" id="kernel"/>
+            <argument type="service" id="service_container"/>
+            <argument type="service" id="knp_menu.factory"/>
+          </service>
+        </argument>
+      </argument>
+    </service>
     <service id="debug.event_dispatcher" alias="event_dispatcher"/>
+    <service id="translator" alias="translator.default"/>
     <service id="database_connection" alias="doctrine.dbal.default_connection"/>
     <service id="doctrine.orm.entity_manager" alias="doctrine.orm.default_entity_manager"/>
+    <service id="sonata.admin.security.handler" alias="sonata.admin.security.handler.noop"/>
   </services>
 </container>

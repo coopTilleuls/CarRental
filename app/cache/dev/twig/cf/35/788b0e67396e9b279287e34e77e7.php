@@ -3,8 +3,6 @@
 /* DunglasCarRentalBundle:Customer:index.html.twig */
 class __TwigTemplate_cf35788b0e67396e9b279287e34e77e7 extends Twig_Template
 {
-    protected $parent;
-
     public function __construct(Twig_Environment $env)
     {
         parent::__construct($env);
@@ -14,19 +12,13 @@ class __TwigTemplate_cf35788b0e67396e9b279287e34e77e7 extends Twig_Template
         );
     }
 
-    public function getParent(array $context)
+    protected function doGetParent(array $context)
     {
-        if (null === $this->parent) {
-            $this->parent = $this->env->loadTemplate("DunglasCarRentalBundle::layout.html.twig");
-        }
-
-        return $this->parent;
+        return "DunglasCarRentalBundle::layout.html.twig";
     }
 
     protected function doDisplay(array $context, array $blocks = array())
     {
-        $context = array_merge($this->env->getGlobals(), $context);
-
         $this->getParent($context)->display($context, array_merge($this->blocks, $blocks));
     }
 
@@ -50,40 +42,40 @@ class __TwigTemplate_cf35788b0e67396e9b279287e34e77e7 extends Twig_Template
     ";
         // line 17
         $context['_parent'] = (array) $context;
-        $context['_seq'] = twig_ensure_traversable($this->getContext($context, 'entities'));
-        foreach ($context['_seq'] as $context['_key'] => $context['entity']) {
+        $context['_seq'] = twig_ensure_traversable($this->getContext($context, "entities"));
+        foreach ($context['_seq'] as $context["_key"] => $context["entity"]) {
             // line 18
             echo "        <tr>
             <td><a href=\"";
             // line 19
-            echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("customer_show", array("id" => $this->getAttribute($this->getContext($context, 'entity'), "id", array(), "any", false))), "html");
+            echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("customer_show", array("id" => $this->getAttribute($this->getContext($context, "entity"), "id"))), "html", null, true);
             echo "\">";
-            echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, 'entity'), "id", array(), "any", false), "html");
+            echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, "entity"), "id"), "html", null, true);
             echo "</a></td>
             <td>";
             // line 20
-            echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, 'entity'), "lastName", array(), "any", false), "html");
+            echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, "entity"), "lastName"), "html", null, true);
             echo "</td>
             <td>";
             // line 21
-            echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, 'entity'), "firstName", array(), "any", false), "html");
+            echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, "entity"), "firstName"), "html", null, true);
             echo "</td>
             <td>";
             // line 22
-            echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, 'entity'), "active", array(), "any", false), "html");
+            echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, "entity"), "active"), "html", null, true);
             echo "</td>
             <td>
                 <ul>
                     <li>
                         <a href=\"";
             // line 26
-            echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("customer_show", array("id" => $this->getAttribute($this->getContext($context, 'entity'), "id", array(), "any", false))), "html");
+            echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("customer_show", array("id" => $this->getAttribute($this->getContext($context, "entity"), "id"))), "html", null, true);
             echo "\">show</a>
                     </li>
                     <li>
                         <a href=\"";
             // line 29
-            echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("customer_edit", array("id" => $this->getAttribute($this->getContext($context, 'entity'), "id", array(), "any", false))), "html");
+            echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("customer_edit", array("id" => $this->getAttribute($this->getContext($context, "entity"), "id"))), "html", null, true);
             echo "\">edit</a>
                     </li>
                 </ul>
@@ -102,7 +94,7 @@ class __TwigTemplate_cf35788b0e67396e9b279287e34e77e7 extends Twig_Template
     <li>
         <a href=\"";
         // line 40
-        echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("customer_new"), "html");
+        echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("customer_new"), "html", null, true);
         echo "\">
             Create a new customer
         </a>

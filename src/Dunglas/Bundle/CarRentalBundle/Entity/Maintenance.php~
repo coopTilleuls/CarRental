@@ -3,6 +3,7 @@
 namespace Dunglas\Bundle\CarRentalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Dunglas\Bundle\CarRentalBundle\Entity\Maintenance
@@ -42,14 +43,22 @@ class Maintenance
     private $vehicle;
     
     /**
+     *
+     * @var text $notes
+     * 
+     * @ORM\Column(name="notes", type="text")
+     */
+    private $notes;
+    
+    /**
      * @ORM\Column(name="created", type="datetime")
-     * @Gedmo:Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      */
     private $created;
     
     /**
      * @ORM\Column(name="updated", type="datetime")
-     * @Gedmo:Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      */
     private $updated;
 

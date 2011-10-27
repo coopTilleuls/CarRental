@@ -5,6 +5,7 @@ namespace Dunglas\Bundle\CarRentalBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Dunglas\Bundle\CarRentalBundle\Entity\Customer
@@ -26,7 +27,7 @@ class Customer
     /**
      * @var string $gender
      * 
-     * @Assert\Choice(
+     * @ Assert \ Choice(
      *     choices = { "male", "female" },
      *     message = "Choose a valid gender."
      * )
@@ -37,13 +38,14 @@ class Customer
     /**
      * @var string $lastName
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="lastName", type="string", length=255, nullable=false)
      */
     private $lastName;
 
     /**
      * @var string $firstName
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="firstName", type="string", length=255, nullable=false)
      */
     private $firstName;
@@ -51,7 +53,7 @@ class Customer
 
     /**
      * @var string $address1
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="address1", type="string", length=255)
      */
     private $address1;
@@ -59,20 +61,20 @@ class Customer
     /**
      * @var string $address2
      *
-     * @ORM\Column(name="address2", type="string", length=255)
+     * @ORM\Column(name="address2", type="string", length=255, nullable=true)
      */
     private $address2;
 
     /**
      * @var string $city
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="city", type="string", length=255)
      */
     private $city;
 
     /**
      * @var string $zipCode
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="zipCode", type="string", length=20)
      */
     private $zipCode;
@@ -80,42 +82,42 @@ class Customer
     /**
      *
      * @var string $country
-     * @ORM\Column(name="country", type="string", length=2)
+     * @ORM\Column(name="country", type="string", length=2, nullable=true)
      */
     private $country;
 
     /**
      * @var string $emailAddress
      *
-     * @ORM\Column(name="emailAddress", type="string", length=255, nullable=false)
+     * @ORM\Column(name="emailAddress", type="string", length=255, nullable=true)
      */
     private $emailAddress;
 
     /**
      * @var string $phoneNumber1
      *
-     * @ORM\Column(name="phoneNumber1", type="string", length=255)
+     * @ORM\Column(name="phoneNumber1", type="string", length=255, nullable=true)
      */
     private $phoneNumber1;
 
     /**
      * @var string $phoneNumber2
      *
-     * @ORM\Column(name="phoneNumber2", type="string", length=255)
+     * @ORM\Column(name="phoneNumber2", type="string", length=255, nullable=true)
      */
     private $phoneNumber2;
 
     /**
      * @var date $registrationDate
      *
-     * @ORM\Column(name="registrationDate", type="date")
+     * @ORM\Column(name="registrationDate", type="date", nullable=true)
      */
     private $registrationDate;
 
     /**
      * @var date $birth
      *
-     * @ORM\Column(name="birth", type="date")
+     * @ORM\Column(name="birth", type="date", nullable=true)
      */
     private $birth;
 
@@ -123,7 +125,7 @@ class Customer
      *
      * @var string $notes
      * 
-     * @ORM\Column(name="notes", type="text")
+     * @ORM\Column(name="notes", type="text", nullable=true)
      */
     private $notes;
     
@@ -141,13 +143,13 @@ class Customer
     
     /**
      * @ORM\Column(name="created", type="datetime")
-     * @Gedmo:Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      */
     private $created;
     
     /**
      * @ORM\Column(name="updated", type="datetime")
-     * @Gedmo:Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      */
     private $updated;
     
@@ -536,7 +538,21 @@ class Customer
         return $this->updated;
     }
     
+    public static function getGenders() {
+        return array('male' => 'male', 'female' => 'female');
+    }
+    
     public function __toString() {
         return $this->getLastName() . ' ' . $this->getFirstName();
+    }
+
+    /**
+     * Add rentals
+     *
+     * @param Dunglas\Bundle\CarRentalBundle\Entity\Renting $rentals
+     */
+    public function addRenting(\Dunglas\Bundle\CarRentalBundle\Entity\Renting $rentals)
+    {
+        $this->rentals[] = $rentals;
     }
 }

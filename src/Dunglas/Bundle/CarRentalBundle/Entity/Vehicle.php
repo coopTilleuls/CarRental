@@ -5,6 +5,7 @@ namespace Dunglas\Bundle\CarRentalBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Dunglas\Bundle\CarRentalBundle\Entity\Vehicle
@@ -76,7 +77,7 @@ class Vehicle
     /**
      * @var text $notes
      *
-     * @ORM\Column(name="notes", type="text")
+     * @ORM\Column(name="notes", type="text", nullable=true)
      */
     private $notes;
 
@@ -99,13 +100,13 @@ class Vehicle
     
     /**
      * @ORM\Column(name="created", type="datetime")
-     * @Gedmo:Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      */
     private $created;
     
     /**
      * @ORM\Column(name="updated", type="datetime")
-     * @Gedmo:Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      */
     private $updated;
     
@@ -364,10 +365,6 @@ class Vehicle
     {
         return $this->model;
     }
-    
-    public function __toString() {
-        return $this->getModel()->getManufacturer() . ' ' . $this->getModel() . ' (' . $this->getId() . ')';
-    }
 
     /**
      * Set fuel
@@ -387,5 +384,31 @@ class Vehicle
     public function getFuel()
     {
         return $this->fuel;
+    }
+    
+    
+    
+    public function __toString() {
+        return $this->getModel()->getManufacturer() . ' ' . $this->getModel() . ' (' . $this->getNumberPlate() . ')';
+    }
+
+    /**
+     * Add rentals
+     *
+     * @param Dunglas\Bundle\CarRentalBundle\Entity\Renting $rentals
+     */
+    public function addRenting(\Dunglas\Bundle\CarRentalBundle\Entity\Renting $rentals)
+    {
+        $this->rentals[] = $rentals;
+    }
+
+    /**
+     * Add maintenances
+     *
+     * @param Dunglas\Bundle\CarRentalBundle\Entity\Maintenance $maintenances
+     */
+    public function addMaintenance(\Dunglas\Bundle\CarRentalBundle\Entity\Maintenance $maintenances)
+    {
+        $this->maintenances[] = $maintenances;
     }
 }

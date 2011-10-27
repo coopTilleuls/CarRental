@@ -4,6 +4,7 @@ namespace Dunglas\Bundle\CarRentalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Dunglas\Bundle\CarRentalBundle\Entity\Fuel
@@ -38,13 +39,13 @@ class Fuel
     
     /**
      * @ORM\Column(name="created", type="datetime")
-     * @Gedmo:Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      */
     private $created;
     
     /**
      * @ORM\Column(name="updated", type="datetime")
-     * @Gedmo:Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      */
     private $updated;
 
@@ -77,5 +78,73 @@ class Fuel
     public function getName()
     {
         return $this->name;
+    }
+    public function __construct()
+    {
+        $this->vehicles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Set created
+     *
+     * @param datetime $created
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    }
+
+    /**
+     * Get created
+     *
+     * @return datetime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param datetime $updated
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return datetime 
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Add vehicles
+     *
+     * @param Dunglas\Bundle\CarRentalBundle\Entity\Vehicle $vehicles
+     */
+    public function addVehicles(\Dunglas\Bundle\CarRentalBundle\Entity\Vehicle $vehicles)
+    {
+        $this->vehicles[] = $vehicles;
+    }
+
+    /**
+     * Get vehicles
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getVehicles()
+    {
+        return $this->vehicles;
+    }
+    
+    public function __toString() {
+        return $this->getName();
     }
 }

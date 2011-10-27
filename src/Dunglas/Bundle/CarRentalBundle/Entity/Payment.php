@@ -3,6 +3,7 @@
 namespace Dunglas\Bundle\CarRentalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Dunglas\Bundle\CarRentalBundle\Entity\Payment
@@ -42,14 +43,22 @@ class Payment
     private $renting;
     
     /**
+     *
+     * @var text $notes
+     * 
+     * @ORM\Column(name="notes", type="text", nullable=true)
+     */
+    private $notes;
+    
+    /**
      * @ORM\Column(name="created", type="datetime")
-     * @Gedmo:Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      */
     private $created;
     
     /**
      * @ORM\Column(name="updated", type="datetime")
-     * @Gedmo:Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      */
     private $updated;
 
@@ -162,5 +171,31 @@ class Payment
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * Set notes
+     *
+     * @param text $notes
+     * @return Payment
+     */
+    public function setNotes($notes)
+    {
+        $this->notes = $notes;
+        return $this;
+    }
+
+    /**
+     * Get notes
+     *
+     * @return text 
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+    
+    public function __toString() {
+        return $this->getAmount() . ' €';
     }
 }

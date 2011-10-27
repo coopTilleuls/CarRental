@@ -3,8 +3,6 @@
 /* WebProfilerBundle:Collector:exception.html.twig */
 class __TwigTemplate_5d3b638ac12563d2ac3402e018d01056 extends Twig_Template
 {
-    protected $parent;
-
     public function __construct(Twig_Environment $env)
     {
         parent::__construct($env);
@@ -16,19 +14,13 @@ class __TwigTemplate_5d3b638ac12563d2ac3402e018d01056 extends Twig_Template
         );
     }
 
-    public function getParent(array $context)
+    protected function doGetParent(array $context)
     {
-        if (null === $this->parent) {
-            $this->parent = $this->env->loadTemplate("WebProfilerBundle:Profiler:layout.html.twig");
-        }
-
-        return $this->parent;
+        return "WebProfilerBundle:Profiler:layout.html.twig";
     }
 
     protected function doDisplay(array $context, array $blocks = array())
     {
-        $context = array_merge($this->env->getGlobals(), $context);
-
         $this->getParent($context)->display($context, array_merge($this->blocks, $blocks));
     }
 
@@ -37,11 +29,11 @@ class __TwigTemplate_5d3b638ac12563d2ac3402e018d01056 extends Twig_Template
     {
         // line 4
         echo "    <link href=\"";
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/framework/css/exception.css"), "html");
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/framework/css/exception.css"), "html", null, true);
         echo "\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
     ";
         // line 5
-        echo $this->renderParentBlock("head", $context, $blocks);
+        $this->displayParentBlock("head", $context, $blocks);
         echo "
 ";
     }
@@ -53,13 +45,13 @@ class __TwigTemplate_5d3b638ac12563d2ac3402e018d01056 extends Twig_Template
         echo "<span class=\"label\">
     <span class=\"icon\"><img src=\"";
         // line 10
-        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/webprofiler/images/profiler/exception.png"), "html");
+        echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/webprofiler/images/profiler/exception.png"), "html", null, true);
         echo "\" alt=\"Exception\" /></span>
     <strong>Exception</strong>
     <span class=\"count\">
         ";
         // line 13
-        if ($this->getAttribute($this->getContext($context, 'collector'), "hasexception", array(), "any", false)) {
+        if ($this->getAttribute($this->getContext($context, "collector"), "hasexception")) {
             // line 14
             echo "            <span>1</span>
         ";
@@ -78,7 +70,7 @@ class __TwigTemplate_5d3b638ac12563d2ac3402e018d01056 extends Twig_Template
 
     ";
         // line 23
-        if ((!$this->getAttribute($this->getContext($context, 'collector'), "hasexception", array(), "any", false))) {
+        if ((!$this->getAttribute($this->getContext($context, "collector"), "hasexception"))) {
             // line 24
             echo "        <p>
             <em>No exception was thrown and uncaught during the request.</em>
@@ -87,7 +79,7 @@ class __TwigTemplate_5d3b638ac12563d2ac3402e018d01056 extends Twig_Template
         } else {
             // line 28
             echo "        ";
-            echo $this->env->getExtension('actions')->renderAction("WebProfilerBundle:Exception:show", array("exception" => $this->getAttribute($this->getContext($context, 'collector'), "exception", array(), "any", false), "format" => "html"), array());
+            echo $this->env->getExtension('actions')->renderAction("WebProfilerBundle:Exception:show", array("exception" => $this->getAttribute($this->getContext($context, "collector"), "exception"), "format" => "html"), array());
             // line 29
             echo "    ";
         }

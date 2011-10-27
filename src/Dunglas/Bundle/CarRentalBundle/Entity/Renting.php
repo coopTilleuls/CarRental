@@ -4,6 +4,7 @@ namespace Dunglas\Bundle\CarRentalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Dunglas\Bundle\CarRentalBundle\Entity\Renting
@@ -56,7 +57,7 @@ class Renting
     /**
      * @var text $notes
      *
-     * @ORM\Column(name="notes", type="text")
+     * @ORM\Column(name="notes", type="text", nullable=true)
      */
     private $notes;
 
@@ -74,13 +75,13 @@ class Renting
     
     /**
      * @ORM\Column(name="created", type="datetime")
-     * @Gedmo:Timestampable(on="create")
+     * @Gedmo\Timestampable(on="create")
      */
     private $created;
     
     /**
      * @ORM\Column(name="updated", type="datetime")
-     * @Gedmo:Timestampable(on="update")
+     * @Gedmo\Timestampable(on="update")
      */
     private $updated;
     
@@ -307,5 +308,19 @@ class Renting
     public function getUpdated()
     {
         return $this->updated;
+    }
+    
+    public function __toString() {
+        return $this->getId() . ' - ' . $this->getVehicle() . ' - ' . $this->getCustomer();
+    }
+
+    /**
+     * Add payments
+     *
+     * @param Dunglas\Bundle\CarRentalBundle\Entity\Payment $payments
+     */
+    public function addPayment(\Dunglas\Bundle\CarRentalBundle\Entity\Payment $payments)
+    {
+        $this->payments[] = $payments;
     }
 }

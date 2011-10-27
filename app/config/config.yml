@@ -1,9 +1,9 @@
 imports:
-    - { resource: parameters.ini }
+    - { resource: parameters.yml }
     - { resource: security.yml }
 
 framework:
-    #esi:             ~
+    translator:      { fallback: %locale% }
     secret:          %secret%
     charset:         UTF-8
     router:          { resource: "%kernel.root_dir%/config/routing.yml" }
@@ -11,8 +11,8 @@ framework:
     csrf_protection: true
     validation:      { enable_annotations: true }
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
+    default_locale: %locale%
     session:
-        default_locale: %locale%
         auto_start:     true
 
 # Twig Configuration
@@ -39,6 +39,7 @@ doctrine:
         dbname:   %database_name%
         user:     %database_user%
         password: %database_password%
+        unix_socket: %database_unix_socket%
         charset:  UTF8
 
     orm:
@@ -62,4 +63,48 @@ jms_security_extra:
 
 stof_doctrine_extensions:
     orm:
-        default: ~
+        default:
+            timestampable: true
+
+services:
+   dunglas.carrental.admin.renting:
+      class: Dunglas\Bundle\CarRentalBundle\Admin\RentingAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: "Car Rental", label: Renting }
+      arguments: [null, Dunglas\Bundle\CarRentalBundle\Entity\Renting, null]
+   
+   dunglas.carrental.admin.payment:
+      class: Dunglas\Bundle\CarRentalBundle\Admin\PaymentAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: "Car Rental", label: Payment }
+      arguments: [null, Dunglas\Bundle\CarRentalBundle\Entity\Payment, null]
+  
+   dunglas.carrental.admin.customer:
+      class: Dunglas\Bundle\CarRentalBundle\Admin\CustomerAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: "Car Rental", label: Customer }
+      arguments: [null, Dunglas\Bundle\CarRentalBundle\Entity\Customer, null]
+  
+   dunglas.carrental.admin.vehicle:
+      class: Dunglas\Bundle\CarRentalBundle\Admin\VehicleAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Vehicle, label: Vehicle }
+      arguments: [null, Dunglas\Bundle\CarRentalBundle\Entity\Vehicle, null]
+   
+   dunglas.carrental.admin.manufacturer:
+      class: Dunglas\Bundle\CarRentalBundle\Admin\ManufacturerAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Config, label: Manufacturer }
+      arguments: [null, Dunglas\Bundle\CarRentalBundle\Entity\Manufacturer, null]
+   
+   dunglas.carrental.admin.model:
+      class: Dunglas\Bundle\CarRentalBundle\Admin\ModelAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Config, label: Model }
+      arguments: [null, Dunglas\Bundle\CarRentalBundle\Entity\Model, null]
+   
+   dunglas.carrental.admin.fuel:
+      class: Dunglas\Bundle\CarRentalBundle\Admin\FuelAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: Config, label: Fuel }
+      arguments: [null, Dunglas\Bundle\CarRentalBundle\Entity\Fuel, null]

@@ -3,8 +3,6 @@
 /* DunglasCarRentalBundle::layout.html.twig */
 class __TwigTemplate_0499da4648903e20fbf88e96412dfcdd extends Twig_Template
 {
-    protected $parent;
-
     public function __construct(Twig_Environment $env)
     {
         parent::__construct($env);
@@ -15,19 +13,13 @@ class __TwigTemplate_0499da4648903e20fbf88e96412dfcdd extends Twig_Template
         );
     }
 
-    public function getParent(array $context)
+    protected function doGetParent(array $context)
     {
-        if (null === $this->parent) {
-            $this->parent = $this->env->loadTemplate("::base.html.twig");
-        }
-
-        return $this->parent;
+        return "::base.html.twig";
     }
 
     protected function doDisplay(array $context, array $blocks = array())
     {
-        $context = array_merge($this->env->getGlobals(), $context);
-
         $this->getParent($context)->display($context, array_merge($this->blocks, $blocks));
     }
 
