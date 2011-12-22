@@ -41,32 +41,31 @@ class Maintenance
      * @ORM\JoinColumn(name="vehicle_id", referencedColumnName="id")
      */
     private $vehicle;
-    
+
     /**
      *
      * @var text $notes
-     * 
+     *
      * @ORM\Column(name="notes", type="text")
      */
     private $notes;
-    
+
     /**
      * @ORM\Column(name="created", type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
     private $created;
-    
+
     /**
      * @ORM\Column(name="updated", type="datetime")
      * @Gedmo\Timestampable(on="update")
      */
     private $updated;
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -86,7 +85,7 @@ class Maintenance
     /**
      * Get date
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getDate()
     {
@@ -106,7 +105,7 @@ class Maintenance
     /**
      * Get vehicle
      *
-     * @return Dunglas\Bundle\CarRentalBundle\Entity\Vehicle 
+     * @return Dunglas\Bundle\CarRentalBundle\Entity\Vehicle
      */
     public function getVehicle()
     {
@@ -126,7 +125,7 @@ class Maintenance
     /**
      * Get scheduled
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getScheduled()
     {
@@ -146,7 +145,7 @@ class Maintenance
     /**
      * Get created
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreated()
     {
@@ -166,7 +165,7 @@ class Maintenance
     /**
      * Get updated
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdated()
     {
@@ -188,7 +187,7 @@ class Maintenance
     /**
      * Get notes
      *
-     * @return text 
+     * @return text
      */
     public function getNotes()
     {

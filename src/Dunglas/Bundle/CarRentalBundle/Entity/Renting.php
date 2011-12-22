@@ -66,34 +66,39 @@ class Renting
      *
      * @ORM\Column(name="active", type="boolean")
      */
-    private $active;
-    
+    private $active = true;
+
     /**
      * @ORM\OneToMany(targetEntity="Payment", mappedBy="renting")
      */
     private $payments;
-    
+
     /**
      * @ORM\Column(name="created", type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
     private $created;
-    
+
     /**
      * @ORM\Column(name="updated", type="datetime")
      * @Gedmo\Timestampable(on="update")
      */
     private $updated;
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->payments = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->getId() . ' - ' . $this->getVehicle() . ' - ' . $this->getCustomer();
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -113,7 +118,7 @@ class Renting
     /**
      * Get notes
      *
-     * @return text 
+     * @return text
      */
     public function getNotes()
     {
@@ -133,7 +138,7 @@ class Renting
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function isActive()
     {
@@ -153,7 +158,7 @@ class Renting
     /**
      * Get customer
      *
-     * @return Dunglas\Bundle\CarRentalBundle\Entity\Customer 
+     * @return Dunglas\Bundle\CarRentalBundle\Entity\Customer
      */
     public function getCustomer()
     {
@@ -173,7 +178,7 @@ class Renting
     /**
      * Get vehicle
      *
-     * @return Dunglas\Bundle\CarRentalBundle\Entity\Vehicle 
+     * @return Dunglas\Bundle\CarRentalBundle\Entity\Vehicle
      */
     public function getVehicle()
     {
@@ -193,7 +198,7 @@ class Renting
     /**
      * Get payments
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getPayments()
     {
@@ -213,7 +218,7 @@ class Renting
     /**
      * Get exited
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getExited()
     {
@@ -233,7 +238,7 @@ class Renting
     /**
      * Get scheduledReturn
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getScheduledReturn()
     {
@@ -253,7 +258,7 @@ class Renting
     /**
      * Get returned
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getReturned()
     {
@@ -263,7 +268,7 @@ class Renting
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActive()
     {
@@ -283,7 +288,7 @@ class Renting
     /**
      * Get created
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreated()
     {
@@ -303,15 +308,11 @@ class Renting
     /**
      * Get updated
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdated()
     {
         return $this->updated;
-    }
-    
-    public function __toString() {
-        return $this->getId() . ' - ' . $this->getVehicle() . ' - ' . $this->getCustomer();
     }
 
     /**

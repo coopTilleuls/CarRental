@@ -36,6 +36,12 @@ class DunglasBundleCarRentalBundleEntityCustomerProxy extends \Dunglas\Bundle\Ca
     }
 
     
+    public function __toString()
+    {
+        $this->__load();
+        return parent::__toString();
+    }
+
     public function getId()
     {
         if ($this->__isInitialized__ === false) {
@@ -265,12 +271,6 @@ class DunglasBundleCarRentalBundleEntityCustomerProxy extends \Dunglas\Bundle\Ca
     {
         $this->__load();
         return parent::getUpdated();
-    }
-
-    public function __toString()
-    {
-        $this->__load();
-        return parent::__toString();
     }
 
     public function addRenting(\Dunglas\Bundle\CarRentalBundle\Entity\Renting $rentals)

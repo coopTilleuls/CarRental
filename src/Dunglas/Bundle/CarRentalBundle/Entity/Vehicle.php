@@ -33,12 +33,11 @@ class Vehicle
      */
     private $numberPlate;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="Model", inversedBy="vehicles")
      */
     private $model;
-    
+
     /**
      * @var string $version
      *
@@ -87,39 +86,44 @@ class Vehicle
      * @ORM\Column(name="active", type="boolean")
      */
     private $active = true;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Renting", mappedBy="vehicle")
      */
     private $rentals;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Maintenance", mappedBy="vehicle")
      */
     private $maintenances;
-    
+
     /**
      * @ORM\Column(name="created", type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
     private $created;
-    
+
     /**
      * @ORM\Column(name="updated", type="datetime")
      * @Gedmo\Timestampable(on="update")
      */
     private $updated;
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->rentals = new ArrayCollection();
         $this->maintenances = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->getModel()->getManufacturer() . ' ' . $this->getModel() . ' (' . $this->getNumberPlate() . ')';
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -139,13 +143,13 @@ class Vehicle
     /**
      * Get numberPlate
      *
-     * @return string 
+     * @return string
      */
     public function getNumberPlate()
     {
         return $this->numberPlate;
     }
-    
+
     /**
      * Set version
      *
@@ -159,7 +163,7 @@ class Vehicle
     /**
      * Get version
      *
-     * @return string 
+     * @return string
      */
     public function getVersion()
     {
@@ -179,7 +183,7 @@ class Vehicle
     /**
      * Get nextVehicleInspection
      *
-     * @return date 
+     * @return date
      */
     public function getNextVehicleInspection()
     {
@@ -199,7 +203,7 @@ class Vehicle
     /**
      * Get lastValvetrain
      *
-     * @return date 
+     * @return date
      */
     public function getLastValvetrain()
     {
@@ -219,7 +223,7 @@ class Vehicle
     /**
      * Get valvetrain
      *
-     * @return integer 
+     * @return integer
      */
     public function getValvetrain()
     {
@@ -239,7 +243,7 @@ class Vehicle
     /**
      * Get notes
      *
-     * @return text 
+     * @return text
      */
     public function getNotes()
     {
@@ -259,7 +263,7 @@ class Vehicle
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActive()
     {
@@ -279,7 +283,7 @@ class Vehicle
     /**
      * Get rentals
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getRentals()
     {
@@ -299,7 +303,7 @@ class Vehicle
     /**
      * Get maintenances
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getMaintenances()
     {
@@ -319,7 +323,7 @@ class Vehicle
     /**
      * Get created
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreated()
     {
@@ -339,7 +343,7 @@ class Vehicle
     /**
      * Get updated
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdated()
     {
@@ -359,7 +363,7 @@ class Vehicle
     /**
      * Get model
      *
-     * @return Dunglas\Bundle\CarRentalBundle\Entity\Model 
+     * @return Dunglas\Bundle\CarRentalBundle\Entity\Model
      */
     public function getModel()
     {
@@ -379,17 +383,11 @@ class Vehicle
     /**
      * Get fuel
      *
-     * @return Dunglas\Bundle\CarRentalBundle\Entity\Fuel 
+     * @return Dunglas\Bundle\CarRentalBundle\Entity\Fuel
      */
     public function getFuel()
     {
         return $this->fuel;
-    }
-    
-    
-    
-    public function __toString() {
-        return $this->getModel()->getManufacturer() . ' ' . $this->getModel() . ' (' . $this->getNumberPlate() . ')';
     }
 
     /**

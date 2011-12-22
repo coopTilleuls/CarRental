@@ -23,10 +23,10 @@ class Customer
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * @var string $gender
-     * 
+     *
      * @ Assert \ Choice(
      *     choices = { "male", "female" },
      *     message = "Choose a valid gender."
@@ -49,7 +49,6 @@ class Customer
      * @ORM\Column(name="firstName", type="string", length=255, nullable=false)
      */
     private $firstName;
-
 
     /**
      * @var string $address1
@@ -78,7 +77,7 @@ class Customer
      * @ORM\Column(name="zipCode", type="string", length=20)
      */
     private $zipCode;
-    
+
     /**
      *
      * @var string $country
@@ -124,43 +123,49 @@ class Customer
     /**
      *
      * @var string $notes
-     * 
+     *
      * @ORM\Column(name="notes", type="text", nullable=true)
      */
     private $notes;
-    
+
     /**
      * @var boolean $active
      *
      * @ORM\Column(name="active", type="boolean")
      */
     private $active = true;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Renting", mappedBy="customer")
      */
     private $rentals;
-    
+
     /**
      * @ORM\Column(name="created", type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
     private $created;
-    
+
     /**
      * @ORM\Column(name="updated", type="datetime")
      * @Gedmo\Timestampable(on="update")
      */
     private $updated;
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->rentals = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getLastName() . ' ' . $this->getFirstName();
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -180,13 +185,13 @@ class Customer
     /**
      * Get gender
      *
-     * @return string 
+     * @return string
      */
     public function getGender()
     {
         return $this->gender;
     }
-    
+
     /**
      * Set lastName
      *
@@ -200,7 +205,7 @@ class Customer
     /**
      * Get lastName
      *
-     * @return string 
+     * @return string
      */
     public function getLastName()
     {
@@ -220,13 +225,12 @@ class Customer
     /**
      * Get firstName
      *
-     * @return string 
+     * @return string
      */
     public function getFirstName()
     {
         return $this->firstName;
     }
-
 
     /**
      * Set address1
@@ -241,7 +245,7 @@ class Customer
     /**
      * Get address1
      *
-     * @return string 
+     * @return string
      */
     public function getAddress1()
     {
@@ -261,7 +265,7 @@ class Customer
     /**
      * Get address2
      *
-     * @return string 
+     * @return string
      */
     public function getAddress2()
     {
@@ -281,7 +285,7 @@ class Customer
     /**
      * Get city
      *
-     * @return string 
+     * @return string
      */
     public function getCity()
     {
@@ -301,7 +305,7 @@ class Customer
     /**
      * Get zipCode
      *
-     * @return string 
+     * @return string
      */
     public function getZipCode()
     {
@@ -321,7 +325,7 @@ class Customer
     /**
      * Get emailAddress
      *
-     * @return string 
+     * @return string
      */
     public function getEmailAddress()
     {
@@ -341,7 +345,7 @@ class Customer
     /**
      * Get phoneNumber1
      *
-     * @return string 
+     * @return string
      */
     public function getPhoneNumber1()
     {
@@ -361,7 +365,7 @@ class Customer
     /**
      * Get phoneNumber2
      *
-     * @return string 
+     * @return string
      */
     public function getPhoneNumber2()
     {
@@ -381,7 +385,7 @@ class Customer
     /**
      * Get registrationDate
      *
-     * @return date 
+     * @return date
      */
     public function getRegistrationDate()
     {
@@ -401,7 +405,7 @@ class Customer
     /**
      * Get birth
      *
-     * @return date 
+     * @return date
      */
     public function getBirth()
     {
@@ -421,7 +425,7 @@ class Customer
     /**
      * Is active?
      *
-     * @return boolean 
+     * @return boolean
      */
     public function isActive()
     {
@@ -441,7 +445,7 @@ class Customer
     /**
      * Get country
      *
-     * @return string 
+     * @return string
      */
     public function getCountry()
     {
@@ -461,7 +465,7 @@ class Customer
     /**
      * Get notes
      *
-     * @return text 
+     * @return text
      */
     public function getNotes()
     {
@@ -471,7 +475,7 @@ class Customer
     /**
      * Get active
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getActive()
     {
@@ -491,7 +495,7 @@ class Customer
     /**
      * Get rentals
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getRentals()
     {
@@ -511,7 +515,7 @@ class Customer
     /**
      * Get created
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreated()
     {
@@ -531,19 +535,16 @@ class Customer
     /**
      * Get updated
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdated()
     {
         return $this->updated;
     }
-    
-    public static function getGenders() {
+
+    public static function getGenders()
+    {
         return array('male' => 'male', 'female' => 'female');
-    }
-    
-    public function __toString() {
-        return $this->getLastName() . ' ' . $this->getFirstName();
     }
 
     /**

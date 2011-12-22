@@ -41,32 +41,36 @@ class Payment
      * @ORM\JoinColumn(name="renting_id", referencedColumnName="id")
      */
     private $renting;
-    
+
     /**
      *
      * @var text $notes
-     * 
+     *
      * @ORM\Column(name="notes", type="text", nullable=true)
      */
     private $notes;
-    
+
     /**
      * @ORM\Column(name="created", type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
     private $created;
-    
+
     /**
      * @ORM\Column(name="updated", type="datetime")
      * @Gedmo\Timestampable(on="update")
      */
     private $updated;
 
+    public function __toString()
+    {
+        return $this->getAmount() . ' €';
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -86,7 +90,7 @@ class Payment
     /**
      * Get amount
      *
-     * @return decimal 
+     * @return decimal
      */
     public function getAmount()
     {
@@ -106,7 +110,7 @@ class Payment
     /**
      * Get date
      *
-     * @return date 
+     * @return date
      */
     public function getDate()
     {
@@ -126,7 +130,7 @@ class Payment
     /**
      * Get renting
      *
-     * @return Dunglas\Bundle\CarRentalBundle\Entity\Renting 
+     * @return Dunglas\Bundle\CarRentalBundle\Entity\Renting
      */
     public function getRenting()
     {
@@ -146,7 +150,7 @@ class Payment
     /**
      * Get created
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreated()
     {
@@ -166,7 +170,7 @@ class Payment
     /**
      * Get updated
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdated()
     {
@@ -188,14 +192,10 @@ class Payment
     /**
      * Get notes
      *
-     * @return text 
+     * @return text
      */
     public function getNotes()
     {
         return $this->notes;
-    }
-    
-    public function __toString() {
-        return $this->getAmount() . ' €';
     }
 }

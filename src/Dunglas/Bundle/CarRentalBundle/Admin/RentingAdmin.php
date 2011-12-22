@@ -29,14 +29,12 @@ class RentingAdmin extends Admin
     {
         $list
                 ->addIdentifier('id')
+                ->addIdentifier('exited')
+                ->add('scheduledReturn')
+                ->add('returned')
                 ->add('customer')
                 ->add('vehicle')
                 ->add('active')
-                ->add('exited')
-                ->add('scheduledReturn')
-                ->add('returned')
-                ->add('created')
-                ->add('updated')
                 ->add('_action', 'actions', array(
                     'actions' => array(
                         'edit' => array()))

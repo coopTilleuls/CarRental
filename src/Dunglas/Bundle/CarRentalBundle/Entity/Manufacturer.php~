@@ -38,6 +38,13 @@ class Manufacturer
     private $models;
     
     /**
+     * @var boolean $active
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
+    private $active = true;
+    
+    /**
      * @ORM\Column(name="created", type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
@@ -146,5 +153,15 @@ class Manufacturer
     
     public function __toString() {
         return $this->getName();
+    }
+
+    /**
+     * Add models
+     *
+     * @param Dunglas\Bundle\CarRentalBundle\Entity\Model $models
+     */
+    public function addModel(\Dunglas\Bundle\CarRentalBundle\Entity\Model $models)
+    {
+        $this->models[] = $models;
     }
 }

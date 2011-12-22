@@ -36,6 +36,12 @@ class DunglasBundleCarRentalBundleEntityModelProxy extends \Dunglas\Bundle\CarRe
     }
 
     
+    public function __toString()
+    {
+        $this->__load();
+        return parent::__toString();
+    }
+
     public function getId()
     {
         if ($this->__isInitialized__ === false) {
@@ -105,22 +111,28 @@ class DunglasBundleCarRentalBundleEntityModelProxy extends \Dunglas\Bundle\CarRe
         return parent::getVehicles();
     }
 
-    public function __toString()
-    {
-        $this->__load();
-        return parent::__toString();
-    }
-
     public function addVehicle(\Dunglas\Bundle\CarRentalBundle\Entity\Vehicle $vehicles)
     {
         $this->__load();
         return parent::addVehicle($vehicles);
     }
 
+    public function setActive($active)
+    {
+        $this->__load();
+        return parent::setActive($active);
+    }
+
+    public function getActive()
+    {
+        $this->__load();
+        return parent::getActive();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'manufacturer', 'vehicles', 'created', 'updated');
+        return array('__isInitialized__', 'id', 'name', 'manufacturer', 'vehicles', 'active', 'created', 'updated');
     }
 
     public function __clone()

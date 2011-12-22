@@ -172,4 +172,26 @@ class Maintenance
     {
         return $this->updated;
     }
+
+    /**
+     * Set notes
+     *
+     * @param text $notes
+     * @return Maintenance
+     */
+    public function setNotes($notes)
+    {
+        $this->notes = $notes;
+        return $this;
+    }
+
+    /**
+     * Get notes
+     *
+     * @return text 
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
 }

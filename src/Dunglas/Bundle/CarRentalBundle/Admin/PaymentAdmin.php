@@ -15,7 +15,7 @@ class PaymentAdmin extends Admin
         $form
                 ->add('amount')
                 ->add('date')
-                ->add('renting')
+                //->add('renting')
                 ->add('notes', null, array('required' => false));
     }
 
@@ -26,8 +26,6 @@ class PaymentAdmin extends Admin
                 ->add('date')
                 ->add('renting')
                 ->add('amount')
-                ->add('created')
-                ->add('updated')
                 ->add('_action', 'actions', array(
                     'actions' => array(
                         'edit' => array()))

@@ -33,19 +33,6 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
-     * Gets the 'acme.demo.listener' service.
-     *
-     * This service is shared.
-     * This method always returns the same instance of the service.
-     *
-     * @return Acme\DemoBundle\ControllerListener A Acme\DemoBundle\ControllerListener instance.
-     */
-    protected function getAcme_Demo_ListenerService()
-    {
-        return $this->services['acme.demo.listener'] = new \Acme\DemoBundle\ControllerListener($this->get('twig.extension.acme.demo'));
-    }
-
-    /**
      * Gets the 'annotation_reader' service.
      *
      * This service is shared.
@@ -87,7 +74,6 @@ class appDevDebugProjectContainer extends Container
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SonataAdminBundle', '/Users/dunglas/Documents/workspace/CarRental/app/Resources/SonataAdminBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SonataAdminBundle', '/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sonata/AdminBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'KnpMenuBundle', '/Users/dunglas/Documents/workspace/CarRental/app/Resources/KnpMenuBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'KnpMenuBundle', '/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Knp/Bundle/MenuBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'DunglasCarRentalBundle', '/Users/dunglas/Documents/workspace/CarRental/app/Resources/DunglasCarRentalBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'DunglasCarRentalBundle', '/Users/dunglas/Documents/workspace/CarRental/src/Dunglas/Bundle/CarRentalBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AcmeDemoBundle', '/Users/dunglas/Documents/workspace/CarRental/app/Resources/AcmeDemoBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AcmeDemoBundle', '/Users/dunglas/Documents/workspace/CarRental/src/Acme/DemoBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'WebProfilerBundle', '/Users/dunglas/Documents/workspace/CarRental/app/Resources/WebProfilerBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'WebProfilerBundle', '/Users/dunglas/Documents/workspace/CarRental/vendor/symfony/src/Symfony/Bundle/WebProfilerBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioDistributionBundle', '/Users/dunglas/Documents/workspace/CarRental/app/Resources/SensioDistributionBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioDistributionBundle', '/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sensio/Bundle/DistributionBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
         $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioGeneratorBundle', '/Users/dunglas/Documents/workspace/CarRental/app/Resources/SensioGeneratorBundle/views', '/\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioGeneratorBundle', '/Users/dunglas/Documents/workspace/CarRental/vendor/bundles/Sensio/Bundle/GeneratorBundle/Resources/views', '/\\.[^.]+\\.twig$/'))), 'twig');
@@ -307,7 +293,7 @@ class appDevDebugProjectContainer extends Container
         $instance->setValidator($this->get('validator'));
         $instance->setSecurityHandler($this->get('sonata.admin.security.handler.noop'));
         $instance->setMenuFactory($this->get('knp_menu.factory'));
-        $instance->setLabel('Customer');
+        $instance->setLabel('Customers');
         $instance->configure();
 
         return $instance;
@@ -333,7 +319,7 @@ class appDevDebugProjectContainer extends Container
         $instance->setValidator($this->get('validator'));
         $instance->setSecurityHandler($this->get('sonata.admin.security.handler.noop'));
         $instance->setMenuFactory($this->get('knp_menu.factory'));
-        $instance->setLabel('Fuel');
+        $instance->setLabel('Fuels');
         $instance->configure();
 
         return $instance;
@@ -359,7 +345,7 @@ class appDevDebugProjectContainer extends Container
         $instance->setValidator($this->get('validator'));
         $instance->setSecurityHandler($this->get('sonata.admin.security.handler.noop'));
         $instance->setMenuFactory($this->get('knp_menu.factory'));
-        $instance->setLabel('Manufacturer');
+        $instance->setLabel('Manufacturers');
         $instance->configure();
 
         return $instance;
@@ -385,7 +371,7 @@ class appDevDebugProjectContainer extends Container
         $instance->setValidator($this->get('validator'));
         $instance->setSecurityHandler($this->get('sonata.admin.security.handler.noop'));
         $instance->setMenuFactory($this->get('knp_menu.factory'));
-        $instance->setLabel('Model');
+        $instance->setLabel('Models');
         $instance->configure();
 
         return $instance;
@@ -411,7 +397,7 @@ class appDevDebugProjectContainer extends Container
         $instance->setValidator($this->get('validator'));
         $instance->setSecurityHandler($this->get('sonata.admin.security.handler.noop'));
         $instance->setMenuFactory($this->get('knp_menu.factory'));
-        $instance->setLabel('Payment');
+        $instance->setLabel('Payments');
         $instance->configure();
 
         return $instance;
@@ -437,7 +423,7 @@ class appDevDebugProjectContainer extends Container
         $instance->setValidator($this->get('validator'));
         $instance->setSecurityHandler($this->get('sonata.admin.security.handler.noop'));
         $instance->setMenuFactory($this->get('knp_menu.factory'));
-        $instance->setLabel('Renting');
+        $instance->setLabel('Rentings');
         $instance->configure();
 
         return $instance;
@@ -463,7 +449,7 @@ class appDevDebugProjectContainer extends Container
         $instance->setValidator($this->get('validator'));
         $instance->setSecurityHandler($this->get('sonata.admin.security.handler.noop'));
         $instance->setMenuFactory($this->get('knp_menu.factory'));
-        $instance->setLabel('Vehicle');
+        $instance->setLabel('Vehicles');
         $instance->configure();
 
         return $instance;
@@ -493,7 +479,6 @@ class appDevDebugProjectContainer extends Container
         $instance->addListenerService('kernel.view', array(0 => 'sensio_framework_extra.view.listener', 1 => 'onKernelView'), 0);
         $instance->addListenerService('kernel.response', array(0 => 'sensio_framework_extra.cache.listener', 1 => 'onKernelResponse'), 0);
         $instance->addListenerService('kernel.controller', array(0 => 'security.extra.controller_listener', 1 => 'onCoreController'), -255);
-        $instance->addListenerService('kernel.controller', array(0 => 'acme.demo.listener', 1 => 'onKernelController'), 0);
         $instance->addListenerService('kernel.response', array(0 => 'web_profiler.debug_toolbar', 1 => 'onKernelResponse'), -128);
         $instance->addSubscriberService('response_listener', 'Symfony\\Component\\HttpKernel\\EventListener\\ResponseListener');
         $instance->addSubscriberService('locale_listener', 'Symfony\\Component\\HttpKernel\\EventListener\\LocaleListener');
@@ -2762,7 +2747,6 @@ class appDevDebugProjectContainer extends Container
         $instance->addExtension(new \Symfony\Bundle\AsseticBundle\Twig\AsseticExtension($this->get('assetic.asset_factory'), true, array()));
         $instance->addExtension($this->get('sonata.admin.twig.extension'));
         $instance->addExtension(new \Knp\Menu\Twig\MenuExtension(new \Knp\Menu\Twig\Helper($this->get('knp_menu.renderer_provider'), $this->get('knp_menu.menu_provider'))));
-        $instance->addExtension($this->get('twig.extension.acme.demo'));
 
         return $instance;
     }
@@ -3050,23 +3034,6 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
-     * Gets the 'twig.extension.acme.demo' service.
-     *
-     * This service is shared.
-     * This method always returns the same instance of the service.
-     *
-     * This service is private.
-     * If you want to be able to request this service from the container directly,
-     * make it public, otherwise you might end up with broken code.
-     *
-     * @return Acme\DemoBundle\Twig\Extension\DemoExtension A Acme\DemoBundle\Twig\Extension\DemoExtension instance.
-     */
-    protected function getTwig_Extension_Acme_DemoService()
-    {
-        return $this->services['twig.extension.acme.demo'] = new \Acme\DemoBundle\Twig\Extension\DemoExtension($this->get('twig.loader'));
-    }
-
-    /**
      * Gets the 'validator.mapping.class_metadata_factory' service.
      *
      * This service is shared.
@@ -3171,7 +3138,6 @@ class appDevDebugProjectContainer extends Container
                 'SonataAdminBundle' => 'Sonata\\AdminBundle\\SonataAdminBundle',
                 'KnpMenuBundle' => 'Knp\\Bundle\\MenuBundle\\KnpMenuBundle',
                 'DunglasCarRentalBundle' => 'Dunglas\\Bundle\\CarRentalBundle\\DunglasCarRentalBundle',
-                'AcmeDemoBundle' => 'Acme\\DemoBundle\\AcmeDemoBundle',
                 'WebProfilerBundle' => 'Symfony\\Bundle\\WebProfilerBundle\\WebProfilerBundle',
                 'SensioDistributionBundle' => 'Sensio\\Bundle\\DistributionBundle\\SensioDistributionBundle',
                 'SensioGeneratorBundle' => 'Sensio\\Bundle\\GeneratorBundle\\SensioGeneratorBundle',

@@ -19,9 +19,8 @@ class FuelAdmin extends Admin
     protected function configureListFields(ListMapper $list)
     {
         $list
+                ->addIdentifier('id')
                 ->addIdentifier('name')
-                ->add('created')
-                ->add('updated')
                 ->add('_action', 'actions', array(
                     'actions' => array(
                         'edit' => array()))

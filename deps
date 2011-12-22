@@ -50,6 +50,9 @@
     git=http://github.com/symfony/AsseticBundle.git
     target=/bundles/Symfony/Bundle/AsseticBundle
 
+[doctrine-extensions]
+    git=git://github.com/l3pp4rd/DoctrineExtensions.git
+
 [StofDoctrineExtensionsBundle]
     git=git://github.com/stof/StofDoctrineExtensionsBundle.git
     target=/bundles/Stof/DoctrineExtensionsBundle

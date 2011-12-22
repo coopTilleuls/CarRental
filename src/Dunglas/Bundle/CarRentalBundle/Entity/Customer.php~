@@ -545,4 +545,14 @@ class Customer
     public function __toString() {
         return $this->getLastName() . ' ' . $this->getFirstName();
     }
+
+    /**
+     * Add rentals
+     *
+     * @param Dunglas\Bundle\CarRentalBundle\Entity\Renting $rentals
+     */
+    public function addRenting(\Dunglas\Bundle\CarRentalBundle\Entity\Renting $rentals)
+    {
+        $this->rentals[] = $rentals;
+    }
 }

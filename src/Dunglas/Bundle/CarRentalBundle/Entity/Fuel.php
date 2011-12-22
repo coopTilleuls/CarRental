@@ -3,6 +3,7 @@
 namespace Dunglas\Bundle\CarRentalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -31,29 +32,33 @@ class Fuel
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Vehicle", mappedBy="fuel")
      */
     private $vehicles;
-    
+
     /**
      * @ORM\Column(name="created", type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
     private $created;
-    
+
     /**
      * @ORM\Column(name="updated", type="datetime")
      * @Gedmo\Timestampable(on="update")
      */
     private $updated;
 
+    public function __construct()
+    {
+        $this->vehicles = new ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -73,17 +78,13 @@ class Fuel
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
         return $this->name;
     }
-    public function __construct()
-    {
-        $this->vehicles = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
+
     /**
      * Set created
      *
@@ -97,7 +98,7 @@ class Fuel
     /**
      * Get created
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreated()
     {
@@ -117,7 +118,7 @@ class Fuel
     /**
      * Get updated
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdated()
     {
@@ -137,14 +138,15 @@ class Fuel
     /**
      * Get vehicles
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getVehicles()
     {
         return $this->vehicles;
     }
-    
-    public function __toString() {
+
+    public function __toString()
+    {
         return $this->getName();
     }
 

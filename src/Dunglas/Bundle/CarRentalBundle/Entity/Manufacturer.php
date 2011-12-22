@@ -3,6 +3,7 @@
 namespace Dunglas\Bundle\CarRentalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -31,29 +32,45 @@ class Manufacturer
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Model", mappedBy="manufacturer")
      */
     private $models;
-    
+
+    /**
+     * @var boolean $active
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
+    private $active = true;
+
     /**
      * @ORM\Column(name="created", type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
     private $created;
-    
+
     /**
      * @ORM\Column(name="updated", type="datetime")
      * @Gedmo\Timestampable(on="update")
      */
     private $updated;
 
+    public function __construct()
+    {
+        $this->models = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -73,17 +90,13 @@ class Manufacturer
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
         return $this->name;
     }
-    public function __construct()
-    {
-        $this->models = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
+
     /**
      * Set created
      *
@@ -97,7 +110,7 @@ class Manufacturer
     /**
      * Get created
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreated()
     {
@@ -117,7 +130,7 @@ class Manufacturer
     /**
      * Get updated
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdated()
     {
@@ -137,15 +150,11 @@ class Manufacturer
     /**
      * Get models
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getModels()
     {
         return $this->models;
-    }
-    
-    public function __toString() {
-        return $this->getName();
     }
 
     /**
@@ -156,5 +165,27 @@ class Manufacturer
     public function addModel(\Dunglas\Bundle\CarRentalBundle\Entity\Model $models)
     {
         $this->models[] = $models;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return Manufacturer
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 }

@@ -31,34 +31,50 @@ class Model
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Manufacturer", inversedBy="models")
      */
     private $manufacturer;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Vehicle", mappedBy="model")
      */
     private $vehicles;
-    
+
+    /**
+     * @var boolean $active
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
+    private $active = true;
+
     /**
      * @ORM\Column(name="created", type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
     private $created;
-    
+
     /**
      * @ORM\Column(name="updated", type="datetime")
      * @Gedmo\Timestampable(on="update")
      */
     private $updated;
+    
+    public function __construct()
+    {
+        $this->vehicles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    public function __toString()
+    {
+        return /*$this->getManufacturer() + ' ' + */$this->getName();
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -78,17 +94,13 @@ class Model
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
         return $this->name;
     }
-    public function __construct()
-    {
-        $this->vehicles = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
+
     /**
      * Set created
      *
@@ -102,7 +114,7 @@ class Model
     /**
      * Get created
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getCreated()
     {
@@ -122,7 +134,7 @@ class Model
     /**
      * Get updated
      *
-     * @return datetime 
+     * @return datetime
      */
     public function getUpdated()
     {
@@ -142,7 +154,7 @@ class Model
     /**
      * Get manufacturer
      *
-     * @return Dunglas\Bundle\CarRentalBundle\Entity\Manufacturer 
+     * @return Dunglas\Bundle\CarRentalBundle\Entity\Manufacturer
      */
     public function getManufacturer()
     {
@@ -162,15 +174,11 @@ class Model
     /**
      * Get vehicles
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return Doctrine\Common\Collections\Collection
      */
     public function getVehicles()
     {
         return $this->vehicles;
-    }
-    
-    public function __toString() {
-        return $this->getName();
     }
 
     /**
@@ -181,5 +189,27 @@ class Model
     public function addVehicle(\Dunglas\Bundle\CarRentalBundle\Entity\Vehicle $vehicles)
     {
         $this->vehicles[] = $vehicles;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return Model
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 }

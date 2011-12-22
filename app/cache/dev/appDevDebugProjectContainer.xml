@@ -23,7 +23,6 @@
       <parameter key="SonataAdminBundle">Sonata\AdminBundle\SonataAdminBundle</parameter>
       <parameter key="KnpMenuBundle">Knp\Bundle\MenuBundle\KnpMenuBundle</parameter>
       <parameter key="DunglasCarRentalBundle">Dunglas\Bundle\CarRentalBundle\DunglasCarRentalBundle</parameter>
-      <parameter key="AcmeDemoBundle">Acme\DemoBundle\AcmeDemoBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
       <parameter key="SensioDistributionBundle">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</parameter>
       <parameter key="SensioGeneratorBundle">Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle</parameter>
@@ -460,7 +459,7 @@
   </parameters>
   <services>
     <service id="dunglas.carrental.admin.renting" class="Dunglas\Bundle\CarRentalBundle\Admin\RentingAdmin" scope="prototype">
-      <tag name="sonata.admin" manager_type="orm" group="Car Rental" label="Renting"/>
+      <tag name="sonata.admin" manager_type="orm" group="Car Rental" label="Rentings"/>
       <argument>dunglas.carrental.admin.renting</argument>
       <argument>Dunglas\Bundle\CarRentalBundle\Entity\Renting</argument>
       <argument>SonataAdminBundle:CRUD</argument>
@@ -498,12 +497,12 @@
         <argument type="service" id="knp_menu.factory"/>
       </call>
       <call method="setLabel">
-        <argument>Renting</argument>
+        <argument>Rentings</argument>
       </call>
       <call method="configure"/>
     </service>
     <service id="dunglas.carrental.admin.payment" class="Dunglas\Bundle\CarRentalBundle\Admin\PaymentAdmin" scope="prototype">
-      <tag name="sonata.admin" manager_type="orm" group="Car Rental" label="Payment"/>
+      <tag name="sonata.admin" manager_type="orm" group="Car Rental" label="Payments"/>
       <argument>dunglas.carrental.admin.payment</argument>
       <argument>Dunglas\Bundle\CarRentalBundle\Entity\Payment</argument>
       <argument>SonataAdminBundle:CRUD</argument>
@@ -541,12 +540,12 @@
         <argument type="service" id="knp_menu.factory"/>
       </call>
       <call method="setLabel">
-        <argument>Payment</argument>
+        <argument>Payments</argument>
       </call>
       <call method="configure"/>
     </service>
     <service id="dunglas.carrental.admin.customer" class="Dunglas\Bundle\CarRentalBundle\Admin\CustomerAdmin" scope="prototype">
-      <tag name="sonata.admin" manager_type="orm" group="Car Rental" label="Customer"/>
+      <tag name="sonata.admin" manager_type="orm" group="Car Rental" label="Customers"/>
       <argument>dunglas.carrental.admin.customer</argument>
       <argument>Dunglas\Bundle\CarRentalBundle\Entity\Customer</argument>
       <argument>SonataAdminBundle:CRUD</argument>
@@ -584,12 +583,12 @@
         <argument type="service" id="knp_menu.factory"/>
       </call>
       <call method="setLabel">
-        <argument>Customer</argument>
+        <argument>Customers</argument>
       </call>
       <call method="configure"/>
     </service>
     <service id="dunglas.carrental.admin.vehicle" class="Dunglas\Bundle\CarRentalBundle\Admin\VehicleAdmin" scope="prototype">
-      <tag name="sonata.admin" manager_type="orm" group="Vehicle" label="Vehicle"/>
+      <tag name="sonata.admin" manager_type="orm" group="Vehicle" label="Vehicles"/>
       <argument>dunglas.carrental.admin.vehicle</argument>
       <argument>Dunglas\Bundle\CarRentalBundle\Entity\Vehicle</argument>
       <argument>SonataAdminBundle:CRUD</argument>
@@ -627,12 +626,12 @@
         <argument type="service" id="knp_menu.factory"/>
       </call>
       <call method="setLabel">
-        <argument>Vehicle</argument>
+        <argument>Vehicles</argument>
       </call>
       <call method="configure"/>
     </service>
     <service id="dunglas.carrental.admin.manufacturer" class="Dunglas\Bundle\CarRentalBundle\Admin\ManufacturerAdmin" scope="prototype">
-      <tag name="sonata.admin" manager_type="orm" group="Config" label="Manufacturer"/>
+      <tag name="sonata.admin" manager_type="orm" group="Config" label="Manufacturers"/>
       <argument>dunglas.carrental.admin.manufacturer</argument>
       <argument>Dunglas\Bundle\CarRentalBundle\Entity\Manufacturer</argument>
       <argument>SonataAdminBundle:CRUD</argument>
@@ -670,12 +669,12 @@
         <argument type="service" id="knp_menu.factory"/>
       </call>
       <call method="setLabel">
-        <argument>Manufacturer</argument>
+        <argument>Manufacturers</argument>
       </call>
       <call method="configure"/>
     </service>
     <service id="dunglas.carrental.admin.model" class="Dunglas\Bundle\CarRentalBundle\Admin\ModelAdmin" scope="prototype">
-      <tag name="sonata.admin" manager_type="orm" group="Config" label="Model"/>
+      <tag name="sonata.admin" manager_type="orm" group="Config" label="Models"/>
       <argument>dunglas.carrental.admin.model</argument>
       <argument>Dunglas\Bundle\CarRentalBundle\Entity\Model</argument>
       <argument>SonataAdminBundle:CRUD</argument>
@@ -713,12 +712,12 @@
         <argument type="service" id="knp_menu.factory"/>
       </call>
       <call method="setLabel">
-        <argument>Model</argument>
+        <argument>Models</argument>
       </call>
       <call method="configure"/>
     </service>
     <service id="dunglas.carrental.admin.fuel" class="Dunglas\Bundle\CarRentalBundle\Admin\FuelAdmin" scope="prototype">
-      <tag name="sonata.admin" manager_type="orm" group="Config" label="Fuel"/>
+      <tag name="sonata.admin" manager_type="orm" group="Config" label="Fuels"/>
       <argument>dunglas.carrental.admin.fuel</argument>
       <argument>Dunglas\Bundle\CarRentalBundle\Entity\Fuel</argument>
       <argument>SonataAdminBundle:CRUD</argument>
@@ -756,7 +755,7 @@
         <argument type="service" id="knp_menu.factory"/>
       </call>
       <call method="setLabel">
-        <argument>Fuel</argument>
+        <argument>Fuels</argument>
       </call>
       <call method="configure"/>
     </service>
@@ -872,14 +871,6 @@
           <argument>onCoreController</argument>
         </argument>
         <argument>-255</argument>
-      </call>
-      <call method="addListenerService">
-        <argument>kernel.controller</argument>
-        <argument type="collection">
-          <argument>acme.demo.listener</argument>
-          <argument>onKernelController</argument>
-        </argument>
-        <argument>0</argument>
       </call>
       <call method="addListenerService">
         <argument>kernel.response</argument>
@@ -2221,9 +2212,6 @@
           </service>
         </argument>
       </call>
-      <call method="addExtension">
-        <argument type="service" id="twig.extension.acme.demo"/>
-      </call>
     </service>
     <service id="twig.loader" class="Symfony\Bundle\TwigBundle\Loader\FilesystemLoader">
       <argument type="service" id="templating.locator"/>
@@ -2848,33 +2836,6 @@
               <argument type="service">
                 <service class="%assetic.directory_resource.class%" public="false">
                   <argument type="service" id="templating.loader"/>
-                  <argument>AcmeDemoBundle</argument>
-                  <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/AcmeDemoBundle/views</argument>
-                  <argument>/\.[^.]+\.twig$/</argument>
-                </service>
-              </argument>
-              <argument type="service">
-                <service class="%assetic.directory_resource.class%" public="false">
-                  <argument type="service" id="templating.loader"/>
-                  <argument>AcmeDemoBundle</argument>
-                  <argument>/Users/dunglas/Documents/workspace/CarRental/src/Acme/DemoBundle/Resources/views</argument>
-                  <argument>/\.[^.]+\.twig$/</argument>
-                </service>
-              </argument>
-            </argument>
-          </service>
-        </argument>
-        <argument>twig</argument>
-      </call>
-      <call method="addResource">
-        <argument type="service">
-          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
-            <tag name="assetic.templating.twig"/>
-            <tag name="assetic.formula_resource" loader="twig"/>
-            <argument type="collection">
-              <argument type="service">
-                <service class="%assetic.directory_resource.class%" public="false">
-                  <argument type="service" id="templating.loader"/>
                   <argument>WebProfilerBundle</argument>
                   <argument>/Users/dunglas/Documents/workspace/CarRental/app/Resources/WebProfilerBundle/views</argument>
                   <argument>/\.[^.]+\.twig$/</argument>
@@ -3270,14 +3231,6 @@
       <tag name="knp_menu.renderer" alias="twig"/>
       <argument type="service" id="twig"/>
       <argument>knp_menu.html.twig</argument>
-    </service>
-    <service id="twig.extension.acme.demo" class="Acme\DemoBundle\Twig\Extension\DemoExtension" public="false">
-      <tag name="twig.extension"/>
-      <argument type="service" id="twig.loader"/>
-    </service>
-    <service id="acme.demo.listener" class="Acme\DemoBundle\ControllerListener">
-      <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController"/>
-      <argument type="service" id="twig.extension.acme.demo"/>
     </service>
     <service id="web_profiler.debug_toolbar" class="Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener">
       <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" priority="-128"/>

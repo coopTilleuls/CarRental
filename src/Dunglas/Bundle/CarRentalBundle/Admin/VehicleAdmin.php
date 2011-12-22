@@ -27,11 +27,10 @@ class VehicleAdmin extends Admin
     protected function configureListFields(ListMapper $list)
     {
         $list
+                ->addIdentifier('id')
                 ->addIdentifier('numberPlate')
                 ->add('model')
                 ->add('active')
-                ->add('created')
-                ->add('updated')
                 ->add('_action', 'actions', array(
                     'actions' => array(
                         'edit' => array()))

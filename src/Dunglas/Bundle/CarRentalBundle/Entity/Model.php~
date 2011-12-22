@@ -43,6 +43,13 @@ class Model
     private $vehicles;
     
     /**
+     * @var boolean $active
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
+    private $active = true;
+    
+    /**
      * @ORM\Column(name="created", type="datetime")
      * @Gedmo\Timestampable(on="create")
      */
@@ -171,5 +178,15 @@ class Model
     
     public function __toString() {
         return $this->getName();
+    }
+
+    /**
+     * Add vehicles
+     *
+     * @param Dunglas\Bundle\CarRentalBundle\Entity\Vehicle $vehicles
+     */
+    public function addVehicle(\Dunglas\Bundle\CarRentalBundle\Entity\Vehicle $vehicles)
+    {
+        $this->vehicles[] = $vehicles;
     }
 }

@@ -66,7 +66,7 @@ class Renting
      *
      * @ORM\Column(name="active", type="boolean")
      */
-    private $active;
+    private $active = true;
     
     /**
      * @ORM\OneToMany(targetEntity="Payment", mappedBy="renting")
@@ -311,6 +311,16 @@ class Renting
     }
     
     public function __toString() {
-        return $this->getId() . ' - ' . $this->getCustomer();
+        return $this->getId() . ' - ' . $this->getVehicle() . ' - ' . $this->getCustomer();
+    }
+
+    /**
+     * Add payments
+     *
+     * @param Dunglas\Bundle\CarRentalBundle\Entity\Payment $payments
+     */
+    public function addPayment(\Dunglas\Bundle\CarRentalBundle\Entity\Payment $payments)
+    {
+        $this->payments[] = $payments;
     }
 }

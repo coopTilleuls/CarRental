@@ -391,4 +391,24 @@ class Vehicle
     public function __toString() {
         return $this->getModel()->getManufacturer() . ' ' . $this->getModel() . ' (' . $this->getNumberPlate() . ')';
     }
+
+    /**
+     * Add rentals
+     *
+     * @param Dunglas\Bundle\CarRentalBundle\Entity\Renting $rentals
+     */
+    public function addRenting(\Dunglas\Bundle\CarRentalBundle\Entity\Renting $rentals)
+    {
+        $this->rentals[] = $rentals;
+    }
+
+    /**
+     * Add maintenances
+     *
+     * @param Dunglas\Bundle\CarRentalBundle\Entity\Maintenance $maintenances
+     */
+    public function addMaintenance(\Dunglas\Bundle\CarRentalBundle\Entity\Maintenance $maintenances)
+    {
+        $this->maintenances[] = $maintenances;
+    }
 }
