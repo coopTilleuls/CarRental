@@ -17,11 +17,11 @@ Features
 Installation
 ------------
 
+Copy `app/config/parameters.yml-dist` to `app/config/parameters.yml` and edit it to match your database credentials.
+
 Install the vendors:
 
-    php bin/vendors install
-
-Copy `app/config/parameters.yml-dist` to `app/config/parameters.yml` and edit it to match your database credentials.
+    php bin/vendors install --reinstall
 
 Generate bootstrap files:
 

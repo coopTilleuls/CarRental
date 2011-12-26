@@ -118,7 +118,7 @@
                 <target>Sortie le</target>
             </trans-unit>
             <trans-unit id="scheduledreturn">
-                <source>Scheduledreturn</source>
+                <source>Scheduled Return</source>
                 <target>Retour prévu le</target>
             </trans-unit>
             <trans-unit id="return">
@@ -175,24 +175,24 @@
                 <source>phoneNumber1</source>
                 <target>Téléphone 1</target>
             </trans-unit>
-            <trans-unit id="Gender">
-                <source>Gender</source>
+            <trans-unit id="Honorific">
+                <source>Honorific</source>
                 <target>Civilité</target>
             </trans-unit>
-            <trans-unit id="male">
-                <source>male</source>
+            <trans-unit id="mr">
+                <source>Mr.</source>
                 <target>Monsieur</target>
             </trans-unit>
-            <trans-unit id="female">
-                <source>female</source>
+            <trans-unit id="ms">
+                <source>Ms.</source>
                 <target>Madame</target>
             </trans-unit>
-            <trans-unit id="Lastname">
-                <source>Lastname</source>
+            <trans-unit id="Last Name">
+                <source>Last Name</source>
                 <target>Nom</target>
             </trans-unit>
             <trans-unit id="Firstname">
-                <source>Firstname</source>
+                <source>First Name</source>
                 <target>Prénom</target>
             </trans-unit>
             <trans-unit id="Address1">
@@ -207,8 +207,8 @@
                 <source>City</source>
                 <target>Ville</target>
             </trans-unit>
-            <trans-unit id="Zipcode">
-                <source>Zipcode</source>
+            <trans-unit id="ZipCode">
+                <source>Zip Code</source>
                 <target>Code postal</target>
             </trans-unit>
             <trans-unit id="Country">
@@ -216,19 +216,19 @@
                 <target>Pays</target>
             </trans-unit>
             <trans-unit id="EmailAddress">
-                <source>Emailaddress</source>
+                <source>Email Address</source>
                 <target>Email</target>
             </trans-unit>
-            <trans-unit id="Phonenumber1">
-                <source>Phonenumber1</source>
+            <trans-unit id="PhoneNumber1">
+                <source>Phone Number1</source>
                 <target>Téléphone 1</target>
             </trans-unit>
-            <trans-unit id="Phonenumber2">
-                <source>Phonenumber2</source>
+            <trans-unit id="PhoneNumber2">
+                <source>Phone Number2</source>
                 <target>Téléphone 2</target>
             </trans-unit>
-            <trans-unit id="Registrationdate">
-                <source>Registrationdate</source>
+            <trans-unit id="RegistrationDate">
+                <source>Registration Date</source>
                 <target>Date d'adhésion</target>
             </trans-unit>
             <trans-unit id="Birth">
@@ -256,20 +256,20 @@
                 <source>model</source>
                 <target>Modèle</target>
             </trans-unit>
-            <trans-unit id="Numberplate">
-                <source>Numberplate</source>
+            <trans-unit id="NumberPlate">
+                <source>Number Plate</source>
                 <target>Immatriculation</target>
             </trans-unit>
             <trans-unit id="Version">
                 <source>Version</source>
                 <target>Version</target>
             </trans-unit>
-            <trans-unit id="Nextvehicleinspection">
-                <source>Nextvehicleinspection</source>
+            <trans-unit id="NextVehicleInspection">
+                <source>Next Vehicle Inspection</source>
                 <target>Dernière révision</target>
             </trans-unit>
-            <trans-unit id="Lastvalvetrain">
-                <source>Lastvalvetrain</source>
+            <trans-unit id="LastValvetrain">
+                <source>Last Valvetrain</source>
                 <target>Dernière distribution</target>
             </trans-unit>
             <trans-unit id="Valvetrain">

@@ -21,7 +21,7 @@ class VehicleAdmin extends Admin
                 ->add('lastValvetrain')
                 ->add('valvetrain')
                 ->add('notes', null, array('required' => false))
-                ->add('active');
+                ->add('active', null, array('required' => false));
     }
 
     protected function configureListFields(ListMapper $list)

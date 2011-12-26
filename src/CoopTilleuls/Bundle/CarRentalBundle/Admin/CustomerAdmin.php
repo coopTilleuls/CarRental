@@ -15,7 +15,7 @@ class CustomerAdmin extends Admin
     protected function configureFormFields(FormMapper $form)
     {
         $form
-                ->add('gender', 'choice', array('choices' => Customer::getGenders()))
+                ->add('honorific', 'choice', array('choices' => Customer::getHonorifics()))
                 ->add('lastName')
                 ->add('firstName')
                 ->add('birth')
@@ -28,7 +28,7 @@ class CustomerAdmin extends Admin
                 ->add('phoneNumber2', null, array('required' => false))
                 ->add('emailAddress', null, array('required' => false))
                 ->add('registrationDate')
-                ->add('active')
+                ->add('active', null, array('required' => false))
                 ->add('notes', null, array('required' => false));
     }
 

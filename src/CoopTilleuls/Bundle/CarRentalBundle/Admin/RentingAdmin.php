@@ -19,8 +19,7 @@ class RentingAdmin extends Admin
                 ->add('exited')
                 ->add('scheduledReturn')
                 ->add('returned')
-                ->add('payments', 'sonata_type_collection', array(), array('edit' => 'inline',
-                    'inline' => 'table'))
+                //->add('payments', 'sonata_type_collection', array(), array('edit' => 'inline', 'inline' => 'table'))
                 ->add('active')
                 ->add('notes', null, array('required' => false));
     }

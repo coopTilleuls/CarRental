@@ -28,12 +28,12 @@ class Customer
      * @var string $gender
      *
      * @ Assert \ Choice(
-     *     choices = { "male", "female" },
-     *     message = "Choose a valid gender."
+     *     choices = { "Mr.", "Mrs." },
+     *     message = "Choose a valid honorific."
      * )
-     * @ORM\Column(name="gender", type="string", length=2)
+     * @ORM\Column(name="honorific", type="integer")
      */
-    private $gender;
+    private $honorific;
 
     /**
      * @var string $lastName
@@ -161,6 +161,10 @@ class Customer
     {
         return $this->getLastName() . ' ' . $this->getFirstName();
     }
+    
+    public static function getHonorifics() {
+        return array(0 => 'Mr.', 1 => 'Ms.');
+    }
 
     /**
      * Get id
@@ -173,14 +177,14 @@ class Customer
     }
 
     /**
-     * Set gender
+     * Set honorific
      *
-     * @param string $gender
+     * @param string $honorific
      * @return Customer
      */
-    public function setGender($gender)
+    public function setHonorific($honorific)
     {
-        $this->gender = $gender;
+        $this->honorific = $honorific;
         return $this;
     }
 
@@ -189,9 +193,9 @@ class Customer
      *
      * @return string 
      */
-    public function getGender()
+    public function getHonorific()
     {
-        return $this->gender;
+        return $this->honorific;
     }
 
     /**
