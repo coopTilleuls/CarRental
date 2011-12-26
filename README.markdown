@@ -1,6 +1,19 @@
 CarRental
 =========
 
+CarRental is a web application designed to manage car rental organizations.
+This is a gracious realization of [La Coopérative des Tilleuls](http://la-cooperative-des-tilleuls.com/) originally intended for the association [Auto Solidaire](http://www.as-ats.fr/) (Roubaix, France).
+
+This free software is built using [Symfony2](http://symfony.com/) and [the Sonata Project](http://sonata-project.org/).
+
+Features
+--------
+
+- Manage rentals
+- Manage customers
+- Manage vehicle park
+- Mange system users
+
 Installation
 ------------
 
@@ -9,6 +22,10 @@ Install the vendors:
     php bin/vendors install
 
 Copy `app/config/parameters.yml-dist` to `app/config/parameters.yml` and edit it to match your database credentials.
+
+Generate bootstrap files:
+
+    php vendor/bundles/Sensio/Bundle/DistributionBundle/Resources/bin/build_bootstrap.php
 
 Create the database schema:
 
@@ -22,7 +39,13 @@ Create your admin account:
 
     php app/console fos:user:create --super-admin kevin kevin@example.com mypassword
 
+Install assets:
+
+    php app/console assets:install web/
+
+Go to `http://localhost/` and enjoy.
+
 License
 -------
 
-This bundle is under the AGPL v3 license. See the complete license in the file `LICENSE`
+This bundle is under the AGPL v3 license. See the complete license in the file `LICENSE`.

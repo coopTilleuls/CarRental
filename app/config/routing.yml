@@ -3,6 +3,10 @@
 #   resource: "@FrameworkBundle/Resources/config/routing/internal.xml"
 #   prefix:   /_internal
 
+homepage:
+    pattern:   /
+    defaults:  { _controller: CoopTilleulsCarRentalBundle:Core:homepage }
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
@@ -32,4 +36,4 @@ sonata_user:
 _sonata_admin:
     resource: .
     type: sonata_admin
-    prefix: /
+    prefix: /admin
