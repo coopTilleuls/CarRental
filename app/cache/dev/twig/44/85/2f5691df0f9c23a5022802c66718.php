@@ -3,15 +3,10 @@
 /* TwigBundle:Exception:logs.html.twig */
 class __TwigTemplate_44852f5691df0f9c23a5022802c66718 extends Twig_Template
 {
-    protected function doGetParent(array $context)
-    {
-        return false;
-    }
-
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
-        echo "<ol class=\"traces\">
+        echo "<ol class=\"traces logs\">
     ";
         // line 2
         $context['_parent'] = (array) $context;

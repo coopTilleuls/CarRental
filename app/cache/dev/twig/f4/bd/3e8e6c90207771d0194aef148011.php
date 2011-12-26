@@ -14,24 +14,19 @@ class __TwigTemplate_f4bd3e8e6c90207771d0194aef148011 extends Twig_Template
         );
     }
 
-    protected function doGetParent(array $context)
-    {
-        return false;
-    }
-
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
         echo "<!DOCTYPE html>
-<html>
+<html lang=\"en\">
     <head>
-        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />
+        <meta charset=\"UTF-8\" />
         <meta name=\"robots\" content=\"noindex,nofollow\" />
         <title>";
         // line 6
         $this->displayBlock('title', $context, $blocks);
         echo "</title>
-        <link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"";
+        <link rel=\"icon\" type=\"image/x-icon\" sizes=\"16x16\" href=\"";
         // line 7
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/webprofiler/favicon.ico"), "html", null, true);
         echo "\" />
@@ -60,13 +55,13 @@ class __TwigTemplate_f4bd3e8e6c90207771d0194aef148011 extends Twig_Template
     public function block_head($context, array $blocks = array())
     {
         // line 9
-        echo "            <link href=\"";
+        echo "            <link rel=\"stylesheet\" href=\"";
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/webprofiler/css/toolbar.css"), "html", null, true);
-        echo "\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
-            <link href=\"";
+        echo "\"  />
+            <link rel=\"stylesheet\" href=\"";
         // line 10
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/webprofiler/css/profiler.css"), "html", null, true);
-        echo "\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
+        echo "\" />
         ";
     }
 

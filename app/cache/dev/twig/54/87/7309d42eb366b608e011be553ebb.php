@@ -3,17 +3,12 @@
 /* WebProfilerBundle:Profiler:toolbar_js.html.twig */
 class __TwigTemplate_54877309d42eb366b608e011be553ebb extends Twig_Template
 {
-    protected function doGetParent(array $context)
-    {
-        return false;
-    }
-
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
         echo "<div id=\"sfwdt";
         echo twig_escape_filter($this->env, $this->getContext($context, "token"), "html", null, true);
-        echo "\" style=\"display: none\"></div>
+        echo "\" class=\"sf-toolbar\" style=\"display: none\"></div>
 <script type=\"text/javascript\">/*<![CDATA[*/
     (function () {
         var wdt, xhr;

@@ -3,11 +3,6 @@
 /* TwigBundle:Exception:traces.html.twig */
 class __TwigTemplate_fac255e20c992eb0536dca16ec8112d0 extends Twig_Template
 {
-    protected function doGetParent(array $context)
-    {
-        return false;
-    }
-
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
@@ -27,8 +22,7 @@ class __TwigTemplate_fac255e20c992eb0536dca16ec8112d0 extends Twig_Template
             // line 5
             echo $this->env->getExtension('code')->abbrClass($this->getAttribute($this->getContext($context, "exception"), "class"));
             echo ": ";
-            echo twig_escape_filter($this->env, twig_strtr($this->getAttribute($this->getContext($context, "exception"), "message"), array("
-" => "<br />")), "html", null, true);
+            echo $this->env->getExtension('code')->formatFileFromText(nl2br(twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, "exception"), "message"), "html", null, true)));
             echo "&nbsp;
             ";
             // line 6

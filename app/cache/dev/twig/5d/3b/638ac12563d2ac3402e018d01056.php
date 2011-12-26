@@ -28,9 +28,9 @@ class __TwigTemplate_5d3b638ac12563d2ac3402e018d01056 extends Twig_Template
     public function block_head($context, array $blocks = array())
     {
         // line 4
-        echo "    <link href=\"";
+        echo "    <link rel=\"stylesheet\" href=\"";
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/framework/css/exception.css"), "html", null, true);
-        echo "\" rel=\"stylesheet\" type=\"text/css\" media=\"screen\" />
+        echo "\" />
     ";
         // line 5
         $this->displayParentBlock("head", $context, $blocks);

@@ -74,41 +74,40 @@ class __TwigTemplate_7499a50c8b86c0648f4054d33ca9f30a extends Twig_Template
         echo "
     ";
         // line 22
-        $context["icon"] = new Twig_Markup("        <img width=\"21\" height=\"28\" alt=\"Environment\" style=\"border-width: 0; vertical-align: middle; margin-right: 5px;\" src=\"data:image/png;base64,
-        iVBORw0KGgoAAAANSUhEUgAAABUAAAAcCAYAAACOGPReAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAZNJREFUeNpi/P//PwO1ARMDDcCooWDA4+npeRiEQWw0NTweHh4nQZhYORYoLf39+3cbGBuIbyJplPnx44cZjA3ENwjJwQzljoqKOghjo7lGBAcbBLiA+g7B2DBBRqCXj3/79s0CRSUX14lt27a5AplfgNgBCPaDxA8cOOAIokBe9fLy2o1LHxO6BAhAxWTwxIUMPn0seDTCvPotLi7uJIyNIxhQ9OEzVADoRZSgWbRo0UmoF1vx6GPBl06l8XhRmtzEL0KmHF5DWcmUo1E21dLSeo0uCBX7jUffb3z6GIGFdC2QYXPp0iVw4Ovp6T0FUkeA+BUw0c/AZiIwE2QAKTEc+laBktQqIL6al5e3FqqhDsQHYhU8Ln0CzVnY9D1hghYeD5E0PISKfcDjxQ949H2FJX5eJEkY+820adMm4/DiGzz6GFgIeBFX0DzBF/swQ/8oKCi8h7Gh9FeodzikpKSeQ8XuopW12PQxMEKraE0gDoSKrQfi60gaSZaDGQqqCiShks+h5Si8yiBVjnFkNyYAAgwAQGPBFLF65f4AAAAASUVORK5CYII=\"/>
+        $context["icon"] = new Twig_Markup("        <img width=\"21\" height=\"28\" alt=\"Environment\" style=\"border-width: 0; vertical-align: middle; margin-right: 5px;\" src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAcCAYAAACOGPReAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAZNJREFUeNpi/P//PwO1ARMDDcCooWDA4+npeRiEQWw0NTweHh4nQZhYORYoLf39+3cbGBuIbyJplPnx44cZjA3ENwjJwQzljoqKOghjo7lGBAcbBLiA+g7B2DBBRqCXj3/79s0CRSUX14lt27a5AplfgNgBCPaDxA8cOOAIokBe9fLy2o1LHxO6BAhAxWTwxIUMPn0seDTCvPotLi7uJIyNIxhQ9OEzVADoRZSgWbRo0UmoF1vx6GPBl06l8XhRmtzEL0KmHF5DWcmUo1E21dLSeo0uCBX7jUffb3z6GIGFdC2QYXPp0iVw4Ovp6T0FUkeA+BUw0c/AZiIwE2QAKTEc+laBktQqIL6al5e3FqqhDsQHYhU8Ln0CzVnY9D1hghYeD5E0PISKfcDjxQ949H2FJX5eJEkY+820adMm4/DiGzz6GFgIeBFX0DzBF/swQ/8oKCi8h7Gh9FeodzikpKSeQ8XuopW12PQxMEKraE0gDoSKrQfi60gaSZaDGQqqCiShks+h5Si8yiBVjnFkNyYAAgwAQGPBFLF65f4AAAAASUVORK5CYII=\"/>
     ");
-        // line 26
+        // line 25
         echo "    ";
         ob_start();
-        // line 27
+        // line 26
         echo "        ";
         ob_start();
-        // line 28
+        // line 27
         echo "            ";
         if ($this->getContext($context, "verbose")) {
-            // line 29
+            // line 28
             echo "                <span>";
             echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, "collector"), "appname"), "html", null, true);
             echo "</span>
                 <span style=\"margin: 0; padding: 0; color: #979696;\">|</span>
                 <span>";
-            // line 31
+            // line 30
             echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, "collector"), "env"), "html", null, true);
             echo "</span>
                 <span style=\"margin: 0; padding: 0; color: #979696;\">|</span>
                 <span>";
-            // line 33
+            // line 32
             echo (($this->getAttribute($this->getContext($context, "collector"), "debug")) ? ("debug") : ("no-debug"));
             echo "</span>
                 <span style=\"margin: 0; padding: 0; color: #979696;\">|</span>
             ";
         }
-        // line 36
+        // line 35
         echo "            <span>
                 ";
-        // line 37
+        // line 36
         if ($this->getContext($context, "profiler_url")) {
-            // line 38
+            // line 37
             echo "                    <a style=\"color: #2f2f2f\" href=\"";
             echo twig_escape_filter($this->env, $this->getContext($context, "profiler_url"), "html", null, true);
             echo "\">";
@@ -116,31 +115,31 @@ class __TwigTemplate_7499a50c8b86c0648f4054d33ca9f30a extends Twig_Template
             echo "</a>
                 ";
         } else {
-            // line 40
+            // line 39
             echo "                    ";
             echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, "collector"), "token"), "html", null, true);
             echo "
                 ";
         }
-        // line 42
+        // line 41
         echo "            </span>
         ";
         echo trim(preg_replace('/>\s+</', '><', ob_get_clean()));
-        // line 44
+        // line 43
         echo "    ";
         $context["text"] = new Twig_Markup(ob_get_clean());
-        // line 45
+        // line 44
         echo "    ";
         $this->env->loadTemplate("WebProfilerBundle:Profiler:toolbar_item.html.twig")->display(array_merge($context, array("link" => $this->getContext($context, "profiler_url"))));
     }
 
-    // line 48
+    // line 47
     public function block_menu($context, array $blocks = array())
     {
-        // line 49
+        // line 48
         echo "<span class=\"label\">
     <span class=\"icon\"><img src=\"";
-        // line 50
+        // line 49
         echo twig_escape_filter($this->env, $this->env->getExtension('assets')->getAssetUrl("bundles/webprofiler/images/profiler/config.png"), "html", null, true);
         echo "\" alt=\"Configuration\" /></span>
     <strong>Config</strong>
@@ -148,10 +147,10 @@ class __TwigTemplate_7499a50c8b86c0648f4054d33ca9f30a extends Twig_Template
 ";
     }
 
-    // line 55
+    // line 54
     public function block_panel($context, array $blocks = array())
     {
-        // line 56
+        // line 55
         echo "    <h2>Project Configuration</h2>
     <table>
         <tr>
@@ -161,28 +160,28 @@ class __TwigTemplate_7499a50c8b86c0648f4054d33ca9f30a extends Twig_Template
         <tr>
             <th>Symfony version</th>
             <td>";
-        // line 64
+        // line 63
         echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, "collector"), "symfonyversion"), "html", null, true);
         echo "</td>
         </tr>
         <tr>
             <th>Application name</th>
             <td>";
-        // line 68
+        // line 67
         echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, "collector"), "appname"), "html", null, true);
         echo "</td>
         </tr>
         <tr>
             <th>Environment</th>
             <td>";
-        // line 72
+        // line 71
         echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, "collector"), "env"), "html", null, true);
         echo "</td>
         </tr>
         <tr>
             <th>Debug</th>
             <td>";
-        // line 76
+        // line 75
         echo (($this->getAttribute($this->getContext($context, "collector"), "debug")) ? ("enabled") : ("disabled"));
         echo "</td>
         </tr>
@@ -197,42 +196,42 @@ class __TwigTemplate_7499a50c8b86c0648f4054d33ca9f30a extends Twig_Template
         <tr>
             <th>PHP version</th>
             <td>";
-        // line 88
+        // line 87
         echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, "collector"), "phpversion"), "html", null, true);
         echo "</td>
         </tr>
         <tr>
             <th>Xdebug</th>
             <td>";
-        // line 92
+        // line 91
         echo (($this->getAttribute($this->getContext($context, "collector"), "hasxdebug")) ? ("enabled") : ("disabled"));
         echo "</td>
         </tr>
         <tr>
             <th>PHP acceleration</th>
             <td>";
-        // line 96
+        // line 95
         echo (($this->getAttribute($this->getContext($context, "collector"), "hasaccelerator")) ? ("enabled") : ("disabled"));
         echo "</td>
         </tr>
         <tr>
             <th>XCache</th>
             <td>";
-        // line 100
+        // line 99
         echo (($this->getAttribute($this->getContext($context, "collector"), "hasxcache")) ? ("enabled") : ("disabled"));
         echo "</td>
         </tr>
         <tr>
             <th>APC</th>
             <td>";
-        // line 104
+        // line 103
         echo (($this->getAttribute($this->getContext($context, "collector"), "hasapc")) ? ("enabled") : ("disabled"));
         echo "</td>
         </tr>
         <tr>
             <th>EAccelerator</th>
             <td>";
-        // line 108
+        // line 107
         echo (($this->getAttribute($this->getContext($context, "collector"), "haseaccelerator")) ? ("enabled") : ("disabled"));
         echo "</td>
         </tr>
@@ -245,21 +244,21 @@ class __TwigTemplate_7499a50c8b86c0648f4054d33ca9f30a extends Twig_Template
             <th>Path</th>
         </tr>
         ";
-        // line 118
+        // line 117
         $context["bundles"] = $this->getAttribute($this->getContext($context, "collector"), "bundles");
-        // line 119
+        // line 118
         echo "        ";
         $context['_parent'] = (array) $context;
         $context['_seq'] = twig_ensure_traversable(twig_sort_filter(twig_get_array_keys_filter($this->getContext($context, "bundles"))));
         foreach ($context['_seq'] as $context["_key"] => $context["name"]) {
-            // line 120
+            // line 119
             echo "        <tr>
             <th>";
-            // line 121
+            // line 120
             echo twig_escape_filter($this->env, $this->getContext($context, "name"), "html", null, true);
             echo "</th>
             <td>";
-            // line 122
+            // line 121
             echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, "bundles"), $this->getContext($context, "name"), array(), "array"), "html", null, true);
             echo "</td>
         </tr>
@@ -268,7 +267,7 @@ class __TwigTemplate_7499a50c8b86c0648f4054d33ca9f30a extends Twig_Template
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['name'], $context['_parent'], $context['loop']);
         $context = array_merge($_parent, array_intersect_key($context, $_parent));
-        // line 125
+        // line 124
         echo "    </table>
 
 ";

@@ -3,11 +3,6 @@
 /* TwigBundle:Exception:trace.html.twig */
 class __TwigTemplate_31241a6d20c3dcbf4388b6a53913c456 extends Twig_Template
 {
-    protected function doGetParent(array $context)
-    {
-        return false;
-    }
-
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
@@ -30,16 +25,19 @@ class __TwigTemplate_31241a6d20c3dcbf4388b6a53913c456 extends Twig_Template
             // line 7
             echo $this->env->getExtension('code')->formatArgs($this->getAttribute($this->getContext($context, "trace"), "args"));
             echo ")
-    <br />
 ";
         }
-        // line 10
+        // line 9
         echo "
 ";
-        // line 11
-        if (($this->getAttribute(twig_default_filter($this->getContext($context, "trace")), "file", array(), "any", true) && $this->getAttribute(twig_default_filter($this->getContext($context, "trace")), "line", array(), "any", true))) {
+        // line 10
+        if (((($this->getAttribute($this->getContext($context, "trace", true), "file", array(), "any", true, true) && $this->getAttribute($this->getContext($context, "trace"), "file")) && $this->getAttribute($this->getContext($context, "trace", true), "line", array(), "any", true, true)) && $this->getAttribute($this->getContext($context, "trace"), "line"))) {
+            // line 11
+            echo "    ";
+            echo (($this->getAttribute($this->getContext($context, "trace"), "function")) ? ("<br />") : (""));
+            echo "
+    in ";
             // line 12
-            echo "    in ";
             echo $this->env->getExtension('code')->formatFile($this->getAttribute($this->getContext($context, "trace"), "file"), $this->getAttribute($this->getContext($context, "trace"), "line"));
             echo "&nbsp;
     ";

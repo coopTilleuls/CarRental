@@ -1,0 +1,97 @@
+<?php
+
+namespace CoopTilleuls\Bundle\CarRentalBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+/**
+ * Dunglas\Bundle\CarRentalBundle\Entity\Renting
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Dunglas\Bundle\CarRentalBundle\Entity\RentingRepository")
+ */
+class Renting
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Customer", inversedBy="rentals")
+     */
+    private $customer;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Vehicle", inversedBy="rentals")
+     */
+    private $vehicle;
+
+    /**
+     * @var date $exited
+     *
+     * @ORM\Column(name="exited", type="datetime")
+     */
+    private $exited;
+
+    /**
+     * @var date $scheduledReturn
+     *
+     * @ORM\Column(name="scheduledReturn", type="datetime")
+     */
+    private $scheduledReturn;
+
+    /**
+     * @var date $returned
+     *
+     * @ORM\Column(name="returned", type="datetime")
+     */
+    private $returned;
+
+    /**
+     * @var text $notes
+     *
+     * @ORM\Column(name="notes", type="text", nullable=true)
+     */
+    private $notes;
+
+    /**
+     * @var boolean $active
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
+    private $active = true;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Payment", mappedBy="renting")
+     */
+    private $payments;
+
+    /**
+     * @ORM\Column(name="created", type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     */
+    private $created;
+
+    /**
+     * @ORM\Column(name="updated", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updated;
+
+    public function __construct()
+    {
+        $this->payments = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getId() . ' - ' . $this->getVehicle() . ' - ' . $this->getCustomer();
+    }
+}

@@ -3,18 +3,13 @@
 /* WebProfilerBundle:Profiler:toolbar.html.twig */
 class __TwigTemplate_e5f80510cc552b0d3263042bd20a2897 extends Twig_Template
 {
-    protected function doGetParent(array $context)
-    {
-        return false;
-    }
-
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
         echo "<!-- START of Symfony2 Web Debug Toolbar -->
 ";
         // line 2
-        if (($this->getContext($context, "position") != "normal")) {
+        if (("normal" != $this->getContext($context, "position"))) {
             // line 3
             echo "    <div style=\"clear: both; height: 40px;\"></div>
 ";

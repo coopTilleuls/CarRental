@@ -9,9 +9,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 
-class SessionListener
+class SessionListener implements EventSubscriberInterface
 {
     private $container;
     private $autoStart;
@@ -42,6 +44,13 @@ class SessionListener
         if ($this->autoStart || $request->hasPreviousSession()) {
             $session->start();
         }
+    }
+
+    static public function getSubscribedEvents()
+    {
+        return array(
+            KernelEvents::REQUEST => array('onKernelRequest', 128),
+        );
     }
 }
 }
@@ -429,6 +438,8 @@ namespace Symfony\Component\Routing\Matcher
 {
 
 use Symfony\Component\Routing\RequestContextAwareInterface;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 
 
 interface UrlMatcherInterface extends RequestContextAwareInterface
@@ -445,6 +456,7 @@ namespace Symfony\Component\Routing\Generator
 {
 
 use Symfony\Component\Routing\RequestContextAwareInterface;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 
 
 interface UrlGeneratorInterface extends RequestContextAwareInterface
@@ -479,9 +491,9 @@ namespace Symfony\Component\Routing\Matcher
 
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\Matcher\RedirectableUrlMatcherInterface;
 
 
 class UrlMatcher implements UrlMatcherInterface
@@ -559,6 +571,16 @@ class UrlMatcher implements UrlMatcherInterface
                     $this->allow = array_merge($this->allow, $req);
 
                     continue;
+                }
+            }
+
+                        if ($scheme = $route->getRequirement('_scheme')) {
+                if (!$this instanceof RedirectableUrlMatcherInterface) {
+                    throw new \LogicException('The "_scheme" requirement is only supported for URL matchers that implement RedirectableUrlMatcherInterface.');
+                }
+
+                if ($this->context->getScheme() !== $scheme) {
+                    return $this->redirect($pathinfo, $name, $scheme);
                 }
             }
 
@@ -1106,9 +1128,10 @@ use Symfony\Component\Routing\Router as BaseRouter;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\HttpKernel\CacheWarmer\WarmableInterface;
 
 
-class Router extends BaseRouter
+class Router extends BaseRouter implements WarmableInterface
 {
     private $container;
 
@@ -1132,6 +1155,18 @@ class Router extends BaseRouter
         }
 
         return $this->collection;
+    }
+
+    
+    public function warmUp($cacheDir)
+    {
+        $currentDir = $this->getOption('cache_dir');
+
+                $this->setOption('cache_dir', $cacheDir);
+        $this->getMatcher();
+        $this->getGenerator();
+
+        $this->setOption('cache_dir', $currentDir);
     }
 
     
@@ -1497,7 +1532,7 @@ class TemplateNameParser extends BaseTemplateNameParser
     {
         if ($name instanceof TemplateReferenceInterface) {
             return $name;
-        } else if (isset($this->cache[$name])) {
+        } elseif (isset($this->cache[$name])) {
             return $this->cache[$name];
         }
 
@@ -1563,7 +1598,6 @@ use Symfony\Component\Templating\TemplateReferenceInterface;
 class TemplateLocator implements FileLocatorInterface
 {
     protected $locator;
-    protected $path;
     protected $cache;
 
     
@@ -1598,7 +1632,7 @@ class TemplateLocator implements FileLocatorInterface
         try {
             return $this->cache[$key] = $this->locator->locate($template->getPath(), $currentPath);
         } catch (\InvalidArgumentException $e) {
-            throw new \InvalidArgumentException(sprintf('Unable to find template "%s" in "%s".', $template, $this->path), 0, $e);
+            throw new \InvalidArgumentException(sprintf('Unable to find template "%s" : "%s".', $template, $e->getMessage()), 0, $e);
         }
     }
 }
@@ -1613,6 +1647,7 @@ namespace Symfony\Component\HttpFoundation
 
 class ParameterBag
 {
+    
     protected $parameters;
 
     
@@ -1668,7 +1703,7 @@ class ParameterBag
                 }
 
                 $currentKey = '';
-            } else if (']' === $char) {
+            } elseif (']' === $char) {
                 if (null === $currentKey) {
                     throw new \InvalidArgumentException(sprintf('Malformed path. Unexpected "]" at position %d.', $i));
                 }
@@ -1736,20 +1771,20 @@ class ParameterBag
     {
         return (int) $this->get($key, $default, $deep);
     }
-    
+
     
     public function filter($key, $default = null, $deep = false, $filter=FILTER_DEFAULT, $options=array())
     {
         $value = $this->get($key, $default, $deep);
-        
+
                 if (!is_array($options) && $options) {
             $options = array('flags' => $options);
         }
-        
+
                 if (is_array($value) && !isset($options['flags'])) {
             $options['flags'] = FILTER_REQUIRE_ARRAY;
         }
-        
+
         return filter_var($value, $filter, $options);
     }
 }
@@ -2073,6 +2108,7 @@ namespace Symfony\Component\HttpFoundation
 
 class ServerBag extends ParameterBag
 {
+    
     public function getHeaders()
     {
         $headers = array();
@@ -2127,20 +2163,46 @@ class Request
     
     public $headers;
 
+    
     protected $content;
+
+    
     protected $languages;
+
+    
     protected $charsets;
+
+    
     protected $acceptableContentTypes;
+
+    
     protected $pathInfo;
+
+    
     protected $requestUri;
+
+    
     protected $baseUrl;
+
+    
     protected $basePath;
+
+    
     protected $method;
+
+    
     protected $format;
+
+    
     protected $session;
+
+    
     protected $locale;
+
+    
     protected $defaultLocale = 'en';
 
+    
     static protected $formats;
 
     
@@ -2394,7 +2456,9 @@ class Request
             if ($this->server->has('HTTP_CLIENT_IP')) {
                 return $this->server->get('HTTP_CLIENT_IP');
             } elseif (self::$trustProxy && $this->server->has('HTTP_X_FORWARDED_FOR')) {
-                return $this->server->get('HTTP_X_FORWARDED_FOR');
+                $clientIp = explode(',', $this->server->get('HTTP_X_FORWARDED_FOR'), 2);
+
+                return isset($clientIp[0]) ? trim($clientIp[0]) : '';
             }
         }
 
@@ -2647,16 +2711,25 @@ class Request
         $this->format = $format;
     }
 
+    
+    public function getContentType()
+    {
+        return $this->getFormat($this->server->get('CONTENT_TYPE'));
+    }
+
+    
     public function setDefaultLocale($locale)
     {
         $this->setPhpDefaultLocale($this->defaultLocale = $locale);
     }
 
+    
     public function setLocale($locale)
     {
         $this->setPhpDefaultLocale($this->locale = $locale);
     }
 
+    
     public function getLocale()
     {
         return null === $this->locale ? $this->defaultLocale : $this->locale;
@@ -2785,9 +2858,9 @@ class Request
 
         $values = array();
         foreach (array_filter(explode(',', $header)) as $value) {
-                        if ($pos = strpos($value, ';')) {
-                $q     = (float) trim(substr($value, strpos($value, '=') + 1));
-                $value = trim(substr($value, 0, $pos));
+                        if (preg_match('/;\s*(q=.*$)/', $value, $match)) {
+                $q     = (float) substr(trim($match[1]), 2);
+                $value = trim(substr($value, 0, -strlen($match[0])));
             } else {
                 $q = 1;
             }
@@ -2829,6 +2902,7 @@ class Request
         return $requestUri;
     }
 
+    
     protected function prepareBaseUrl()
     {
         $filename = basename($this->server->get('SCRIPT_FILENAME'));
@@ -2942,6 +3016,7 @@ class Request
         );
     }
 
+    
     private function setPhpDefaultLocale($locale)
     {
                                 try {
@@ -2966,12 +3041,22 @@ class Response
     
     public $headers;
 
+    
     protected $content;
+
+    
     protected $version;
+
+    
     protected $statusCode;
+
+    
     protected $statusText;
+
+    
     protected $charset;
 
+    
     static public $statusTexts = array(
         100 => 'Continue',
         101 => 'Switching Protocols',
@@ -3031,8 +3116,6 @@ class Response
     
     public function __toString()
     {
-        $this->prepare();
-
         return
             sprintf('HTTP/%s %s %s', $this->version, $this->statusCode, $this->statusText)."\r\n".
             $this->headers."\r\n".
@@ -3046,21 +3129,38 @@ class Response
     }
 
     
-    public function prepare()
+    public function prepare(Request $request)
     {
+        $headers = $this->headers;
+
         if ($this->isInformational() || in_array($this->statusCode, array(204, 304))) {
             $this->setContent('');
         }
 
-                $charset = $this->charset ?: 'UTF-8';
-        if (!$this->headers->has('Content-Type')) {
-            $this->headers->set('Content-Type', 'text/html; charset='.$charset);
-        } elseif ('text/' === substr($this->headers->get('Content-Type'), 0, 5) && false === strpos($this->headers->get('Content-Type'), 'charset')) {
-                        $this->headers->set('Content-Type', $this->headers->get('Content-Type').'; charset='.$charset);
+                if (!$headers->has('Content-Type')) {
+            $format = $request->getRequestFormat();
+            if (null !== $format && $mimeType = $request->getMimeType($format)) {
+                $headers->set('Content-Type', $mimeType);
+            }
         }
 
-                if ($this->headers->has('Transfer-Encoding')) {
-            $this->headers->remove('Content-Length');
+                $charset = $this->charset ?: 'UTF-8';
+        if (!$headers->has('Content-Type')) {
+            $headers->set('Content-Type', 'text/html; charset='.$charset);
+        } elseif ('text/' === substr($headers->get('Content-Type'), 0, 5) && false === strpos($headers->get('Content-Type'), 'charset')) {
+                        $headers->set('Content-Type', $headers->get('Content-Type').'; charset='.$charset);
+        }
+
+                if ($headers->has('Transfer-Encoding')) {
+            $headers->remove('Content-Length');
+        }
+
+        if ('HEAD' === $request->getMethod()) {
+                        $length = $headers->get('Content-Length');
+            $this->setContent('');
+            if ($length) {
+                $headers->set('Content-Length', $length);
+            }
         }
     }
 
@@ -3070,8 +3170,6 @@ class Response
                 if (headers_sent()) {
             return;
         }
-
-        $this->prepare();
 
                 header(sprintf('HTTP/%s %s %s', $this->version, $this->statusCode, $this->statusText));
 
@@ -3520,7 +3618,10 @@ class ResponseHeaderBag extends HeaderBag
     const DISPOSITION_ATTACHMENT = 'attachment';
     const DISPOSITION_INLINE     = 'inline';
 
+    
     protected $computedCacheControl = array();
+
+    
     protected $cookies              = array();
 
     
@@ -3758,6 +3859,7 @@ class FileLocator implements FileLocatorInterface
                 && $file[1] == ':'
                 && ($file[2] == '\\' || $file[2] == '/')
             )
+            || null !== parse_url($file, PHP_URL_SCHEME)
         ) {
             return true;
         }
@@ -3821,6 +3923,9 @@ class EventDispatcher implements EventDispatcherInterface
         if (null === $event) {
             $event = new Event();
         }
+
+        $event->setDispatcher($this);
+        $event->setName($eventName);
 
         $this->doDispatch($this->getListeners($eventName), $eventName, $event);
     }
@@ -3939,6 +4044,12 @@ class Event
     private $propagationStopped = false;
 
     
+    private $dispatcher;
+
+    
+    private $name;
+
+    
     public function isPropagationStopped()
     {
         return $this->propagationStopped;
@@ -3948,6 +4059,30 @@ class Event
     public function stopPropagation()
     {
         $this->propagationStopped = true;
+    }
+
+    
+    public function setDispatcher(EventDispatcher $dispatcher)
+    {
+        $this->dispatcher = $dispatcher;
+    }
+
+    
+    public function getDispatcher()
+    {
+        return $this->dispatcher;
+    }
+
+    
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 }
 }
@@ -3979,12 +4114,13 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Event\PostResponseEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 
-class HttpKernel implements HttpKernelInterface
+class HttpKernel implements HttpKernelInterface, TerminableInterface
 {
     private $dispatcher;
     private $resolver;
@@ -4008,6 +4144,12 @@ class HttpKernel implements HttpKernelInterface
 
             return $this->handleException($e, $request, $type);
         }
+    }
+
+    
+    public function terminate(Request $request, Response $response)
+    {
+        $this->dispatcher->dispatch(KernelEvents::TERMINATE, new PostResponseEvent($this, $request, $response));
     }
 
     
@@ -4123,7 +4265,6 @@ namespace Symfony\Component\HttpKernel\EventListener
 {
 
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -4141,33 +4282,17 @@ class ResponseListener implements EventSubscriberInterface
     
     public function onKernelResponse(FilterResponseEvent $event)
     {
-        $request = $event->getRequest();
-        $response = $event->getResponse();
-
-        if ('HEAD' === $request->getMethod()) {
-                        $length = $response->headers->get('Content-Length');
-            $response->setContent('');
-            if ($length) {
-                $response->headers->set('Content-Length', $length);
-            }
-        }
-
         if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
             return;
         }
+
+        $response = $event->getResponse();
 
         if (null === $response->getCharset()) {
             $response->setCharset($this->charset);
         }
 
-        if ($response->headers->has('Content-Type')) {
-            return;
-        }
-
-        $format = $request->getRequestFormat();
-        if ((null !== $format) && $mimeType = $request->getMimeType($format)) {
-            $response->headers->set('Content-Type', $mimeType);
-        }
+        $response->prepare($event->getRequest());
     }
 
     static public function getSubscribedEvents()
@@ -4208,18 +4333,13 @@ class RouterListener implements EventSubscriberInterface
         $this->logger = $logger;
     }
 
-    public function onEarlyKernelRequest(GetResponseEvent $event)
-    {
-        if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
-            return;
-        }
-
-                        $this->urlMatcher->getContext()->fromRequest($event->getRequest());
-    }
-
     public function onKernelRequest(GetResponseEvent $event)
     {
         $request = $event->getRequest();
+
+        if (HttpKernelInterface::MASTER_REQUEST === $event->getRequestType()) {
+            $this->urlMatcher->getContext()->fromRequest($request);
+        }
 
         if ($request->attributes->has('_controller')) {
                         return;
@@ -4233,6 +4353,8 @@ class RouterListener implements EventSubscriberInterface
             }
 
             $request->attributes->add($parameters);
+            unset($parameters['_route']);
+            $request->attributes->set('_route_params', $parameters);
         } catch (ResourceNotFoundException $e) {
             $message = sprintf('No route found for "%s %s"', $request->getMethod(), $request->getPathInfo());
 
@@ -4257,7 +4379,7 @@ class RouterListener implements EventSubscriberInterface
     static public function getSubscribedEvents()
     {
         return array(
-            KernelEvents::REQUEST => array(array('onEarlyKernelRequest', 255), array('onKernelRequest', 10)),
+            KernelEvents::REQUEST => array(array('onKernelRequest', 32)),
         );
     }
 }
@@ -4316,7 +4438,7 @@ class ControllerResolver implements ControllerResolverInterface
     {
         if (is_array($controller)) {
             $r = new \ReflectionMethod($controller[0], $controller[1]);
-        } elseif (is_object($controller)) {
+        } elseif (is_object($controller) && !$controller instanceof \Closure) {
             $r = new \ReflectionObject($controller);
             $r = $r->getMethod('__invoke');
         } else {
@@ -4360,7 +4482,7 @@ class ControllerResolver implements ControllerResolverInterface
             throw new \InvalidArgumentException(sprintf('Unable to find controller "%s".', $controller));
         }
 
-        list($class, $method) = explode('::', $controller);
+        list($class, $method) = explode('::', $controller, 2);
 
         if (!class_exists($class)) {
             throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.', $class));
@@ -4556,8 +4678,6 @@ class FilterResponseEvent extends KernelEvent
 namespace Symfony\Component\HttpKernel\Event
 {
 
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 
@@ -4677,6 +4797,9 @@ final class KernelEvents
 
     
     const RESPONSE = 'kernel.response';
+
+    
+    const TERMINATE = 'kernel.terminate';
 }
 }
  
@@ -4724,7 +4847,6 @@ namespace Symfony\Bundle\FrameworkBundle\Controller
 {
 
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 
 class ControllerNameParser
@@ -4745,6 +4867,7 @@ class ControllerNameParser
         }
 
         list($bundle, $controller, $action) = $parts;
+        $controller = str_replace('/', '\\', $controller);
         $class = null;
         $logs = array();
         foreach ($this->kernel->getBundle($bundle, false) as $b) {
@@ -4817,7 +4940,7 @@ class ControllerResolver extends BaseControllerResolver
             if (2 == $count) {
                                 $controller = $this->parser->parse($controller);
             } elseif (1 == $count) {
-                                list($service, $method) = explode(':', $controller);
+                                list($service, $method) = explode(':', $controller, 2);
 
                 return array($this->container->get($service), $method);
             } else {
@@ -4825,7 +4948,7 @@ class ControllerResolver extends BaseControllerResolver
             }
         }
 
-        list($class, $method) = explode('::', $controller);
+        list($class, $method) = explode('::', $controller, 2);
 
         if (!class_exists($class)) {
             throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.', $class));
@@ -4931,6 +5054,11 @@ class ContainerAwareEventDispatcher extends EventDispatcher
         parent::dispatch($eventName, $event);
     }
 
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
     
     protected function lazyLoad($eventName)
     {
@@ -4982,6 +5110,8 @@ class HttpKernel extends BaseHttpKernel
 
     public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
     {
+        $request->headers->set('X-Php-Ob-Level', ob_get_level());
+
         $this->container->enterScope('request');
         $this->container->set('request', $request, 'request');
 
@@ -5042,7 +5172,9 @@ class HttpKernel extends BaseHttpKernel
 
                 if (0 === strpos($controller, '/')) {
             $subRequest = Request::create($request->getUriForPath($controller), 'get', array(), $request->cookies->all(), array(), $request->server->all());
-            $subRequest->setSession($request->getSession());
+            if ($session = $request->getSession()) {
+                $subRequest->setSession($session);
+            }
         } else {
             $options['attributes']['_controller'] = $controller;
             $options['attributes']['_format'] = $request->getRequestFormat();
@@ -5050,6 +5182,7 @@ class HttpKernel extends BaseHttpKernel
             $subRequest = $request->duplicate($options['query'], null, $options['attributes']);
         }
 
+        $level = ob_get_level();
         try {
             $response = $this->handle($subRequest, HttpKernelInterface::SUB_REQUEST, false);
 
@@ -5070,6 +5203,10 @@ class HttpKernel extends BaseHttpKernel
 
             if (!$options['ignore_errors']) {
                 throw $e;
+            }
+
+                        while (ob_get_level() > $level) {
+                ob_get_clean();
             }
         }
     }
@@ -5103,9 +5240,41 @@ class HttpKernel extends BaseHttpKernel
 namespace Symfony\Component\Security\Http
 {
 
+use Symfony\Component\HttpFoundation\RequestMatcherInterface;
+use Symfony\Component\HttpFoundation\Request;
+
+
+class AccessMap
+{
+    private $map = array();
+
+    
+    public function add(RequestMatcherInterface $requestMatcher, array $roles = array(), $channel = null)
+    {
+        $this->map[] = array($requestMatcher, $roles, $channel);
+    }
+
+    public function getPatterns(Request $request)
+    {
+        foreach ($this->map as $elements) {
+            if (null === $elements[0] || $elements[0]->matches($request)) {
+                return array($elements[1], $elements[2]);
+            }
+        }
+
+        return array(null, null);
+    }
+}
+}
+ 
+
+
+
+namespace Symfony\Component\Security\Http
+{
+
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 
@@ -5166,12 +5335,10 @@ interface FirewallMapInterface
 namespace Symfony\Component\Security\Core
 {
 
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Acl\Voter\FieldVote;
 
 
 class SecurityContext implements SecurityContextInterface
@@ -5200,7 +5367,11 @@ class SecurityContext implements SecurityContextInterface
             $this->token = $this->authenticationManager->authenticate($this->token);
         }
 
-        return $this->accessDecisionManager->decide($this->token, (array) $attributes, $object);
+        if (!is_array($attributes)) {
+            $attributes = array($attributes);
+        }
+
+        return $this->accessDecisionManager->decide($this->token, $attributes, $object);
     }
 
     
@@ -5213,6 +5384,14 @@ class SecurityContext implements SecurityContextInterface
     public function setToken(TokenInterface $token = null)
     {
         $this->token = $token;
+    }
+
+    
+    public function getUser()
+    {
+        if ($this->token) {
+            return $this->token->getUser();
+        }
     }
 }
 }
@@ -5237,6 +5416,9 @@ interface SecurityContextInterface
 
     
     function setToken(TokenInterface $token = null);
+
+    
+    function getUser();
 
     
     function isGranted($attributes, $object = null);
@@ -5269,6 +5451,10 @@ interface UserProviderInterface
 namespace Symfony\Component\Security\Core\Authentication
 {
 
+use Symfony\Component\Security\Core\Event\AuthenticationFailureEvent;
+use Symfony\Component\Security\Core\Event\AuthenticationEvent;
+use Symfony\Component\Security\Core\AuthenticationEvents;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\ProviderNotFoundException;
@@ -5280,6 +5466,7 @@ class AuthenticationProviderManager implements AuthenticationManagerInterface
 {
     private $providers;
     private $eraseCredentials;
+    private $eventDispatcher;
 
     
     public function __construct(array $providers, $eraseCredentials = true)
@@ -5290,6 +5477,11 @@ class AuthenticationProviderManager implements AuthenticationManagerInterface
 
         $this->providers = $providers;
         $this->eraseCredentials = (Boolean) $eraseCredentials;
+    }
+
+    public function setEventDispatcher(EventDispatcherInterface $dispatcher)
+    {
+        $this->eventDispatcher = $dispatcher;
     }
 
     
@@ -5323,11 +5515,19 @@ class AuthenticationProviderManager implements AuthenticationManagerInterface
                 $result->eraseCredentials();
             }
 
+            if (null !== $this->eventDispatcher) {
+                $this->eventDispatcher->dispatch(AuthenticationEvents::AUTHENTICATION_SUCCESS, new AuthenticationEvent($result));
+            }
+
             return $result;
         }
 
         if (null === $lastException) {
             $lastException = new ProviderNotFoundException(sprintf('No Authentication Provider found for token of class "%s".', get_class($token)));
+        }
+
+        if (null !== $this->eventDispatcher) {
+            $this->eventDispatcher->dispatch(AuthenticationEvents::AUTHENTICATION_FAILURE, new AuthenticationFailureEvent($token, $lastException));
         }
 
         $lastException->setExtraInformation($token);
@@ -5634,10 +5834,19 @@ namespace Symfony\Component\HttpFoundation
 
 class RequestMatcher implements RequestMatcherInterface
 {
+    
     private $path;
+
+    
     private $host;
+
+    
     private $methods;
+
+    
     private $ip;
+
+    
     private $attributes;
 
     public function __construct($path = null, $host = null, $methods = null, $ip = null, array $attributes = array())
@@ -5711,6 +5920,7 @@ class RequestMatcher implements RequestMatcherInterface
         return true;
     }
 
+    
     protected function checkIp($requestIp, $ip)
     {
                 if (false !== strpos($requestIp, ':')) {
@@ -5720,10 +5930,11 @@ class RequestMatcher implements RequestMatcherInterface
         }
     }
 
+    
     protected function checkIp4($requestIp, $ip)
     {
         if (false !== strpos($ip, '/')) {
-            list($address, $netmask) = explode('/', $ip);
+            list($address, $netmask) = explode('/', $ip, 2);
 
             if ($netmask < 1 || $netmask > 32) {
                 return false;
@@ -5743,16 +5954,16 @@ class RequestMatcher implements RequestMatcherInterface
             throw new \RuntimeException('Unable to check Ipv6. Check that PHP was not compiled with option "disable-ipv6".');
         }
 
-        list($address, $netmask) = explode('/', $ip);
+        list($address, $netmask) = explode('/', $ip, 2);
 
-        $bytes_addr = unpack("n*", inet_pton($address));
-        $bytes_test = unpack("n*", inet_pton($requestIp));
+        $bytesAddr = unpack("n*", inet_pton($address));
+        $bytesTest = unpack("n*", inet_pton($requestIp));
 
         for ($i = 1, $ceil = ceil($netmask / 16); $i <= $ceil; $i++) {
             $left = $netmask - 16 * ($i-1);
-            $left = ($left <= 16) ?: 16;
+            $left = ($left <= 16) ? $left : 16;
             $mask = ~(0xffff >> $left) & 0xffff;
-            if (($bytes_addr[$i] & $mask) != ($bytes_test[$i] & $mask)) {
+            if (($bytesAddr[$i] & $mask) != ($bytesTest[$i] & $mask)) {
                 return false;
             }
         }
@@ -5795,7 +6006,7 @@ namespace
  */
 class Twig_Environment
 {
-    const VERSION = '1.4.0-DEV';
+    const VERSION = '1.5.0-DEV';
     protected $charset;
     protected $loader;
     protected $debug;
@@ -5820,6 +6031,7 @@ class Twig_Environment
     protected $templateClassPrefix = '__TwigTemplate_';
     protected $functionCallbacks;
     protected $filterCallbacks;
+    protected $staging;
     /**
      * Constructor.
      *
@@ -6035,6 +6247,16 @@ class Twig_Environment
     public function render($name, array $context = array())
     {
         return $this->loadTemplate($name)->render($context);
+    }
+    /**
+     * Displays a template.
+     *
+     * @param string $name    The template name
+     * @param array  $context An array of parameters to pass to the template
+     */
+    public function display($name, array $context = array())
+    {
+        $this->loadTemplate($name)->display($context);
     }
     /**
      * Loads a template by name.
@@ -6358,10 +6580,7 @@ class Twig_Environment
      */
     public function addTokenParser(Twig_TokenParserInterface $parser)
     {
-        if (null === $this->parsers) {
-            $this->getTokenParsers();
-        }
-        $this->parsers->addTokenParser($parser);
+        $this->staging['token_parsers'][] = $parser;
     }
     /**
      * Gets the registered Token Parsers.
@@ -6372,6 +6591,11 @@ class Twig_Environment
     {
         if (null === $this->parsers) {
             $this->parsers = new Twig_TokenParserBroker();
+            if (isset($this->staging['token_parsers'])) {
+                foreach ($this->staging['token_parsers'] as $parser) {
+                    $this->parsers->addTokenParser($parser);
+                }
+            }
             foreach ($this->getExtensions() as $extension) {
                 $parsers = $extension->getTokenParsers();
                 foreach($parsers as $parser) {
@@ -6388,16 +6612,30 @@ class Twig_Environment
         return $this->parsers;
     }
     /**
+     * Gets registered tags.
+     *
+     * Be warned that this method cannot return tags defined by Twig_TokenParserBrokerInterface classes.
+     *
+     * @return Twig_TokenParserInterface[] An array of Twig_TokenParserInterface instances
+     */
+    public function getTags()
+    {
+        $tags = array();
+        foreach ($this->getTokenParsers()->getParsers() as $parser) {
+            if ($parser instanceof Twig_TokenParserInterface) {
+                $tags[$parser->getTag()] = $parser;
+            }
+        }
+        return $tags;
+    }
+    /**
      * Registers a Node Visitor.
      *
      * @param Twig_NodeVisitorInterface $visitor A Twig_NodeVisitorInterface instance
      */
     public function addNodeVisitor(Twig_NodeVisitorInterface $visitor)
     {
-        if (null === $this->visitors) {
-            $this->getNodeVisitors();
-        }
-        $this->visitors[] = $visitor;
+        $this->staging['visitors'][] = $visitor;
     }
     /**
      * Gets the registered Node Visitors.
@@ -6407,7 +6645,7 @@ class Twig_Environment
     public function getNodeVisitors()
     {
         if (null === $this->visitors) {
-            $this->visitors = array();
+            $this->visitors = isset($this->staging['visitors']) ? $this->staging['visitors'] : array();
             foreach ($this->getExtensions() as $extension) {
                 $this->visitors = array_merge($this->visitors, $extension->getNodeVisitors());
             }
@@ -6422,10 +6660,7 @@ class Twig_Environment
      */
     public function addFilter($name, Twig_FilterInterface $filter)
     {
-        if (null === $this->filters) {
-            $this->getFilters();
-        }
-        $this->filters[$name] = $filter;
+        $this->staging['filters'][$name] = $filter;
     }
     /**
      * Get a filter by name.
@@ -6445,6 +6680,16 @@ class Twig_Environment
         if (isset($this->filters[$name])) {
             return $this->filters[$name];
         }
+        foreach ($this->filters as $pattern => $filter) {
+            $pattern = str_replace('\\*', '(.*?)', preg_quote($pattern, '#'), $count);
+            if ($count) {
+                if (preg_match('#^'.$pattern.'$#', $name, $matches)) {
+                    array_shift($matches);
+                    $filter->setArguments($matches);
+                    return $filter;
+                }
+            }
+        }
         foreach ($this->filterCallbacks as $callback) {
             if (false !== $filter = call_user_func($callback, $name)) {
                 return $filter;
@@ -6459,12 +6704,16 @@ class Twig_Environment
     /**
      * Gets the registered Filters.
      *
+     * Be warned that this method cannot return filters defined with registerUndefinedFunctionCallback.
+     *
      * @return Twig_FilterInterface[] An array of Twig_FilterInterface instances
+     *
+     * @see registerUndefinedFilterCallback
      */
     public function getFilters()
     {
         if (null === $this->filters) {
-            $this->filters = array();
+            $this->filters = isset($this->staging['filters']) ? $this->staging['filters'] : array();
             foreach ($this->getExtensions() as $extension) {
                 $this->filters = array_merge($this->filters, $extension->getFilters());
             }
@@ -6479,10 +6728,7 @@ class Twig_Environment
      */
     public function addTest($name, Twig_TestInterface $test)
     {
-        if (null === $this->tests) {
-            $this->getTests();
-        }
-        $this->tests[$name] = $test;
+        $this->staging['tests'][$name] = $test;
     }
     /**
      * Gets the registered Tests.
@@ -6492,7 +6738,7 @@ class Twig_Environment
     public function getTests()
     {
         if (null === $this->tests) {
-            $this->tests = array();
+            $this->tests = isset($this->staging['tests']) ? $this->staging['tests'] : array();
             foreach ($this->getExtensions() as $extension) {
                 $this->tests = array_merge($this->tests, $extension->getTests());
             }
@@ -6507,10 +6753,7 @@ class Twig_Environment
      */
     public function addFunction($name, Twig_FunctionInterface $function)
     {
-        if (null === $this->functions) {
-            $this->getFunctions();
-        }
-        $this->functions[$name] = $function;
+        $this->staging['functions'][$name] = $function;
     }
     /**
      * Get a function by name.
@@ -6530,6 +6773,16 @@ class Twig_Environment
         if (isset($this->functions[$name])) {
             return $this->functions[$name];
         }
+        foreach ($this->functions as $pattern => $function) {
+            $pattern = str_replace('\\*', '(.*?)', preg_quote($pattern, '#'), $count);
+            if ($count) {
+                if (preg_match('#^'.$pattern.'$#', $name, $matches)) {
+                    array_shift($matches);
+                    $function->setArguments($matches);
+                    return $function;
+                }
+            }
+        }
         foreach ($this->functionCallbacks as $callback) {
             if (false !== $function = call_user_func($callback, $name)) {
                 return $function;
@@ -6541,10 +6794,19 @@ class Twig_Environment
     {
         $this->functionCallbacks[] = $callable;
     }
+    /**
+     * Gets registered functions.
+     *
+     * Be warned that this method cannot return functions defined with registerUndefinedFunctionCallback.
+     *
+     * @return Twig_FunctionInterface[] An array of Twig_FunctionInterface instances
+     *
+     * @see registerUndefinedFunctionCallback
+     */
     public function getFunctions()
     {
         if (null === $this->functions) {
-            $this->functions = array();
+            $this->functions = isset($this->staging['functions']) ? $this->staging['functions'] : array();
             foreach ($this->getExtensions() as $extension) {
                 $this->functions = array_merge($this->functions, $extension->getFunctions());
             }
@@ -6559,10 +6821,7 @@ class Twig_Environment
      */
     public function addGlobal($name, $value)
     {
-        if (null === $this->globals) {
-            $this->getGlobals();
-        }
-        $this->globals[$name] = $value;
+        $this->staging['globals'][$name] = $value;
     }
     /**
      * Gets the registered Globals.
@@ -6572,7 +6831,7 @@ class Twig_Environment
     public function getGlobals()
     {
         if (null === $this->globals) {
-            $this->globals = array();
+            $this->globals = isset($this->staging['globals']) ? $this->staging['globals'] : array();
             foreach ($this->getExtensions() as $extension) {
                 $this->globals = array_merge($this->globals, $extension->getGlobals());
             }
@@ -6602,6 +6861,18 @@ class Twig_Environment
             $this->initOperators();
         }
         return $this->binaryOperators;
+    }
+    public function computeAlternatives($name, $items)
+    {
+        $alternatives = array();
+        foreach ($items as $item) {
+            $lev = levenshtein($name, $item);
+            if ($lev <= strlen($name) / 3 || false !== strpos($item, $name)) {
+                $alternatives[$item] = $lev;
+            }
+        }
+        asort($alternatives);
+        return array_keys($alternatives);
     }
     protected function initOperators()
     {
@@ -6702,9 +6973,9 @@ interface Twig_ExtensionInterface
      */
     function getOperators();
     /**
-     * Returns a list of global functions to add to the existing list.
+     * Returns a list of global variables to add to the existing list.
      *
-     * @return array An array of global functions
+     * @return array An array of global variables
      */
     function getGlobals();
     /**
@@ -6795,9 +7066,9 @@ abstract class Twig_Extension implements Twig_ExtensionInterface
         return array();
     }
     /**
-     * Returns a list of global functions to add to the existing list.
+     * Returns a list of global variables to add to the existing list.
      *
-     * @return array An array of global functions
+     * @return array An array of global variables
      */
     public function getGlobals()
     {
@@ -6823,6 +7094,25 @@ if (!defined('ENT_SUBSTITUTE')) {
  */
 class Twig_Extension_Core extends Twig_Extension
 {
+    protected $dateFormat = 'F j, Y H:i';
+    /**
+     * Sets the default format to be used by the date filter.
+     *
+     * @param string $format The default date format string
+     */
+    public function setDateFormat($format)
+    {
+        $this->dateFormat = $format;
+    }
+    /**
+     * Gets the default format to be used by the date filter.
+     *
+     * @return string The default date format string
+     */
+    public function getDateFormat()
+    {
+        return $this->dateFormat;
+    }
     /**
      * Returns the token parser instance to add to the existing list.
      *
@@ -6843,6 +7133,8 @@ class Twig_Extension_Core extends Twig_Extension
             new Twig_TokenParser_From(),
             new Twig_TokenParser_Set(),
             new Twig_TokenParser_Spaceless(),
+            new Twig_TokenParser_Flush(),
+            new Twig_TokenParser_Do(),
         );
     }
     /**
@@ -6854,9 +7146,9 @@ class Twig_Extension_Core extends Twig_Extension
     {
         $filters = array(
             // formatting filters
-            'date'    => new Twig_Filter_Function('twig_date_format_filter'),
+            'date'    => new Twig_Filter_Function('twig_date_format_filter', array('needs_environment' => true)),
             'format'  => new Twig_Filter_Function('sprintf'),
-            'replace' => new Twig_Filter_Function('twig_strtr'),
+            'replace' => new Twig_Filter_Function('strtr'),
             // encoding
             'url_encode'       => new Twig_Filter_Function('twig_urlencode_filter'),
             'json_encode'      => new Twig_Filter_Function('twig_jsonencode_filter'),
@@ -6867,6 +7159,7 @@ class Twig_Extension_Core extends Twig_Extension
             'upper'      => new Twig_Filter_Function('strtoupper'),
             'lower'      => new Twig_Filter_Function('strtolower'),
             'striptags'  => new Twig_Filter_Function('strip_tags'),
+            'nl2br'      => new Twig_Filter_Function('nl2br', array('pre_escape' => 'html', 'is_safe' => array('html'))),
             // array helpers
             'join'    => new Twig_Filter_Function('twig_join_filter'),
             'reverse' => new Twig_Filter_Function('twig_reverse_filter'),
@@ -6874,7 +7167,8 @@ class Twig_Extension_Core extends Twig_Extension
             'sort'    => new Twig_Filter_Function('twig_sort_filter'),
             'merge'   => new Twig_Filter_Function('twig_array_merge'),
             // iteration and runtime
-            'default' => new Twig_Filter_Function('twig_default_filter'),
+            'default' => new Twig_Filter_Node('Twig_Node_Expression_Filter_Default'),
+            '_default' => new Twig_Filter_Function('_twig_default_filter'),
             'keys'    => new Twig_Filter_Function('twig_get_array_keys_filter'),
             // escaping
             'escape' => new Twig_Filter_Function('twig_escape_filter', array('needs_environment' => true, 'is_safe_callback' => 'twig_escape_filter_is_safe')),
@@ -6897,6 +7191,7 @@ class Twig_Extension_Core extends Twig_Extension
             'range'    => new Twig_Function_Function('range'),
             'constant' => new Twig_Function_Function('constant'),
             'cycle'    => new Twig_Function_Function('twig_cycle'),
+            'random'   => new Twig_Function_Function('twig_random'),
         );
     }
     /**
@@ -6907,14 +7202,14 @@ class Twig_Extension_Core extends Twig_Extension
     public function getTests()
     {
         return array(
-            'even'        => new Twig_Test_Function('twig_test_even'),
-            'odd'         => new Twig_Test_Function('twig_test_odd'),
-            'defined'     => new Twig_Test_Function('twig_test_defined'),
-            'sameas'      => new Twig_Test_Function('twig_test_sameas'),
-            'none'        => new Twig_Test_Function('twig_test_none'),
-            'null'        => new Twig_Test_Function('twig_test_none'),
-            'divisibleby' => new Twig_Test_Function('twig_test_divisibleby'),
-            'constant'    => new Twig_Test_Function('twig_test_constant'),
+            'even'        => new Twig_Test_Node('Twig_Node_Expression_Test_Even'),
+            'odd'         => new Twig_Test_Node('Twig_Node_Expression_Test_Odd'),
+            'defined'     => new Twig_Test_Node('Twig_Node_Expression_Test_Defined'),
+            'sameas'      => new Twig_Test_Node('Twig_Node_Expression_Test_Sameas'),
+            'none'        => new Twig_Test_Node('Twig_Node_Expression_Test_Null'),
+            'null'        => new Twig_Test_Node('Twig_Node_Expression_Test_Null'),
+            'divisibleby' => new Twig_Test_Node('Twig_Node_Expression_Test_Divisibleby'),
+            'constant'    => new Twig_Test_Node('Twig_Node_Expression_Test_Constant'),
             'empty'       => new Twig_Test_Function('twig_test_empty'),
         );
     }
@@ -6945,6 +7240,7 @@ class Twig_Extension_Core extends Twig_Extension
                 '<='     => array('precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_LessEqual', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
                 'not in' => array('precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_NotIn', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
                 'in'     => array('precedence' => 20, 'class' => 'Twig_Node_Expression_Binary_In', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
+                '..'     => array('precedence' => 25, 'class' => 'Twig_Node_Expression_Binary_Range', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
                 '+'      => array('precedence' => 30, 'class' => 'Twig_Node_Expression_Binary_Add', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
                 '-'      => array('precedence' => 30, 'class' => 'Twig_Node_Expression_Binary_Sub', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
                 '~'      => array('precedence' => 40, 'class' => 'Twig_Node_Expression_Binary_Concat', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
@@ -6954,7 +7250,6 @@ class Twig_Extension_Core extends Twig_Extension
                 '%'      => array('precedence' => 60, 'class' => 'Twig_Node_Expression_Binary_Mod', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
                 'is'     => array('precedence' => 100, 'callable' => array($this, 'parseTestExpression'), 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
                 'is not' => array('precedence' => 100, 'callable' => array($this, 'parseNotTestExpression'), 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
-                '..'     => array('precedence' => 110, 'class' => 'Twig_Node_Expression_Binary_Range', 'associativity' => Twig_ExpressionParser::OPERATOR_LEFT),
                 '**'     => array('precedence' => 200, 'class' => 'Twig_Node_Expression_Binary_Power', 'associativity' => Twig_ExpressionParser::OPERATOR_RIGHT),
             ),
         );
@@ -6966,12 +7261,21 @@ class Twig_Extension_Core extends Twig_Extension
     public function parseTestExpression(Twig_Parser $parser, $node)
     {
         $stream = $parser->getStream();
-        $name = $stream->expect(Twig_Token::NAME_TYPE);
+        $name = $stream->expect(Twig_Token::NAME_TYPE)->getValue();
         $arguments = null;
         if ($stream->test(Twig_Token::PUNCTUATION_TYPE, '(')) {
             $arguments = $parser->getExpressionParser()->parseArguments();
         }
-        return new Twig_Node_Expression_Test($node, $name->getValue(), $arguments, $parser->getCurrentToken()->getLine());
+        $class = $this->getTestNodeClass($parser->getEnvironment(), $name);
+        return new $class($node, $name, $arguments, $parser->getCurrentToken()->getLine());
+    }
+    protected function getTestNodeClass(Twig_Environment $env, $name)
+    {
+        $testMap = $env->getTests();
+        if (isset($testMap[$name]) && $testMap[$name] instanceof Twig_Test_Node) {
+            return $testMap[$name]->getClass();
+        }
+        return 'Twig_Node_Expression_Test';
     }
     /**
      * Returns the name of the extension.
@@ -6999,22 +7303,45 @@ function twig_cycle($values, $i)
     return $values[$i % count($values)];
 }
 /**
+ * Returns a random item from sequence.
+ *
+ * @param Iterator|array $values An array or an ArrayAccess instance
+ *
+ * @return mixed A random value from the given sequence
+ */
+function twig_random($values)
+{
+    if (!is_array($values) && !$values instanceof Traversable) {
+        return $values;
+    }
+    if (is_object($values)) {
+        $values = iterator_to_array($values);
+    }
+    $keys = array_keys($values);
+    return $values[$keys[mt_rand(0, count($values) - 1)]];
+}
+/**
  * Converts a date to the given format.
  *
  * <pre>
  *   {{ post.published_at|date("m/d/Y") }}
  * </pre>
  *
+ * @param Twig_Environment    $env      A Twig_Environment instance
  * @param DateTime|string     $date     A date
  * @param string              $format   A format
  * @param DateTimeZone|string $timezone A timezone
  *
  * @return string The formatter date
  */
-function twig_date_format_filter($date, $format = 'F j, Y H:i', $timezone = null)
+function twig_date_format_filter(Twig_Environment $env, $date, $format = null, $timezone = null)
 {
+    if (null === $format) {
+        $format = $env->getExtension('core')->getDateFormat();
+    }
     if (!$date instanceof DateTime && !$date instanceof DateInterval) {
-        if (ctype_digit((string) $date)) {
+        $asString = (string) $date;
+        if (ctype_digit($asString) || (!empty($asString) && '-' === $asString[0] && ctype_digit(substr($asString, 1)))) {
             $date = new DateTime('@'.$date);
             $date->setTimezone(new DateTimeZone(date_default_timezone_get()));
         } else {
@@ -7132,21 +7459,10 @@ function twig_join_filter($value, $glue = '')
 {
     return implode($glue, (array) $value);
 }
-/**
- * Returns the value or the default value when it is undefined or empty.
- *
- * <pre>
- *
- *  {{ var.foo|default('foo item on var is not defined') }}
- *
- * </pre>
- *
- * @param mixed $value   A value
- * @param mixed $default The default value
- *
- * @param mixed The value or the default value;
- */
-function twig_default_filter($value, $default = '')
+// The '_default' filter is used internally to avoid using the ternary operator
+// which costs a lot for big contexts (before PHP 5.4). So, on average,
+// a function call is cheaper.
+function _twig_default_filter($value, $default = '')
 {
     if (twig_test_empty($value)) {
         return $default;
@@ -7182,19 +7498,20 @@ function twig_get_array_keys_filter($array)
 /**
  * Reverses an array.
  *
- * @param array|Traversable $array An array or a Traversable instance
+ * @param array|Traversable $array        An array or a Traversable instance
+ * @param Boolean           $preserveKeys Whether to preserve key or not
  *
  * return array The array reversed
  */
-function twig_reverse_filter($array)
+function twig_reverse_filter($array, $preserveKeys = false)
 {
     if (is_object($array) && $array instanceof Traversable) {
-        return array_reverse(iterator_to_array($array));
+        return array_reverse(iterator_to_array($array), $preserveKeys);
     }
     if (!is_array($array)) {
         return array();
     }
-    return array_reverse($array);
+    return array_reverse($array, $preserveKeys);
 }
 /**
  * Sorts an array.
@@ -7212,27 +7529,14 @@ function twig_in_filter($value, $compare)
     if (is_array($compare)) {
         return in_array($value, $compare);
     } elseif (is_string($compare)) {
+        if (!strlen((string) $value)) {
+            return empty($compare);
+        }
         return false !== strpos($compare, (string) $value);
     } elseif (is_object($compare) && $compare instanceof Traversable) {
         return in_array($value, iterator_to_array($compare, false));
     }
     return false;
-}
-/**
- * Replaces placeholders in a string.
- *
- * <pre>
- *  {{ "I like %this% and %that%."|replace({'%this%': foo, '%that%': "bar"}) }}
- * </pre>
- *
- * @param string $pattern      A string
- * @param string $replacements The values for the placeholders
- *
- * @return string The string where the placeholders have been replaced
- */
-function twig_strtr($pattern, $replacements)
-{
-    return str_replace(array_keys($replacements), array_values($replacements), $pattern);
 }
 /**
  * Escapes a string.
@@ -7254,6 +7558,7 @@ function twig_escape_filter(Twig_Environment $env, $string, $type = 'html', $cha
     if (null === $charset) {
         $charset = $env->getCharset();
     }
+    $string = (string) $string;
     switch ($type) {
         case 'js':
             // escape all non-alphanumeric characters
@@ -7270,20 +7575,26 @@ function twig_escape_filter(Twig_Environment $env, $string, $type = 'html', $cha
             return $string;
         case 'html':
             // see http://php.net/htmlspecialchars
-            if (in_array(strtolower($charset), array(
-                'iso-8859-1', 'iso8859-1',
-                'iso-8859-15', 'iso8859-15',
-                'utf-8',
-                'cp866', 'ibm866', '866',
-                'cp1251', 'win-1251', '1251',
-                'cp1252', '1252',
-                'koi8-r', 'koi8-ru', 'koi8r',
-                'big5', '950',
-                'gb2312', '936',
-                'big5-hkscs', 'big5',
-                'shift_jis', 'sjis', '932',
-                'euc-jp', 'eucjp',
-            ))) {
+            // Using a static variable to avoid initializing the array
+            // each time the function is called. Moving the declaration on the
+            // top of the function slow downs other escaping types.
+            static $htmlspecialcharsCharsets = array(
+                'iso-8859-1' => true, 'iso8859-1' => true,
+                'iso-8859-15' => true, 'iso8859-15' => true,
+                'utf-8' => true,
+                'cp866' => true, 'ibm866' => true, '866' => true,
+                'cp1251' => true, 'windows-1251' => true, 'win-1251' => true,
+                '1251' => true,
+                'cp1252' => true, 'windows-1252' => true, '1252' => true,
+                'koi8-r' => true, 'koi8-ru' => true, 'koi8r' => true,
+                'big5' => true, '950' => true,
+                'gb2312' => true, '936' => true,
+                'big5-hkscs' => true,
+                'shift_jis' => true, 'sjis' => true, '932' => true,
+                'euc-jp' => true, 'eucjp' => true,
+                'iso8859-5' => true, 'iso-8859-5' => true, 'macroman' => true,
+            );
+            if (isset($htmlspecialcharsCharsets[strtolower($charset)])) {
                 return htmlspecialchars($string, ENT_QUOTES | ENT_SUBSTITUTE, $charset);
             }
             $string = twig_convert_encoding($string, 'UTF-8', $charset);
@@ -7330,7 +7641,7 @@ function _twig_escape_js_callback($matches)
         return '\\x'.substr('00'.bin2hex($char), -2);
     }
     // \uHHHH
-    $char = _twig_convert_encoding($char, 'UTF-16BE', 'UTF-8');
+    $char = twig_convert_encoding($char, 'UTF-16BE', 'UTF-8');
     return '\\u'.substr('0000'.bin2hex($char), -4);
 }
 // add multibyte extensions if possible
@@ -7457,122 +7768,6 @@ function twig_ensure_traversable($seq)
     } else {
         return array();
     }
-}
-/**
- * Checks that a variable points to the same memory address than another one.
- *
- * <pre>
- * {% if foo.attribute is sameas(false) %}
- *    the foo attribute really is the ``false`` PHP value
- * {% endif %}
- * </pre>
- *
- * @param mixed $value A PHP variable
- * @param mixed $test  The PHP variable to test against
- *
- * @return Boolean true if the values are the same, false otherwise
- */
-function twig_test_sameas($value, $test)
-{
-    return $value === $test;
-}
-/**
- * Checks that a variable is null.
- *
- * <pre>
- *  {{ var is none }}
- * </pre>
- *
- * @param mixed $value a PHP variable.
- *
- * @return Boolean true if the value is null, false otherwise
- */
-function twig_test_none($value)
-{
-    return null === $value;
-}
-/**
- * Checks if a variable is divisible by a number.
- *
- * <pre>
- *  {% if loop.index is divisibleby(3) %}
- * </pre>
- *
- * @param integer $value A PHP value
- * @param integer $num   A number
- *
- * @return Boolean true if the value is divisible by the number, false otherwise
- */
-function twig_test_divisibleby($value, $num)
-{
-    return 0 == $value % $num;
-}
-/**
- * Checks if a number is even.
- *
- * <pre>
- *  {{ var is even }}
- * </pre>
- *
- * @param integer $value An integer
- *
- * @return Boolean true if the value is even, false otherwise
- */
-function twig_test_even($value)
-{
-    return $value % 2 == 0;
-}
-/**
- * Checks if a number is odd.
- *
- * <pre>
- *  {{ var is odd }}
- * </pre>
- *
- * @param integer $value An integer
- *
- * @return Boolean true if the value is odd, false otherwise
- */
-function twig_test_odd($value)
-{
-    return $value % 2 == 1;
-}
-/**
- * Checks if a variable is the exact same value as a constant.
- *
- * <pre>
- *  {% if post.status is constant('Post::PUBLISHED') %}
- *    the status attribute is exactly the same as Post::PUBLISHED
- *  {% endif %}
- * </pre>
- *
- * @param mixed $value    A PHP value
- * @param mixed $constant The constant to test against
- *
- * @return Boolean true if the value is the same as the constant, false otherwise
- */
-function twig_test_constant($value, $constant)
-{
-    return constant($constant) === $value;
-}
-/**
- * Checks if a variable is defined in the current context.
- *
- * <pre>
- * {# defined works with variable names #}
- * {% if foo is defined %}
- *     {# ... #}
- * {% endif %}
- * </pre>
- *
- * @param mixed $name    A PHP variable
- * @param array $context The current context
- *
- * @return Boolean true if the value is defined, false otherwise
- */
-function twig_test_defined($name, $context)
-{
-    return array_key_exists($name, $context);
 }
 /**
  * Checks if a variable is empty.
@@ -7875,9 +8070,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
      */
     abstract public function getTemplateName();
     /**
-     * Returns the Twig environment.
-     *
-     * @return Twig_Environment The Twig environment
+     * {@inheritdoc}
      */
     public function getEnvironment()
     {
@@ -7905,7 +8098,14 @@ abstract class Twig_Template implements Twig_TemplateInterface
         }
         return $this->parents[$parent];
     }
-    abstract protected function doGetParent(array $context);
+    protected function doGetParent(array $context)
+    {
+        return false;
+    }
+    public function isTraitable()
+    {
+        return true;
+    }
     /**
      * Displays a parent block.
      *
@@ -8034,10 +8234,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
         return $this->blocks;
     }
     /**
-     * Displays the template with the given context.
-     *
-     * @param array $context An array of parameters to pass to the template
-     * @param array $blocks  An array of blocks to pass to the template
+     * {@inheritdoc}
      */
     public function display(array $context, array $blocks = array())
     {
@@ -8057,11 +8254,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
         }
     }
     /**
-     * Renders the template with the given context and returns it as string.
-     *
-     * @param array $context An array of parameters to pass to the template
-     *
-     * @return string The rendered template
+     * {@inheritdoc}
      */
     public function render(array $context)
     {
@@ -8087,17 +8280,18 @@ abstract class Twig_Template implements Twig_TemplateInterface
     /**
      * Returns a variable from the context.
      *
-     * @param array   $context The context
-     * @param string  $item    The variable to return from the context
+     * @param array   $context           The context
+     * @param string  $item              The variable to return from the context
+     * @param Boolean $ignoreStrictCheck Whether to ignore the strict variable check or not
      *
      * @return The content of the context variable
      *
      * @throws Twig_Error_Runtime if the variable does not exist and Twig is running in strict mode
      */
-    protected function getContext($context, $item)
+    protected function getContext($context, $item, $ignoreStrictCheck = false)
     {
         if (!array_key_exists($item, $context)) {
-            if (!$this->env->isStrictVariables()) {
+            if ($ignoreStrictCheck || !$this->env->isStrictVariables()) {
                 return null;
             }
             throw new Twig_Error_Runtime(sprintf('Variable "%s" does not exist', $item));
@@ -8107,14 +8301,20 @@ abstract class Twig_Template implements Twig_TemplateInterface
     /**
      * Returns the attribute value for a given array/object.
      *
-     * @param mixed   $object        The object or array from where to get the item
-     * @param mixed   $item          The item to get from the array or object
-     * @param array   $arguments     An array of arguments to pass if the item is an object method
-     * @param string  $type          The type of attribute (@see Twig_TemplateInterface)
-     * @param Boolean $isDefinedTest Whether this is only a defined check
+     * @param mixed   $object            The object or array from where to get the item
+     * @param mixed   $item              The item to get from the array or object
+     * @param array   $arguments         An array of arguments to pass if the item is an object method
+     * @param string  $type              The type of attribute (@see Twig_TemplateInterface)
+     * @param Boolean $isDefinedTest     Whether this is only a defined check
+     * @param Boolean $ignoreStrictCheck Whether to ignore the strict attribute check or not
+     *
+     * @return mixed The attribute value, or a Boolean when $isDefinedTest is true, or null when the attribute is not set and $ignoreStrictCheck is true
+     *
+     * @throws Twig_Error_Runtime if the attribute does not exist and Twig is running in strict mode and $isDefinedTest is false
      */
-    protected function getAttribute($object, $item, array $arguments = array(), $type = Twig_TemplateInterface::ANY_CALL, $isDefinedTest = false)
+    protected function getAttribute($object, $item, array $arguments = array(), $type = Twig_TemplateInterface::ANY_CALL, $isDefinedTest = false, $ignoreStrictCheck = false)
     {
+        $item = (string) $item;
         // array
         if (Twig_TemplateInterface::METHOD_CALL !== $type) {
             if ((is_array($object) && array_key_exists($item, $object))
@@ -8129,7 +8329,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
                 if ($isDefinedTest) {
                     return false;
                 }
-                if (!$this->env->isStrictVariables()) {
+                if ($ignoreStrictCheck || !$this->env->isStrictVariables()) {
                     return null;
                 }
                 if (is_object($object)) {
@@ -8144,28 +8344,22 @@ abstract class Twig_Template implements Twig_TemplateInterface
             if ($isDefinedTest) {
                 return false;
             }
-            if (!$this->env->isStrictVariables()) {
+            if ($ignoreStrictCheck || !$this->env->isStrictVariables()) {
                 return null;
             }
-            throw new Twig_Error_Runtime(sprintf('Key "%s" for array with keys "%s" does not exist', $item, implode(', ', array_keys($object))));
+            throw new Twig_Error_Runtime(sprintf('Item "%s" for "%s" does not exist', $item, is_array($object) ? 'Array' : $object));
         }
-        // get some information about the object
         $class = get_class($object);
-        if (!isset(self::$cache[$class])) {
-            $r = new ReflectionClass($class);
-            self::$cache[$class] = array('methods' => array(), 'properties' => array());
-            foreach ($r->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
-                self::$cache[$class]['methods'][strtolower($method->getName())] = true;
-            }
-            foreach ($r->getProperties(ReflectionProperty::IS_PUBLIC) as $property) {
-                self::$cache[$class]['properties'][$property->getName()] = true;
-            }
-        }
         // object property
         if (Twig_TemplateInterface::METHOD_CALL !== $type) {
-            if (isset(self::$cache[$class]['properties'][$item])
-                || isset($object->$item) || array_key_exists($item, $object)
-            ) {
+            /* apparently, this is not needed as this is already covered by the array_key_exists() call below
+            if (!isset(self::$cache[$class]['properties'])) {
+                foreach (get_object_vars($object) as $k => $v) {
+                    self::$cache[$class]['properties'][$k] = true;
+                }
+            }
+            */
+            if (isset($object->$item) || array_key_exists($item, $object)) {
                 if ($isDefinedTest) {
                     return true;
                 }
@@ -8176,6 +8370,9 @@ abstract class Twig_Template implements Twig_TemplateInterface
             }
         }
         // object method
+        if (!isset(self::$cache[$class]['methods'])) {
+            self::$cache[$class]['methods'] = array_change_key_case(array_flip(get_class_methods($object)));
+        }
         $lcItem = strtolower($item);
         if (isset(self::$cache[$class]['methods'][$lcItem])) {
             $method = $item;
@@ -8189,7 +8386,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
             if ($isDefinedTest) {
                 return false;
             }
-            if (!$this->env->isStrictVariables()) {
+            if ($ignoreStrictCheck || !$this->env->isStrictVariables()) {
                 return null;
             }
             throw new Twig_Error_Runtime(sprintf('Method "%s" for object "%s" does not exist', $item, get_class($object)));
@@ -8205,6 +8402,13 @@ abstract class Twig_Template implements Twig_TemplateInterface
             return new Twig_Markup($ret);
         }
         return $ret;
+    }
+    /**
+     * This method is only useful when testing Twig. Do not use it.
+     */
+    static public function clearCache()
+    {
+        self::$cache = array();
     }
 }
 

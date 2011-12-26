@@ -43,11 +43,6 @@ class __TwigTemplate_158d14fdcf5a87c7450759309e9d133d extends Twig_Template
         );
     }
 
-    protected function doGetParent(array $context)
-    {
-        return false;
-    }
-
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 2
@@ -388,7 +383,7 @@ class __TwigTemplate_158d14fdcf5a87c7450759309e9d133d extends Twig_Template
             echo ">
         ";
             // line 54
-            if ((!twig_test_none($this->getContext($context, "empty_value")))) {
+            if ((!(null === $this->getContext($context, "empty_value")))) {
                 // line 55
                 echo "            <option value=\"\">";
                 echo twig_escape_filter($this->env, $this->env->getExtension('translator')->trans($this->getContext($context, "empty_value"), array(), $this->getContext($context, "translation_domain")), "html", null, true);
@@ -407,7 +402,7 @@ class __TwigTemplate_158d14fdcf5a87c7450759309e9d133d extends Twig_Template
                 echo "
             ";
                 // line 60
-                if (((twig_length_filter($this->env, $this->getContext($context, "choices")) > 0) && (!twig_test_none($this->getContext($context, "separator"))))) {
+                if (((twig_length_filter($this->env, $this->getContext($context, "choices")) > 0) && (!(null === $this->getContext($context, "separator"))))) {
                     // line 61
                     echo "                <option disabled=\"disabled\">";
                     echo twig_escape_filter($this->env, $this->getContext($context, "separator"), "html", null, true);
@@ -532,7 +527,7 @@ class __TwigTemplate_158d14fdcf5a87c7450759309e9d133d extends Twig_Template
             echo ">
             ";
             // line 104
-            echo twig_strtr($this->getContext($context, "date_pattern"), array("{{ year }}" => $this->env->getExtension('form')->renderWidget($this->getAttribute($this->getContext($context, "form"), "year")), "{{ month }}" => $this->env->getExtension('form')->renderWidget($this->getAttribute($this->getContext($context, "form"), "month")), "{{ day }}" => $this->env->getExtension('form')->renderWidget($this->getAttribute($this->getContext($context, "form"), "day"))));
+            echo strtr($this->getContext($context, "date_pattern"), array("{{ year }}" => $this->env->getExtension('form')->renderWidget($this->getAttribute($this->getContext($context, "form"), "year")), "{{ month }}" => $this->env->getExtension('form')->renderWidget($this->getAttribute($this->getContext($context, "form"), "month")), "{{ day }}" => $this->env->getExtension('form')->renderWidget($this->getAttribute($this->getContext($context, "form"), "day"))));
             // line 108
             echo "
         </div>
@@ -584,7 +579,7 @@ class __TwigTemplate_158d14fdcf5a87c7450759309e9d133d extends Twig_Template
         echo "    ";
         // line 129
         echo "    ";
-        $context["type"] = ((array_key_exists("type", $context)) ? (twig_default_filter($this->getContext($context, "type"), "text")) : ("text"));
+        $context["type"] = ((array_key_exists("type", $context)) ? (_twig_default_filter($this->getContext($context, "type"), "text")) : ("text"));
         // line 130
         echo "    ";
         $this->displayBlock("field_widget", $context, $blocks);
@@ -600,7 +595,7 @@ class __TwigTemplate_158d14fdcf5a87c7450759309e9d133d extends Twig_Template
         ob_start();
         // line 136
         echo "    ";
-        $context["type"] = ((array_key_exists("type", $context)) ? (twig_default_filter($this->getContext($context, "type"), "number")) : ("number"));
+        $context["type"] = ((array_key_exists("type", $context)) ? (_twig_default_filter($this->getContext($context, "type"), "number")) : ("number"));
         // line 137
         echo "    ";
         $this->displayBlock("field_widget", $context, $blocks);
@@ -616,7 +611,7 @@ class __TwigTemplate_158d14fdcf5a87c7450759309e9d133d extends Twig_Template
         ob_start();
         // line 143
         echo "    ";
-        echo twig_strtr($this->getContext($context, "money_pattern"), array("{{ widget }}" => $this->renderBlock("field_widget", $context, $blocks)));
+        echo strtr($this->getContext($context, "money_pattern"), array("{{ widget }}" => $this->renderBlock("field_widget", $context, $blocks)));
         echo "
 ";
         echo trim(preg_replace('/>\s+</', '><', ob_get_clean()));
@@ -629,7 +624,7 @@ class __TwigTemplate_158d14fdcf5a87c7450759309e9d133d extends Twig_Template
         ob_start();
         // line 149
         echo "    ";
-        $context["type"] = ((array_key_exists("type", $context)) ? (twig_default_filter($this->getContext($context, "type"), "url")) : ("url"));
+        $context["type"] = ((array_key_exists("type", $context)) ? (_twig_default_filter($this->getContext($context, "type"), "url")) : ("url"));
         // line 150
         echo "    ";
         $this->displayBlock("field_widget", $context, $blocks);
@@ -645,7 +640,7 @@ class __TwigTemplate_158d14fdcf5a87c7450759309e9d133d extends Twig_Template
         ob_start();
         // line 156
         echo "    ";
-        $context["type"] = ((array_key_exists("type", $context)) ? (twig_default_filter($this->getContext($context, "type"), "search")) : ("search"));
+        $context["type"] = ((array_key_exists("type", $context)) ? (_twig_default_filter($this->getContext($context, "type"), "search")) : ("search"));
         // line 157
         echo "    ";
         $this->displayBlock("field_widget", $context, $blocks);
@@ -661,7 +656,7 @@ class __TwigTemplate_158d14fdcf5a87c7450759309e9d133d extends Twig_Template
         ob_start();
         // line 163
         echo "    ";
-        $context["type"] = ((array_key_exists("type", $context)) ? (twig_default_filter($this->getContext($context, "type"), "text")) : ("text"));
+        $context["type"] = ((array_key_exists("type", $context)) ? (_twig_default_filter($this->getContext($context, "type"), "text")) : ("text"));
         // line 164
         echo "    ";
         $this->displayBlock("field_widget", $context, $blocks);
@@ -677,15 +672,19 @@ class __TwigTemplate_158d14fdcf5a87c7450759309e9d133d extends Twig_Template
         ob_start();
         // line 170
         echo "    ";
-        $context["type"] = ((array_key_exists("type", $context)) ? (twig_default_filter($this->getContext($context, "type"), "text")) : ("text"));
+        $context["type"] = ((array_key_exists("type", $context)) ? (_twig_default_filter($this->getContext($context, "type"), "text")) : ("text"));
         // line 171
         echo "    <input type=\"";
         echo twig_escape_filter($this->env, $this->getContext($context, "type"), "html", null, true);
         echo "\" ";
         $this->displayBlock("widget_attributes", $context, $blocks);
-        echo " value=\"";
-        echo twig_escape_filter($this->env, $this->getContext($context, "value"), "html", null, true);
-        echo "\" />
+        echo " ";
+        if ((!twig_test_empty($this->getContext($context, "value")))) {
+            echo "value=\"";
+            echo twig_escape_filter($this->env, $this->getContext($context, "value"), "html", null, true);
+            echo "\" ";
+        }
+        echo "/>
 ";
         echo trim(preg_replace('/>\s+</', '><', ob_get_clean()));
     }
@@ -697,7 +696,7 @@ class __TwigTemplate_158d14fdcf5a87c7450759309e9d133d extends Twig_Template
         ob_start();
         // line 177
         echo "    ";
-        $context["type"] = ((array_key_exists("type", $context)) ? (twig_default_filter($this->getContext($context, "type"), "password")) : ("password"));
+        $context["type"] = ((array_key_exists("type", $context)) ? (_twig_default_filter($this->getContext($context, "type"), "password")) : ("password"));
         // line 178
         echo "    ";
         $this->displayBlock("field_widget", $context, $blocks);
@@ -711,7 +710,7 @@ class __TwigTemplate_158d14fdcf5a87c7450759309e9d133d extends Twig_Template
     {
         // line 183
         echo "    ";
-        $context["type"] = ((array_key_exists("type", $context)) ? (twig_default_filter($this->getContext($context, "type"), "hidden")) : ("hidden"));
+        $context["type"] = ((array_key_exists("type", $context)) ? (_twig_default_filter($this->getContext($context, "type"), "hidden")) : ("hidden"));
         // line 184
         echo "    ";
         $this->displayBlock("field_widget", $context, $blocks);
@@ -726,7 +725,7 @@ class __TwigTemplate_158d14fdcf5a87c7450759309e9d133d extends Twig_Template
         ob_start();
         // line 189
         echo "    ";
-        $context["type"] = ((array_key_exists("type", $context)) ? (twig_default_filter($this->getContext($context, "type"), "email")) : ("email"));
+        $context["type"] = ((array_key_exists("type", $context)) ? (_twig_default_filter($this->getContext($context, "type"), "email")) : ("email"));
         // line 190
         echo "    ";
         $this->displayBlock("field_widget", $context, $blocks);
@@ -745,7 +744,7 @@ class __TwigTemplate_158d14fdcf5a87c7450759309e9d133d extends Twig_Template
         if ($this->getContext($context, "required")) {
             // line 199
             echo "        ";
-            $context["attr"] = twig_array_merge($this->getContext($context, "attr"), array("class" => ((($this->getAttribute(twig_default_filter($this->getContext($context, "attr")), "class", array(), "any", true)) ? (twig_default_filter($this->getAttribute($this->getContext($context, "attr"), "class"), "")) : ("")) . " required")));
+            $context["attr"] = twig_array_merge($this->getContext($context, "attr"), array("class" => ((($this->getAttribute($this->getContext($context, "attr", true), "class", array(), "any", true, true)) ? (_twig_default_filter($this->getAttribute($this->getContext($context, "attr", true), "class"), "")) : ("")) . " required")));
             // line 200
             echo "    ";
         }
@@ -821,7 +820,7 @@ class __TwigTemplate_158d14fdcf5a87c7450759309e9d133d extends Twig_Template
         echo "    <div>
         ";
         // line 229
-        echo $this->env->getExtension('form')->renderLabel($this->getContext($context, "form"), ((array_key_exists("label", $context)) ? (twig_default_filter($this->getContext($context, "label"), null)) : (null)));
+        echo $this->env->getExtension('form')->renderLabel($this->getContext($context, "form"), ((array_key_exists("label", $context)) ? (_twig_default_filter($this->getContext($context, "label"), null)) : (null)));
         echo "
         ";
         // line 230
@@ -1017,8 +1016,4 @@ class __TwigTemplate_158d14fdcf5a87c7450759309e9d133d extends Twig_Template
         return "form_div_layout.html.twig";
     }
 
-    public function isTraitable()
-    {
-        return true;
-    }
 }

@@ -34,8 +34,8 @@ class __TwigTemplate_4d149313ff0e9adbd46a94edd98c7e5a extends Twig_Template
         ob_start();
         // line 8
         echo "        ";
-        echo twig_escape_filter($this->env, sprintf("%.0f", ($this->getAttribute($this->getContext($context, "collector"), "memory") / 1024)), "html", null, true);
-        echo " KB
+        echo twig_escape_filter($this->env, sprintf("%.1f", (($this->getAttribute($this->getContext($context, "collector"), "memory") / 1024) / 1024)), "html", null, true);
+        echo " MB
     ";
         $context["text"] = new Twig_Markup(ob_get_clean());
         // line 10

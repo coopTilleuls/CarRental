@@ -39,7 +39,7 @@ class __TwigTemplate_0dcbd6031994835d5c4a7bb14be187be extends Twig_Template
         ob_start();
         // line 9
         echo "            ";
-        if ($this->getAttribute(twig_default_filter($this->getAttribute($this->getContext($context, "collector"), "controller")), "class", array(), "any", true)) {
+        if ($this->getAttribute($this->getAttribute($this->getContext($context, "collector", true), "controller", array(), "any", false, true), "class", array(), "any", true, true)) {
             // line 10
             echo "                <span>";
             echo $this->env->getExtension('code')->abbrClass($this->getAttribute($this->getAttribute($this->getContext($context, "collector"), "controller"), "class"));
@@ -196,93 +196,95 @@ class __TwigTemplate_0dcbd6031994835d5c4a7bb14be187be extends Twig_Template
         echo "
     <h2>Request Content</h2>
 
-    <p>
-        ";
-        // line 81
+    ";
+        // line 80
         if (($this->getAttribute($this->getContext($context, "collector"), "content") == false)) {
-            // line 82
-            echo "            <em>Request content not available (it was retrieved as a resource).</em>
-        ";
+            // line 81
+            echo "        <p><em>Request content not available (it was retrieved as a resource).</em></p>
+    ";
         } elseif ($this->getAttribute($this->getContext($context, "collector"), "content")) {
-            // line 84
-            echo "            <pre>";
+            // line 83
+            echo "        <pre>";
             echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, "collector"), "content"), "html", null, true);
             echo "</pre>
-        ";
+    ";
         } else {
-            // line 86
-            echo "            <em>No content</em>
-        ";
+            // line 85
+            echo "        <p><em>No content</em></p>
+    ";
         }
-        // line 88
-        echo "    </p>
-
+        // line 87
+        echo "
     <h2>Request Server Parameters</h2>
 
     ";
-        // line 92
+        // line 90
         $this->env->loadTemplate("WebProfilerBundle:Profiler:bag.html.twig")->display(array("bag" => $this->getAttribute($this->getContext($context, "collector"), "requestserver")));
-        // line 93
+        // line 91
         echo "
     <h2>Response Headers</h2>
 
     ";
-        // line 96
+        // line 94
         $this->env->loadTemplate("WebProfilerBundle:Profiler:bag.html.twig")->display(array("bag" => $this->getAttribute($this->getContext($context, "collector"), "responseheaders")));
-        // line 97
+        // line 95
         echo "
     <h2>Session Attributes</h2>
 
     ";
-        // line 100
+        // line 98
         if (twig_length_filter($this->env, $this->getAttribute($this->getContext($context, "collector"), "sessionattributes"))) {
-            // line 101
+            // line 99
             echo "        <table>
-            <tr>
-                <th>Key</th>
-                <th>Value</th>
-            </tr>
-            ";
-            // line 106
-            $context["attributes"] = $this->getAttribute($this->getContext($context, "collector"), "sessionattributes");
+            <thead>
+                <tr>
+                    <th scope=\"col\">Key</th>
+                    <th scope=\"col\">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                ";
             // line 107
-            echo "            ";
+            $context["attributes"] = $this->getAttribute($this->getContext($context, "collector"), "sessionattributes");
+            // line 108
+            echo "                ";
             $context['_parent'] = (array) $context;
             $context['_seq'] = twig_ensure_traversable(twig_sort_filter(twig_get_array_keys_filter($this->getContext($context, "attributes"))));
             foreach ($context['_seq'] as $context["_key"] => $context["key"]) {
-                // line 108
-                echo "                <tr>
-                    <th>";
                 // line 109
+                echo "                    <tr>
+                        <th>";
+                // line 110
                 echo twig_escape_filter($this->env, $this->getContext($context, "key"), "html", null, true);
                 echo "</th>
-                    <td>";
-                // line 110
+                        <td>";
+                // line 111
                 echo twig_escape_filter($this->env, $this->env->getExtension('yaml')->dump($this->getAttribute($this->getContext($context, "attributes"), $this->getContext($context, "key"), array(), "array")), "html", null, true);
                 echo "</td>
-                </tr>
-            ";
+                    </tr>
+                ";
             }
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['key'], $context['_parent'], $context['loop']);
             $context = array_merge($_parent, array_intersect_key($context, $_parent));
-            // line 113
-            echo "        </table>
+            // line 114
+            echo "            </tbody>
+        </table>
     ";
         } else {
-            // line 115
+            // line 117
             echo "        <p>
             <em>No session attributes</em>
         </p>
     ";
         }
-        // line 119
+        // line 121
         echo "
 
     ";
-        // line 121
+        // line 123
         if ($this->getAttribute($this->getContext($context, "profile"), "parent")) {
-            // line 122
+            // line 124
             echo "        <h2><a href=\"";
             echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("_profiler", array("token" => $this->getAttribute($this->getAttribute($this->getContext($context, "profile"), "parent"), "token"))), "html", null, true);
             echo "\">Parent request: ";
@@ -290,43 +292,43 @@ class __TwigTemplate_0dcbd6031994835d5c4a7bb14be187be extends Twig_Template
             echo "</a></h2>
 
         ";
-            // line 124
+            // line 126
             $this->env->loadTemplate("WebProfilerBundle:Profiler:bag.html.twig")->display(array("bag" => $this->getAttribute($this->getAttribute($this->getAttribute($this->getContext($context, "profile"), "parent"), "getcollector", array("request", ), "method"), "requestattributes")));
-            // line 125
+            // line 127
             echo "    ";
         }
-        // line 126
+        // line 128
         echo "
     ";
-        // line 127
+        // line 129
         if (twig_length_filter($this->env, $this->getAttribute($this->getContext($context, "profile"), "children"))) {
-            // line 128
+            // line 130
             echo "        <h2>Sub requests</h2>
 
         ";
-            // line 130
+            // line 132
             $context['_parent'] = (array) $context;
             $context['_seq'] = twig_ensure_traversable($this->getAttribute($this->getContext($context, "profile"), "children"));
             foreach ($context['_seq'] as $context["_key"] => $context["child"]) {
-                // line 131
+                // line 133
                 echo "            <h3><a href=\"";
                 echo twig_escape_filter($this->env, $this->env->getExtension('routing')->getPath("_profiler", array("token" => $this->getAttribute($this->getContext($context, "child"), "token"))), "html", null, true);
                 echo "\">";
                 echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, "child"), "token"), "html", null, true);
                 echo "</a></h3>
             ";
-                // line 132
+                // line 134
                 $this->env->loadTemplate("WebProfilerBundle:Profiler:bag.html.twig")->display(array("bag" => $this->getAttribute($this->getAttribute($this->getContext($context, "child"), "getcollector", array("request", ), "method"), "requestattributes")));
-                // line 133
+                // line 135
                 echo "        ";
             }
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['child'], $context['_parent'], $context['loop']);
             $context = array_merge($_parent, array_intersect_key($context, $_parent));
-            // line 134
+            // line 136
             echo "    ";
         }
-        // line 135
+        // line 137
         echo "
 ";
     }

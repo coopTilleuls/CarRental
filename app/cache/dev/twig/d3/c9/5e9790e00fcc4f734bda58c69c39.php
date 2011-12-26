@@ -95,7 +95,7 @@ class __TwigTemplate_d3c95e9790e00fcc4f734bda58c69c39 extends Twig_Template
             foreach ($context['_seq'] as $context["i"] => $context["query"]) {
                 // line 34
                 echo "                <li class=\"";
-                echo ((twig_test_odd($this->getContext($context, "i"))) ? ("odd") : ("even"));
+                echo ((($this->getContext($context, "i") % 2 == 1)) ? ("odd") : ("even"));
                 echo "\">
                     <div>
                         <code>";

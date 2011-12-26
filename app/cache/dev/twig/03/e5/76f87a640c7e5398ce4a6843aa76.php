@@ -144,40 +144,38 @@ class __TwigTemplate_03e576f87a640c7e5398ce4a6843aa76 extends Twig_Template
               'first'  => true,
             );
             foreach ($context['_seq'] as $context["_key"] => $context["log"]) {
-                if (!(($this->getAttribute($this->getContext($context, "log"), "priority") >= $this->getContext($context, "priority")))) {
-                    continue;
-                }
-
-                // line 56
-                echo "                <li class=\"";
-                echo twig_escape_filter($this->env, twig_cycle(array(0 => "odd", 1 => "even"), $this->getAttribute($this->getContext($context, "loop"), "index")), "html", null, true);
-                if ((("ERR" == $this->getAttribute($this->getContext($context, "log"), "priorityName")) || ("ERROR" == $this->getAttribute($this->getContext($context, "log"), "priorityName")))) {
-                    echo " error";
-                }
-                echo "\">
+                if (($this->getAttribute($this->getContext($context, "log"), "priority") >= $this->getContext($context, "priority"))) {
+                    // line 56
+                    echo "                <li class=\"";
+                    echo twig_escape_filter($this->env, twig_cycle(array(0 => "odd", 1 => "even"), $this->getAttribute($this->getContext($context, "loop"), "index")), "html", null, true);
+                    if ((("ERR" == $this->getAttribute($this->getContext($context, "log"), "priorityName")) || ("ERROR" == $this->getAttribute($this->getContext($context, "log"), "priorityName")))) {
+                        echo " error";
+                    }
+                    echo "\">
                     ";
-                // line 57
-                echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, "log"), "message"), "html", null, true);
-                echo "
+                    // line 57
+                    echo twig_escape_filter($this->env, $this->getAttribute($this->getContext($context, "log"), "message"), "html", null, true);
+                    echo "
                     ";
-                // line 58
-                if (($this->getAttribute(twig_default_filter($this->getContext($context, "log")), "context", array(), "any", true) && (!twig_test_empty($this->getAttribute($this->getContext($context, "log"), "context"))))) {
-                    // line 59
-                    echo "                        <br />
+                    // line 58
+                    if (($this->getAttribute($this->getContext($context, "log", true), "context", array(), "any", true, true) && (!twig_test_empty($this->getAttribute($this->getContext($context, "log"), "context"))))) {
+                        // line 59
+                        echo "                        <br />
                         <small>
                             <strong>Context</strong>: ";
-                    // line 61
-                    echo twig_escape_filter($this->env, $this->env->getExtension('yaml')->encode($this->getAttribute($this->getContext($context, "log"), "context")), "html", null, true);
-                    echo "
+                        // line 61
+                        echo twig_escape_filter($this->env, $this->env->getExtension('yaml')->encode($this->getAttribute($this->getContext($context, "log"), "context")), "html", null, true);
+                        echo "
                         </small>
                     ";
-                }
-                // line 64
-                echo "                </li>
+                    }
+                    // line 64
+                    echo "                </li>
             ";
-                ++$context['loop']['index0'];
-                ++$context['loop']['index'];
-                $context['loop']['first'] = false;
+                    ++$context['loop']['index0'];
+                    ++$context['loop']['index'];
+                    $context['loop']['first'] = false;
+                }
             }
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['log'], $context['_parent'], $context['loop']);

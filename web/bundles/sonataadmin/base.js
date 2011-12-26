@@ -1,9 +1,9 @@
 jQuery(document).ready(function() {
-
     Admin.add_pretty_errors(document);
     Admin.add_collapsed_toggle();
+    Admin.add_filters(document);
+    Admin.set_object_field_value(document);
 });
-
 
 var Admin = {
 
@@ -15,8 +15,7 @@ var Admin = {
         var msg = '[Sonata.Admin] ' + Array.prototype.join.call(arguments,', ');
         if (window.console && window.console.log) {
             window.console.log(msg);
-        }
-        else if (window.opera && window.opera.postError) {
+        } else if (window.opera && window.opera.postError) {
             window.opera.postError(msg);
         }
     },
@@ -28,7 +27,7 @@ var Admin = {
      */
     add_pretty_errors: function(subject) {
         jQuery('div.sonata-ba-field-error', subject).each(function(index, element) {
-            var input = jQuery('input, textarea', element);
+            var input = jQuery('input, textarea, select', element);
 
             var message = jQuery('div.sonata-ba-field-error-messages', element).html();
             jQuery('div.sonata-ba-field-error-messages', element).html('');
@@ -40,7 +39,19 @@ var Admin = {
                 return;
             }
 
-            input.qtip({
+            var target;
+
+            /* Hack to handle qTip on select */
+            if(jQuery(input).is("select")) {
+              jQuery(element).prepend("<span></span>");
+              target = jQuery('span', element);
+              jQuery(input).appendTo(target);
+            }
+            else {
+              target = input;
+            }
+
+            target.qtip({
                 content: message,
                 show: 'focusin',
                 hide: 'focusout',
@@ -57,7 +68,8 @@ var Admin = {
                     },
                     tip: 'leftMiddle'
                 }
-            })
+            });
+
         });
     },
 
@@ -94,5 +106,42 @@ var Admin = {
         }
 
         return targetElement;
+    },
+
+    add_filters: function(subject) {
+        jQuery('div.filter_container', subject).hide();
+        jQuery('fieldset.filter_legend', subject).click(function(event) {
+           jQuery('div.filter_container', jQuery(event.target).parent()).toggle();
+        });
+    },
+
+    /**
+     * Change object field value
+     * @param subject
+     */
+    set_object_field_value: function(subject) {
+
+        this.log(jQuery('a.sonata-ba-edit-inline', subject));
+        jQuery('a.sonata-ba-edit-inline', subject).click(function(event) {
+            Admin.stopEvent(event);
+
+            var subject = jQuery(this);
+            jQuery.ajax({
+                url: subject.attr('href'),
+                type: 'POST',
+                success: function(json) {
+                    if(json.status === "OK") {
+                        var elm = jQuery(subject).parent();
+                        elm.children().remove();
+                        // fix issue with html comment ...
+                        elm.html(jQuery(json.content.replace(/<!--[\s\S]*?-->/g, "")).html());
+                        elm.effect("highlight", {'color' : '#57A957'}, 2000);
+                        Admin.set_object_field_value(elm);
+                    } else {
+                        jQuery(a).parent().effect("highlight", {'color' : '#C43C35'}, 2000);
+                    }
+                }
+            });
+        });
     }
 }

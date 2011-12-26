@@ -1,0 +1,164 @@
+<?php
+
+namespace CoopTilleuls\Bundle\CarRentalBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+/**
+ * Dunglas\Bundle\CarRentalBundle\Entity\Customer
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Dunglas\Bundle\CarRentalBundle\Entity\CustomerRepository")
+ */
+class Customer
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string $gender
+     *
+     * @ Assert \ Choice(
+     *     choices = { "male", "female" },
+     *     message = "Choose a valid gender."
+     * )
+     * @ORM\Column(name="gender", type="string", length=2)
+     */
+    private $gender;
+
+    /**
+     * @var string $lastName
+     *
+     * @Assert\NotBlank()
+     * @ORM\Column(name="lastName", type="string", length=255, nullable=false)
+     */
+    private $lastName;
+
+    /**
+     * @var string $firstName
+     * @Assert\NotBlank()
+     * @ORM\Column(name="firstName", type="string", length=255, nullable=false)
+     */
+    private $firstName;
+
+    /**
+     * @var string $address1
+     * @Assert\NotBlank()
+     * @ORM\Column(name="address1", type="string", length=255)
+     */
+    private $address1;
+
+    /**
+     * @var string $address2
+     *
+     * @ORM\Column(name="address2", type="string", length=255, nullable=true)
+     */
+    private $address2;
+
+    /**
+     * @var string $city
+     * @Assert\NotBlank()
+     * @ORM\Column(name="city", type="string", length=255)
+     */
+    private $city;
+
+    /**
+     * @var string $zipCode
+     * @Assert\NotBlank()
+     * @ORM\Column(name="zipCode", type="string", length=20)
+     */
+    private $zipCode;
+
+    /**
+     *
+     * @var string $country
+     * @ORM\Column(name="country", type="string", length=2, nullable=true)
+     */
+    private $country;
+
+    /**
+     * @var string $emailAddress
+     *
+     * @ORM\Column(name="emailAddress", type="string", length=255, nullable=true)
+     */
+    private $emailAddress;
+
+    /**
+     * @var string $phoneNumber1
+     *
+     * @ORM\Column(name="phoneNumber1", type="string", length=255, nullable=true)
+     */
+    private $phoneNumber1;
+
+    /**
+     * @var string $phoneNumber2
+     *
+     * @ORM\Column(name="phoneNumber2", type="string", length=255, nullable=true)
+     */
+    private $phoneNumber2;
+
+    /**
+     * @var date $registrationDate
+     *
+     * @ORM\Column(name="registrationDate", type="date", nullable=true)
+     */
+    private $registrationDate;
+
+    /**
+     * @var date $birth
+     *
+     * @ORM\Column(name="birth", type="date", nullable=true)
+     */
+    private $birth;
+
+    /**
+     *
+     * @var string $notes
+     *
+     * @ORM\Column(name="notes", type="text", nullable=true)
+     */
+    private $notes;
+
+    /**
+     * @var boolean $active
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
+    private $active = true;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Renting", mappedBy="customer")
+     */
+    private $rentals;
+
+    /**
+     * @ORM\Column(name="created", type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     */
+    private $created;
+
+    /**
+     * @ORM\Column(name="updated", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updated;
+
+    public function __construct()
+    {
+        $this->rentals = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->getLastName() . ' ' . $this->getFirstName();
+    }
+}

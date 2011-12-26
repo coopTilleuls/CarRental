@@ -3,11 +3,6 @@
 /* WebProfilerBundle:Profiler:toolbar_item.html.twig */
 class __TwigTemplate_35515443956a9530687f813cbb177897 extends Twig_Template
 {
-    protected function doGetParent(array $context)
-    {
-        return false;
-    }
-
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1
@@ -28,11 +23,11 @@ class __TwigTemplate_35515443956a9530687f813cbb177897 extends Twig_Template
         echo "<span style=\"white-space:nowrap; color:#2f2f2f; display:inline-block; min-height:24px; border-right:1px solid #cdcdcd; padding:5px 7px 5px 4px; \">
      ";
         // line 7
-        echo twig_escape_filter($this->env, ((array_key_exists("icon", $context)) ? (twig_default_filter($this->getContext($context, "icon"), "")) : ("")), "html", null, true);
+        echo twig_escape_filter($this->env, ((array_key_exists("icon", $context)) ? (_twig_default_filter($this->getContext($context, "icon"), "")) : ("")), "html", null, true);
         echo "
      ";
         // line 8
-        echo twig_escape_filter($this->env, ((array_key_exists("text", $context)) ? (twig_default_filter($this->getContext($context, "text"), "")) : ("")), "html", null, true);
+        echo twig_escape_filter($this->env, ((array_key_exists("text", $context)) ? (_twig_default_filter($this->getContext($context, "text"), "")) : ("")), "html", null, true);
         echo "
 </span>
 ";

@@ -1,0 +1,42 @@
+services:
+   coopTilleuls.carrental.admin.renting:
+      class: CoopTilleuls\Bundle\CarRentalBundle\Admin\RentingAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: rental, label: Rentings }
+      arguments: [null, CoopTilleuls\Bundle\CarRentalBundle\Entity\Renting, null]
+   
+   coopTilleuls.carrental.admin.payment:
+      class: CoopTilleuls\Bundle\CarRentalBundle\Admin\PaymentAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: rental, label: Payments }
+      arguments: [null, CoopTilleuls\Bundle\CarRentalBundle\Entity\Payment, null]
+  
+   coopTilleuls.carrental.admin.customer:
+      class: CoopTilleuls\Bundle\CarRentalBundle\Admin\CustomerAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: rental, label: Customers }
+      arguments: [null, CoopTilleuls\Bundle\CarRentalBundle\Entity\Customer, null]
+  
+   coopTilleuls.carrental.admin.vehicle:
+      class: CoopTilleuls\Bundle\CarRentalBundle\Admin\VehicleAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: park, label: Vehicles }
+      arguments: [null, CoopTilleuls\Bundle\CarRentalBundle\Entity\Vehicle, null]
+   
+   coopTilleuls.carrental.admin.manufacturer:
+      class: CoopTilleuls\Bundle\CarRentalBundle\Admin\ManufacturerAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: settings, label: Manufacturers }
+      arguments: [null, CoopTilleuls\Bundle\CarRentalBundle\Entity\Manufacturer, null]
+   
+   coopTilleuls.carrental.admin.model:
+      class: CoopTilleuls\Bundle\CarRentalBundle\Admin\ModelAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: settings, label: Models }
+      arguments: [null, CoopTilleuls\Bundle\CarRentalBundle\Entity\Model, null]
+   
+   coopTilleuls.carrental.admin.fuel:
+      class: CoopTilleuls\Bundle\CarRentalBundle\Admin\FuelAdmin
+      tags:
+        - { name: sonata.admin, manager_type: orm, group: settings, label: Fuels }
+      arguments: [null, CoopTilleuls\Bundle\CarRentalBundle\Entity\Fuel, null]

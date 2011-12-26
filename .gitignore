@@ -1,1 +1,9 @@
+/web/bundles/
+/app/bootstrap*
+/app/cache/*
+/app/logs/*
+/app/config/parameters.yml
+/vendor/*
+/web/bundles/*
 /nbproject/private/
+deps.lock

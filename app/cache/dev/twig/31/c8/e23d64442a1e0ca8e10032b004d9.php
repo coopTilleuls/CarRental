@@ -13,11 +13,6 @@ class __TwigTemplate_31c8e23d64442a1e0ca8e10032b004d9 extends Twig_Template
         );
     }
 
-    protected function doGetParent(array $context)
-    {
-        return false;
-    }
-
     protected function doDisplay(array $context, array $blocks = array())
     {
         // line 1

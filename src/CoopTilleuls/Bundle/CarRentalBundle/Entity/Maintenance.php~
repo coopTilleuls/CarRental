@@ -1,0 +1,64 @@
+<?php
+
+namespace CoopTilleuls\Bundle\CarRentalBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+/**
+ * Dunglas\Bundle\CarRentalBundle\Entity\Maintenance
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Maintenance
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var datetime $date
+     *
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
+
+    /**
+     * @var datetime $scheduled
+     *
+     * @ORM\Column(name="schedule", type="datetime")
+     */
+    private $scheduled;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Vehicle", inversedBy="maintenances")
+     * @ORM\JoinColumn(name="vehicle_id", referencedColumnName="id")
+     */
+    private $vehicle;
+
+    /**
+     *
+     * @var text $notes
+     *
+     * @ORM\Column(name="notes", type="text")
+     */
+    private $notes;
+
+    /**
+     * @ORM\Column(name="created", type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     */
+    private $created;
+
+    /**
+     * @ORM\Column(name="updated", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updated;
+}

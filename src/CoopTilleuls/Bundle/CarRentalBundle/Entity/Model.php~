@@ -1,0 +1,73 @@
+<?php
+
+namespace CoopTilleuls\Bundle\CarRentalBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
+
+/**
+ * CoopTilleuls\Bundle\CarRentalBundle\Entity\Model
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class Model
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string $name
+     *
+     * @Assert\NotBlank()
+     * @Assert\MaxLength(255)
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Manufacturer", inversedBy="models")
+     */
+    private $manufacturer;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Vehicle", mappedBy="model")
+     */
+    private $vehicles;
+
+    /**
+     * @var boolean $active
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
+    private $active = true;
+
+    /**
+     * @ORM\Column(name="created", type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     */
+    private $created;
+
+    /**
+     * @ORM\Column(name="updated", type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updated;
+    
+    public function __construct()
+    {
+        $this->vehicles = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return /*$this->getManufacturer() + ' ' + */$this->getName();
+    }
+}
