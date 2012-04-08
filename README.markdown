@@ -17,7 +17,7 @@ Features
 Installation
 ------------
 
-Copy `app/config/parameters.yml-dist` to `app/config/parameters.yml` and edit it to match your database credentials.
+Copy `app/config/parameters.ini-dist` to `app/config/parameters.ini` and edit it to match your database credentials.
 
 Install the vendors:
 
@@ -37,7 +37,7 @@ Load the fixtures:
 
 Create your admin account:
 
-    php app/console fos:user:create --super-admin kevin kevin@example.com mypassword
+    php app/console fos:user:create --super-admin kevin kevin@la-cooperative-des-tilleuls.com mypassword
 
 Install assets:
 

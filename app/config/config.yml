@@ -1,5 +1,5 @@
 imports:
-    - { resource: parameters.yml }
+    - { resource: parameters.ini }
     - { resource: security.yml }
 
 framework:
@@ -11,8 +11,8 @@ framework:
     csrf_protection: true
     validation:      { enable_annotations: true }
     templating:      { engines: ['twig'] }
-    default_locale: %locale%
     session:
+        default_locale: %locale%
         auto_start:     true
 
 # Twig Configuration
@@ -34,21 +34,19 @@ assetic:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   %database_driver%
-        host:     %database_host%
-        dbname:   %database_name%
-        user:     %database_user%
-        password: %database_password%
-        unix_socket: %database_unix_socket%
-        charset:  UTF8
+        driver:      %database_driver%
+        host:        %database_host%
+        dbname:      %database_name%
+        user:        %database_user%
+        password:    %database_password%
+#        unix_socket: %database_unix_socket%
+        charset:     UTF8
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
         mappings:
             StofDoctrineExtensionsBundle: false
-            
-
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -70,3 +68,19 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: CoopTilleuls\Bundle\CarRentalBundle\Entity\User
+
+sonata_admin:
+    title:      Car Rental
+    title_logo: /bundles/cooptilleulscarrental/images/logo.png
+#    templates:
+#        layout: CoopTilleulsCarRentalBundle::standard_layout.html.twig
+
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+
+sonata_intl:
+    timezone:
+        default: %timezone%

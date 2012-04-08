@@ -1,0 +1,21 @@
+a.brand {
+    color: #eee31c !important;
+    font-weight: bold !important;
+}
+
+.brand img {
+    padding-right: 0px !important;
+}
+
+.footer {
+    margin-top: 100px;
+}
+
+.footer span {
+    background-color: black;
+    display: table-cell;
+    height: 40px;
+    color: #FFFEFE;
+    font-size: 20px;
+    vertical-align: middle;
+}
